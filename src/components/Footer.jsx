@@ -1,43 +1,63 @@
 import { Link } from 'react-router-dom'
-import { CATEGORIES } from '../data/products'
-import { Mail, Phone, Clock } from 'lucide-react'
+import { Mail, Phone, MapPin, Globe } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 
 export default function Footer() {
   const { t } = useLanguage()
   return (
-    <footer style={{ background: "#3D1F0A", borderTop: "2px solid #C5B5A5" }} className="mt-16">
-      <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-16 py-14">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
+    <footer style={{ background: "#0D0C0B", borderTop: "1px solid rgba(182, 165, 143, 0.1)" }} className="mt-20">
+      <div className="w-full px-6 lg:px-12 xl:px-20 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 lg:gap-16">
 
           {/* Brand */}
-          <div className="col-span-2 md:col-span-1">
-            <h3 className="text-xl font-bold mb-3" style={{ fontFamily: 'Cinzel, serif', color: "#FABE1A" }}>
-              ॐ Rudhraksha Divines
+          <div className="col-span-1 md:col-span-2">
+            <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Cormorant Garamond', serif", color: "#D8C7AE" }}>
+              ROYAL HOOF
             </h3>
-            <p className="text-sm leading-relaxed mb-4" style={{ color: "#D4C4B4" }}>
-              {t.footerTagline}
+            <p className="text-sm font-medium mb-4 tracking-wider uppercase" style={{ color: "#9A7650", fontFamily: "'Cormorant Garamond', serif" }}>
+              Horse Riding Academy & Club
             </p>
-            <div className="space-y-2 text-sm" style={{ color: "#D4C4B4" }}>
-              <div className="flex items-center gap-2"><Mail size={13} style={{ color: "#FABE1A" }} /> sivasri3545@gmail.com</div>
-              <div className="flex items-center gap-2"><Phone size={13} style={{ color: "#FABE1A" }} /> +91 92814 44571</div>
-              <div className="flex items-center gap-2"><Clock size={13} style={{ color: "#FABE1A" }} /> Mon–Sun, 9am–9pm</div>
+            <p className="text-sm leading-relaxed mb-6" style={{ color: "#B6A58F", fontFamily: "'Inter', sans-serif" }}>
+              Experience premium horse riding with professional training, boarding facilities, and trail rides. Established 2026.
+            </p>
+            
+            {/* Contact Information */}
+            <div className="space-y-3 text-sm" style={{ color: "#B6A58F", fontFamily: "'Inter', sans-serif" }}>
+              <div className="flex items-start gap-3">
+                <MapPin size={15} style={{ color: "#9A7650", marginTop: "2px" }} className="flex-shrink-0" /> 
+                <div>
+                  <p>GIRI FARMS, Uniworld City</p>
+                  <p>Aspen Greens, Nallambakkam</p>
+                  <p>Tamil Nadu, India</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <Phone size={15} style={{ color: "#9A7650" }} /> 
+                9043700776
+              </div>
+              <div className="flex items-center gap-3">
+                <Globe size={15} style={{ color: "#9A7650" }} /> 
+                www.royalhoof.com
+              </div>
             </div>
           </div>
 
-          {/* Categories */}
+          {/* Services */}
           <div>
-            <h4 className="text-sm font-semibold mb-3 uppercase tracking-wider" style={{ color: "#FABE1A" }}>{t.footerCollections}</h4>
-            <ul className="space-y-2">
-              {CATEGORIES.slice(0, 6).map(cat => (
-                <li key={cat}>
-                  <Link to={`/products?category=${encodeURIComponent(cat)}`}
-                    className="text-sm transition-colors"
-                    style={{ color: "#D4C4B4" }}
-                    onMouseEnter={e => e.currentTarget.style.color = "#FABE1A"}
-                    onMouseLeave={e => e.currentTarget.style.color = "#D4C4B4"}>
-                    {cat}
-                  </Link>
+            <h4 className="eyebrow-label mb-4" style={{ color: "#D8C7AE" }}>Our Services</h4>
+            <ul className="space-y-3">
+              {[
+                "Horse Riding",
+                "Training Programs", 
+                "Boarding Facilities",
+                "Trail Rides",
+                "Photoshoots",
+                "Premium Care"
+              ].map(service => (
+                <li key={service}>
+                  <span className="text-sm" style={{ color: "#B6A58F", fontFamily: "'Inter', sans-serif" }}>
+                    {service}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -45,40 +65,21 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-sm font-semibold mb-3 uppercase tracking-wider" style={{ color: "#FABE1A" }}>{t.footerQuickLinks}</h4>
-            <ul className="space-y-2">
+            <h4 className="eyebrow-label mb-4" style={{ color: "#D8C7AE" }}>Quick Links</h4>
+            <ul className="space-y-3">
               {[
-                { to: "/products", label: t.footerShop },
-                { to: "/orders", label: t.myOrders },
-                { to: "/profile", label: t.footerAccount },
-                { to: "/wishlist", label: t.wishlist },
-                { to: "/cart", label: t.footerCart },
+                { to: "/", label: "Home" },
+                { to: "/events", label: "Events" },
+                { to: "/packages", label: "Packages" },
+                { to: "/gallery", label: "Gallery" },
+                { to: "/enquiry", label: "Book Now" },
+                { to: "/contact", label: "Contact" },
               ].map(item => (
                 <li key={item.to}>
-                  <Link to={item.to} className="text-sm transition-colors" style={{ color: "#D4C4B4" }}
-                    onMouseEnter={e => e.currentTarget.style.color = "#FABE1A"}
-                    onMouseLeave={e => e.currentTarget.style.color = "#D4C4B4"}>
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Help */}
-          <div>
-            <h4 className="text-sm font-semibold mb-3 uppercase tracking-wider" style={{ color: "#FABE1A" }}>{t.footerHelp}</h4>
-            <ul className="space-y-2">
-              {[
-                { to: "/contact", label: t.footerContact },
-                { to: "/shipping-policy", label: t.footerShipping },
-                { to: "/refund-policy", label: t.footerRefund },
-                { to: "/privacy-policy", label: t.footerPrivacy },
-              ].map(item => (
-                <li key={item.to}>
-                  <Link to={item.to} className="text-sm transition-colors" style={{ color: "#D4C4B4" }}
-                    onMouseEnter={e => e.currentTarget.style.color = "#FABE1A"}
-                    onMouseLeave={e => e.currentTarget.style.color = "#D4C4B4"}>
+                  <Link to={item.to} className="text-sm transition-colors duration-300" 
+                    style={{ color: "#B6A58F", fontFamily: "'Inter', sans-serif" }}
+                    onMouseEnter={e => e.currentTarget.style.color = "#F3EBDD"}
+                    onMouseLeave={e => e.currentTarget.style.color = "#B6A58F"}>
                     {item.label}
                   </Link>
                 </li>
@@ -87,21 +88,13 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs"
-          style={{ borderTop: "1px solid #5C3015", color: "#A67560" }}>
-          <span>{t.footerCopy}</span>
-          <div className="flex gap-4">
-            {[
-              { to: "/privacy-policy", label: "Privacy" },
-              { to: "/shipping-policy", label: "Shipping" },
-              { to: "/refund-policy", label: "Refunds" },
-            ].map(item => (
-              <Link key={item.to} to={item.to} className="transition-colors" style={{ color: "#A67560" }}
-                onMouseEnter={e => e.currentTarget.style.color = "#FABE1A"}
-                onMouseLeave={e => e.currentTarget.style.color = "#A67560"}>
-                {item.label}
-              </Link>
-            ))}
+        <div className="equestrian-divider my-10" />
+
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs"
+          style={{ color: "#B6A58F", fontFamily: "'Inter', sans-serif" }}>
+          <span>© 2024 Royal Hoof Horse Riding Academy & Club. All rights reserved.</span>
+          <div className="flex gap-6">
+            <span>ESTD. 2026</span>
           </div>
         </div>
       </div>

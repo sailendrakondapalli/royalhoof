@@ -26,7 +26,7 @@ const policies = {
       },
       {
         heading: 'Contact Us',
-        text: 'For shipping-related queries, please contact:\n📞 Phone / WhatsApp: +91 8639006849\n📧 Email: rudhraksha@gmail.com'
+        text: 'For shipping-related queries, please contact:\n📞 Phone / WhatsApp: +91 99944 41363\n📧 Email: rudhraksha@gmail.com'
       },
     ]
   },
@@ -47,7 +47,7 @@ const policies = {
       },
       {
         heading: 'How to Report',
-        text: 'Send the proof via:\n📱 WhatsApp: +91 8639006849\n📧 Email: rudhraksha@gmail.com\n\nOnce verified by our team, we will:\n• Offer a replacement of the same product, or\n• Provide a refund if replacement is not possible.'
+        text: 'Send the proof via:\n📱 WhatsApp: +91 99944 41363\n📧 Email: rudhraksha@gmail.com\n\nOnce verified by our team, we will:\n• Offer a replacement of the same product, or\n• Provide a refund if replacement is not possible.'
       },
       {
         heading: 'Refunds',
@@ -55,7 +55,7 @@ const policies = {
       },
       {
         heading: 'Contact Us',
-        text: 'For all return or refund related queries, please contact us:\n📞 Phone / WhatsApp: +91 8639006849\n📧 Email: rudhraksha@gmail.com'
+        text: 'For all return or refund related queries, please contact us:\n📞 Phone / WhatsApp: +91 99944 41363\n📧 Email: rudhraksha@gmail.com'
       },
     ]
   },

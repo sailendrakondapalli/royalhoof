@@ -15,18 +15,21 @@ function TagBadges({ tags }) {
   return (
     <div className="flex flex-wrap gap-1">
       {tags.includes('certified') && (
-        <span className="flex items-center gap-0.5 text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-green-900/40 text-green-400 border border-green-700/50">
-          <CheckCircle size={9} /> Certified
+        <span className="flex items-center gap-1 text-[0.625rem] font-semibold px-2 py-0.5 rounded-sm bg-green-900/30 text-green-400 border border-green-700/40"
+          style={{ fontFamily: "'Inter', sans-serif" }}>
+          <CheckCircle size={10} /> Certified
         </span>
       )}
       {tags.includes('nepal') && (
-        <span className="flex items-center gap-0.5 text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-[#C8860A]/15 text-[#C8860A] border border-[#C8860A]/30">
-          <MapPin size={9} /> Nepal
+        <span className="flex items-center gap-1 text-[0.625rem] font-semibold px-2 py-0.5 rounded-sm bg-[#9A7650]/15 text-[#9A7650] border border-[#9A7650]/30"
+          style={{ fontFamily: "'Inter', sans-serif" }}>
+          <MapPin size={10} /> Nepal
         </span>
       )}
       {tags.includes('rare') && (
-        <span className="flex items-center gap-0.5 text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-purple-900/40 text-purple-400 border border-purple-700/50">
-          <Sparkles size={9} /> Rare
+        <span className="flex items-center gap-1 text-[0.625rem] font-semibold px-2 py-0.5 rounded-sm bg-purple-900/30 text-purple-400 border border-purple-700/40"
+          style={{ fontFamily: "'Inter', sans-serif" }}>
+          <Sparkles size={10} /> Rare
         </span>
       )}
     </div>
@@ -41,79 +44,126 @@ function GridCard({ product, inCart, wishlisted, onAddToCart, onWishlist }) {
 
   return (
     <motion.div
-      whileHover={{ y: -5 }}
-      transition={{ duration: 0.22 }}
-      className="group relative bg-[#2A1408] rounded-2xl overflow-hidden border border-[#5C3015] hover:border-[#C8860A]/60 transition-all duration-300 hover:shadow-[0_12px_40px_rgba(200,134,10,0.2)] flex flex-col"
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+      className="group relative equestrian-card rounded-sm overflow-hidden flex flex-col h-full"
     >
       <Link to={`/products/${product.id}`} className="flex flex-col flex-1">
-        <div className="relative overflow-hidden aspect-square bg-[#1A0A02] flex-shrink-0">
+        {/* Image Container */}
+        <div className="relative overflow-hidden aspect-square bg-[#0D0C0B] flex-shrink-0 image-zoom-wrapper">
           {mediaIsVideo ? (
             <video src={media} muted loop playsInline autoPlay
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              className="w-full h-full object-cover" />
           ) : (
             <img src={media} alt={product.name} loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              className="w-full h-full object-cover"
               onError={e => { e.target.src = FALLBACK_IMG }} />
           )}
 
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0F0501]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          {/* Overlay on Hover */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#171614]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
+          {/* Out of Stock Overlay */}
           {product.stock === 0 && (
-            <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-              <span className="text-white text-xs font-semibold bg-[#2A1408] px-3 py-1 rounded-full border border-[#5C3015]">Out of Stock</span>
+            <div className="absolute inset-0 bg-[#171614]/80 flex items-center justify-center backdrop-blur-sm">
+              <span className="text-[#F3EBDD] text-xs font-semibold bg-[#22201D] px-4 py-2 rounded-sm border border-[#B6A58F]/20"
+                style={{ fontFamily: "'Inter', sans-serif" }}>
+                Out of Stock
+              </span>
             </div>
           )}
 
+          {/* Certified Badge */}
           {product.tags?.includes('certified') && (
-            <span className="absolute top-2 left-2 flex items-center gap-1 bg-green-700 text-white text-[10px] px-2 py-0.5 rounded-full font-semibold">
-              <CheckCircle size={9} /> Certified
+            <span className="absolute top-3 left-3 flex items-center gap-1 bg-green-700/90 text-white text-[0.625rem] px-2 py-1 rounded-sm font-semibold backdrop-blur-sm"
+              style={{ fontFamily: "'Inter', sans-serif" }}>
+              <CheckCircle size={10} /> Certified
             </span>
           )}
+          
+          {/* New Badge */}
           {!product.tags?.includes('certified') && product.tags?.includes('new') && (
-            <span className="absolute top-2 left-2 bg-[#C8860A] text-[#1A0A02] text-[10px] px-2 py-0.5 rounded-full font-bold">New</span>
+            <span className="absolute top-3 left-3 bg-[#9A7650] text-[#F3EBDD] text-[0.625rem] px-2 py-1 rounded-sm font-bold backdrop-blur-sm"
+              style={{ fontFamily: "'Inter', sans-serif" }}>
+              New
+            </span>
           )}
 
+          {/* Discount Badge */}
           {origPrice && origPrice > product.price && (
-            <span className="absolute top-2 right-8 bg-green-700 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+            <span className="absolute top-3 right-12 bg-green-700/90 text-white text-[0.625rem] font-bold px-2 py-1 rounded-sm backdrop-blur-sm"
+              style={{ fontFamily: "'Inter', sans-serif" }}>
               -{Math.round(((origPrice - product.price) / origPrice) * 100)}%
             </span>
           )}
 
+          {/* Wishlist Button */}
           <button onClick={onWishlist}
-            className={`absolute top-2 right-2 p-1.5 rounded-full transition-all shadow-md backdrop-blur-sm ${wishlisted ? 'bg-red-500 text-white scale-110' : 'bg-[#1A0A02]/80 text-[#DDB87A] hover:text-red-400 hover:bg-[#2A1408]'}`}>
-            <Heart size={13} fill={wishlisted ? 'currentColor' : 'none'} />
+            className={`absolute top-3 right-3 p-2 rounded-sm transition-all duration-300 backdrop-blur-sm ${
+              wishlisted 
+                ? 'bg-red-500 text-white scale-110' 
+                : 'bg-[#22201D]/80 text-[#F3EBDD] hover:text-red-400 hover:bg-[#22201D]'
+            }`}>
+            <Heart size={14} strokeWidth={1.5} fill={wishlisted ? 'currentColor' : 'none'} />
           </button>
         </div>
 
-        <div className="p-3 flex flex-col flex-1">
-          <p className="text-[10px] text-[#C8860A] mb-1 uppercase tracking-widest font-semibold">{product.category}</p>
-          <h3 className="text-white text-sm font-semibold line-clamp-2 mb-2 group-hover:text-[#C8860A] transition-colors leading-snug flex-1"
-            style={{ fontFamily: "Cinzel, serif" }}>
+        {/* Content */}
+        <div className="p-4 flex flex-col flex-1">
+          {/* Category */}
+          <p className="text-[0.625rem] text-[#9A7650] mb-2 uppercase tracking-[0.15em] font-semibold"
+            style={{ fontFamily: "'Inter', sans-serif" }}>
+            {product.category}
+          </p>
+          
+          {/* Title */}
+          <h3 className="text-[#F3EBDD] text-sm font-medium line-clamp-2 mb-3 group-hover:text-[#D8C7AE] transition-colors leading-snug flex-1"
+            style={{ fontFamily: "'Inter', sans-serif" }}>
             {product.name}
           </h3>
-          <div className="mb-2"><TagBadges tags={product.tags?.filter(t => t !== 'certified')} /></div>
+          
+          {/* Tags */}
+          <div className="mb-3">
+            <TagBadges tags={product.tags?.filter(t => t !== 'certified')} />
+          </div>
+          
+          {/* Pricing */}
           <div className="mt-auto">
             <div className="flex items-center gap-2">
-              <span className="text-[#E5A020] font-bold text-base">{formatINR(product.price)}</span>
+              <span className="text-[#F3EBDD] font-semibold text-base" style={{ fontFamily: "'Inter', sans-serif" }}>
+                {formatINR(product.price)}
+              </span>
               {origPrice && origPrice > product.price && (
-                <span className="text-white/60 text-xs line-through">{formatINR(origPrice)}</span>
+                <span className="text-[#B6A58F]/60 text-xs line-through">
+                  {formatINR(origPrice)}
+                </span>
               )}
             </div>
-            <p className="text-[10px] mt-0.5" style={{ color: product.delivery_charge ? "#DDB87A" : "#4ADE80" }}>
-              {product.delivery_charge ? `+ ₹${product.delivery_charge} delivery` : "🚚 Free Delivery"}
+            <p className="text-[0.625rem] mt-1" 
+              style={{ 
+                color: product.delivery_charge ? "#B6A58F" : "#4ADE80",
+                fontFamily: "'Inter', sans-serif" 
+              }}>
+              {product.delivery_charge ? `+ ₹${product.delivery_charge} delivery` : "Free Delivery"}
             </p>
           </div>
         </div>
       </Link>
 
-      <div className="px-3 pb-3">
+      {/* Add to Cart Button */}
+      <div className="px-4 pb-4">
         <button onClick={onAddToCart} disabled={product.stock === 0}
-          className={`w-full flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed ${
+          className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-sm text-xs font-semibold transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed uppercase tracking-wider ${
             inCart
-              ? 'bg-green-700 hover:bg-green-600 text-white shadow-md'
-              : 'bg-[#C8860A] hover:bg-[#E5A020] text-[#1A0A02] shadow-md hover:shadow-[0_4px_16px_rgba(200,134,10,0.4)]'
-          }`}>
-          {inCart ? <><ArrowRight size={13} /> Go to Cart</> : <><ShoppingCart size={13} /> Add to Cart</>}
+              ? 'bg-green-700 hover:bg-green-600 text-white'
+              : 'bg-[#D8C7AE] hover:bg-[#F3EBDD] text-[#171614]'
+          }`}
+          style={{ fontFamily: "'Inter', sans-serif" }}>
+          {inCart ? (
+            <><ArrowRight size={14} /> View Cart</>
+          ) : (
+            <><ShoppingCart size={14} /> Add to Cart</>
+          )}
         </button>
       </div>
     </motion.div>
@@ -129,73 +179,111 @@ function ListCard({ product, inCart, wishlisted, onAddToCart, onWishlist }) {
 
   return (
     <motion.div
-      whileHover={{ x: 2 }}
-      transition={{ duration: 0.18 }}
-      className="group relative bg-[#2A1408] rounded-xl border border-[#5C3015] hover:border-[#C8860A]/40 transition-all duration-200 hover:shadow-[0_4px_20px_rgba(200,134,10,0.15)] overflow-hidden">
+      whileHover={{ x: 4 }}
+      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+      className="group relative equestrian-card rounded-sm transition-all duration-300 overflow-hidden">
       <Link to={`/products/${product.id}`}>
-        <div className="flex items-stretch gap-3 p-3">
-          <div className="relative flex-shrink-0 w-[110px] h-[110px] rounded-xl overflow-hidden bg-[#1A0A02]">
+        <div className="flex items-stretch gap-4 p-4">
+          {/* Image */}
+          <div className="relative flex-shrink-0 w-28 h-28 rounded-sm overflow-hidden bg-[#0D0C0B] image-zoom-wrapper">
             {mediaIsVideo ? (
               <video src={media} muted loop playsInline autoPlay className="w-full h-full object-cover" />
             ) : (
               <img src={media} alt={product.name} loading="lazy"
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                className="w-full h-full object-cover"
                 onError={e => { e.target.src = FALLBACK_IMG }} />
             )}
             {product.stock === 0 && (
-              <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-                <span className="text-[8px] font-bold text-white bg-[#2A1408] px-1.5 py-0.5 rounded-full border border-[#5C3015]">OOS</span>
+              <div className="absolute inset-0 bg-[#171614]/80 flex items-center justify-center backdrop-blur-sm">
+                <span className="text-[0.625rem] font-bold text-[#F3EBDD] bg-[#22201D] px-2 py-1 rounded-sm border border-[#B6A58F]/20"
+                  style={{ fontFamily: "'Inter', sans-serif" }}>
+                  OOS
+                </span>
               </div>
             )}
           </div>
 
-          <div className="flex-1 min-w-0 flex flex-col justify-between py-0.5">
-            <div className="flex items-center gap-2 mb-0.5">
+          {/* Content */}
+          <div className="flex-1 min-w-0 flex flex-col justify-between py-1">
+            <div className="flex items-center gap-2 mb-1">
               {product.custom_id && (
-                <span className="font-mono text-[10px] text-white/50 bg-[#1A0A02] px-1.5 py-0.5 rounded border border-[#5C3015]">
+                <span className="font-mono text-[0.625rem] text-[#B6A58F] bg-[#171614] px-2 py-0.5 rounded-sm border border-[#B6A58F]/15"
+                  style={{ fontFamily: "'Courier New', monospace" }}>
                   {product.custom_id}
                 </span>
               )}
-              <span className="text-[10px] text-[#C8860A] font-semibold uppercase tracking-wider px-2 py-0.5 bg-[#C8860A]/10 rounded-full border border-[#C8860A]/20">
+              <span className="text-[0.625rem] text-[#9A7650] font-semibold uppercase tracking-wider px-2 py-0.5 bg-[#9A7650]/10 rounded-sm border border-[#9A7650]/20"
+                style={{ fontFamily: "'Inter', sans-serif" }}>
                 {product.category}
               </span>
             </div>
-            <h3 className="text-white text-sm font-bold line-clamp-2 group-hover:text-[#C8860A] transition-colors leading-tight mb-1"
-              style={{ fontFamily: "Cinzel, serif" }}>{product.name}</h3>
+            
+            <h3 className="text-[#F3EBDD] text-sm font-medium line-clamp-2 group-hover:text-[#D8C7AE] transition-colors leading-tight mb-2"
+              style={{ fontFamily: "'Inter', sans-serif" }}>
+              {product.name}
+            </h3>
+            
             {product.size && (
-              <p className="text-white/50 text-[11px] mb-1">Size: <span className="font-medium text-[#DDB87A]">{product.size} mm</span></p>
+              <p className="text-[#B6A58F] text-xs mb-2" style={{ fontFamily: "'Inter', sans-serif" }}>
+                Size: <span className="font-medium text-[#F3EBDD]">{product.size} mm</span>
+              </p>
             )}
+            
             <TagBadges tags={product.tags} />
-            <div className="flex items-center gap-3 mt-1.5">
-              <span className="text-[#E5A020] font-bold text-base leading-none">{formatINR(product.price)}</span>
+            
+            <div className="flex items-center gap-3 mt-2">
+              <span className="text-[#F3EBDD] font-semibold text-base" style={{ fontFamily: "'Inter', sans-serif" }}>
+                {formatINR(product.price)}
+              </span>
               {origPrice && origPrice > product.price && (
-                <span className="text-white/60 text-xs line-through">{formatINR(origPrice)}</span>
+                <span className="text-[#B6A58F]/60 text-xs line-through">
+                  {formatINR(origPrice)}
+                </span>
               )}
               {origPrice && origPrice > product.price && (
-                <span className="text-green-400 text-[10px] font-bold">-{Math.round(((origPrice - product.price) / origPrice) * 100)}%</span>
+                <span className="text-green-400 text-[0.625rem] font-bold" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  -{Math.round(((origPrice - product.price) / origPrice) * 100)}%
+                </span>
               )}
-              <span className={`flex items-center gap-1 text-[10px] font-semibold ml-auto ${inStock ? 'text-green-400' : 'text-red-400'}`}>
+              <span className={`flex items-center gap-1.5 text-[0.625rem] font-semibold ml-auto ${
+                inStock ? 'text-green-400' : 'text-red-400'
+              }`} style={{ fontFamily: "'Inter', sans-serif" }}>
                 <span className={`w-1.5 h-1.5 rounded-full ${inStock ? 'bg-green-400' : 'bg-red-400'}`} />
                 {inStock ? 'In Stock' : 'Out of Stock'}
               </span>
             </div>
-            <p className="text-[10px] mt-0.5" style={{ color: product.delivery_charge ? "#DDB87A" : "#4ADE80" }}>
-              {product.delivery_charge ? `+ ₹${product.delivery_charge} delivery` : "🚚 Free Delivery"}
+            
+            <p className="text-[0.625rem] mt-1" 
+              style={{ 
+                color: product.delivery_charge ? "#B6A58F" : "#4ADE80",
+                fontFamily: "'Inter', sans-serif" 
+              }}>
+              {product.delivery_charge ? `+ ₹${product.delivery_charge} delivery` : "Free Delivery"}
             </p>
           </div>
 
-          <div className="flex-shrink-0 flex flex-col items-center justify-between py-0.5 gap-2 pl-1">
+          {/* Actions */}
+          <div className="flex-shrink-0 flex flex-col items-center justify-between py-1 gap-2 pl-2">
             <button onClick={onWishlist}
-              className={`p-1.5 rounded-full transition-all ${wishlisted ? 'bg-red-900/40 text-red-400' : 'text-white/50 hover:text-red-400 hover:bg-red-900/20'}`}>
-              <Heart size={15} fill={wishlisted ? 'currentColor' : 'none'} />
+              className={`p-2 rounded-sm transition-all duration-300 ${
+                wishlisted 
+                  ? 'bg-red-900/30 text-red-400' 
+                  : 'text-[#F3EBDD]/50 hover:text-red-400 hover:bg-red-900/20'
+              }`}>
+              <Heart size={16} strokeWidth={1.5} fill={wishlisted ? 'currentColor' : 'none'} />
             </button>
             <button onClick={onAddToCart} disabled={product.stock === 0}
-              className={`flex items-center gap-1 px-3 py-2 rounded-full text-[11px] font-bold transition-all disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap ${
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-sm text-xs font-semibold transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap uppercase tracking-wider ${
                 inCart
                   ? 'bg-green-700 hover:bg-green-600 text-white'
-                  : 'bg-[#C8860A] hover:bg-[#E5A020] text-[#1A0A02]'
-              }`}>
-              {inCart ? <><ArrowRight size={11} /> Cart</> : <><ShoppingCart size={11} /> Add</>}
+                  : 'bg-[#D8C7AE] hover:bg-[#F3EBDD] text-[#171614]'
+              }`}
+              style={{ fontFamily: "'Inter', sans-serif" }}>
+              {inCart ? (
+                <><ArrowRight size={12} /> Cart</>
+              ) : (
+                <><ShoppingCart size={12} /> Add</>
+              )}
             </button>
           </div>
         </div>
@@ -218,8 +306,12 @@ export default function ProductCard({ product, layout = 'grid' }) {
     e.preventDefault()
     if (inCart) { navigate('/cart'); return }
     if (!user) { toast.error('Please login to add to cart'); return }
-    try { await addToCart(product, user?.id); toast.success('Added to cart!') }
-    catch (err) { toast.error(err.message || 'Failed to add to cart') }
+    try { 
+      await addToCart(product, user?.id)
+      toast.success('Added to cart!') 
+    } catch (err) { 
+      toast.error(err.message || 'Failed to add to cart') 
+    }
   }
 
   const handleWishlist = async (e) => {
@@ -228,7 +320,9 @@ export default function ProductCard({ product, layout = 'grid' }) {
     try {
       const added = await toggleWishlist(product, user?.id)
       toast.success(added ? 'Added to wishlist!' : 'Removed from wishlist')
-    } catch (err) { toast.error(err.message || 'Failed to update wishlist') }
+    } catch (err) { 
+      toast.error(err.message || 'Failed to update wishlist') 
+    }
   }
 
   const shared = { product, inCart, wishlisted, onAddToCart: handleAddToCart, onWishlist: handleWishlist }

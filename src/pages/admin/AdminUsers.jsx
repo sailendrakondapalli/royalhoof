@@ -4,7 +4,7 @@ import { useAdminStore } from "../../store/adminStore"
 import { formatINR } from "../../utils/format"
 import { supabase } from "../../lib/supabase"
 
-const ADMIN_WHATSAPP = "918639006849"
+const ADMIN_WHATSAPP = "919994441363"
 
 export default function AdminUsers() {
   const { orders, loadOrders } = useAdminStore()

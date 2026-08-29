@@ -3,8 +3,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import {
   LayoutDashboard, Package, ShoppingBag, BarChart3, Users, Bell, Menu, X,
-  LogOut, ChevronRight, AlertTriangle, Store, Image, Tag, Ticket,
-  TrendingUp, Clock, AlertCircle, Info
+  LogOut, ChevronRight, AlertTriangle, Store, Calendar, MessageSquare,
+  TrendingUp, Clock, AlertCircle, Image, Gift
 } from "lucide-react"
 import { useAuthStore } from "../../store/authStore"
 import { useAdminStore } from "../../store/adminStore"
@@ -15,12 +15,12 @@ const NAV = [
   { path: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { path: "/admin/products", label: "Products", icon: Package },
   { path: "/admin/orders", label: "Orders", icon: ShoppingBag },
-  { path: "/admin/categories", label: "Categories", icon: Tag },
-  { path: "/admin/promo-codes", label: "Promo Codes", icon: Ticket },
-  { path: "/admin/banners", label: "Banners", icon: Image },
-  { path: "/admin/about", label: "About Section", icon: Info },
-  { path: "/admin/analytics", label: "Analytics", icon: BarChart3 },
+  { path: "/admin/events", label: "Events", icon: Calendar },
+  { path: "/admin/packages", label: "Packages", icon: Gift },
+  { path: "/admin/gallery", label: "Gallery", icon: Image },
+  { path: "/admin/enquiries", label: "Enquiries", icon: MessageSquare },
   { path: "/admin/users", label: "Users", icon: Users },
+  { path: "/admin/analytics", label: "Analytics", icon: BarChart3 },
 ]
 
 function Sidebar({ pathname, onSignOut, onNavClick, user, pendingCount, lowStockCount }) {

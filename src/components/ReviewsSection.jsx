@@ -70,21 +70,52 @@ export default function ReviewsSection() {
   const [submitting, setSubmitting] = useState(false)
   const [editingId, setEditingId] = useState(null)
   const [showForm, setShowForm] = useState(false)
+  // Anonymous review fields
+  const [guestName, setGuestName] = useState("")
+  const [guestEmail, setGuestEmail] = useState("")
 
   const userReview = reviews.find(r => r.user_id === user?.id)
   const avgRating = reviews.length ? (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1) : null
 
   useEffect(() => {
-    supabase.from("reviews").select("*").order("created_at", { ascending: false })
-      .then(({ data }) => { setReviews(data || []); setLoading(false) })
+    // Only fetch approved reviews for public display
+    supabase.from("reviews")
+      .select("*")
+      .eq("is_approved", true)
+      .order("created_at", { ascending: false })
+      .then(({ data, error }) => { 
+        if (error) {
+          console.error('Error loading reviews:', error)
+        }
+        setReviews(data || [])
+        setLoading(false)
+      })
   }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!comment.trim()) { toast.error("Please write a comment"); return }
+    
+    // For anonymous users, require name
+    if (!user && !guestName.trim()) { 
+      toast.error("Please enter your name"); 
+      return 
+    }
+    
     setSubmitting(true)
     try {
-      const userName = user.user_metadata?.full_name || user.email?.split("@")[0] || "Customer"
+      let userName, userId
+      
+      if (user) {
+        // Logged-in user
+        userName = user.user_metadata?.full_name || user.email?.split("@")[0] || "Customer"
+        userId = user.id
+      } else {
+        // Anonymous user
+        userName = guestName.trim()
+        userId = null // No user ID for anonymous reviews
+      }
+      
       if (editingId) {
         const { data, error } = await supabase.from("reviews")
           .update({ rating, comment: comment.trim() })
@@ -93,17 +124,41 @@ export default function ReviewsSection() {
         setReviews(p => p.map(r => r.id === editingId ? data : r))
         toast.success("Review updated!")
       } else {
+        const reviewData = {
+          user_id: userId,
+          user_name: userName,
+          rating,
+          comment: comment.trim(),
+          is_approved: false // All reviews start as unapproved for admin moderation
+        }
+        
+        // Add email for anonymous users
+        if (!user && guestEmail.trim()) {
+          reviewData.guest_email = guestEmail.trim()
+        }
+        
         const { data, error } = await supabase.from("reviews")
-          .insert({ user_id: user.id, user_name: userName, rating, comment: comment.trim() })
+          .insert(reviewData)
           .select().single()
         if (error) throw error
-        setReviews(p => [data, ...p])
-        toast.success("Review submitted!")
+        
+        // Don't add to display list immediately - needs admin approval first
+        toast.success("Review submitted! It will be visible after admin approval.")
       }
-      setComment(""); setRating(5); setEditingId(null); setShowForm(false)
+      
+      // Reset form
+      setComment("")
+      setRating(5)
+      setEditingId(null)
+      setShowForm(false)
+      setGuestName("")
+      setGuestEmail("")
     } catch (e) {
+      console.error('Review submission error:', e)
       toast.error(e.message || "Failed to submit review")
-    } finally { setSubmitting(false) }
+    } finally { 
+      setSubmitting(false) 
+    }
   }
 
   const handleEdit = (review) => {
@@ -137,31 +192,53 @@ export default function ReviewsSection() {
       </div>
 
       {/* Write review CTA */}
-      {user && !userReview && !showForm && (
+      {!userReview && !showForm && (
         <div className="text-center mb-8">
           <button onClick={() => setShowForm(true)}
             className="px-6 py-3 bg-[#C8860A] text-[#1A0A02] font-bold rounded-lg hover:bg-[#E5A020] transition-all text-sm shadow-[0_4px_16px_rgba(200,134,10,0.3)]">
             Write a Review
           </button>
-        </div>
-      )}
-
-      {!user && (
-        <div className="text-center mb-8 bg-[#2A1408] border border-[#5C3015] rounded-xl p-6">
-          <p className="text-[#DDB87A] text-sm mb-3">Login to share your experience</p>
-          <Link to="/login" className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#C8860A] text-[#1A0A02] font-bold rounded-lg hover:bg-[#E5A020] transition-all text-sm">
-            <LogIn size={14} /> Login to Review
-          </Link>
+          {!user && (
+            <p className="text-[#DDB87A] text-xs mt-2">No login required - share your experience!</p>
+          )}
         </div>
       )}
 
       <AnimatePresence>
-        {showForm && user && (
+        {showForm && (
           <motion.form id="review-form" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
             onSubmit={handleSubmit}
             className="bg-[#2A1408] border border-[#5C3015] rounded-xl p-6 mb-8 space-y-4"
           >
             <p className="text-white font-semibold">{editingId ? "Edit your review" : "Share your experience"}</p>
+            
+            {/* Anonymous user fields */}
+            {!user && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <p className="text-white/50 text-xs mb-2 font-medium uppercase tracking-wide">Your Name *</p>
+                  <input
+                    type="text"
+                    value={guestName}
+                    onChange={e => setGuestName(e.target.value)}
+                    placeholder="Enter your name"
+                    className="w-full bg-[#1A0A02] border border-[#5C3015] rounded-lg px-3 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#C8860A] transition-colors"
+                    required
+                  />
+                </div>
+                <div>
+                  <p className="text-white/50 text-xs mb-2 font-medium uppercase tracking-wide">Email (Optional)</p>
+                  <input
+                    type="email"
+                    value={guestEmail}
+                    onChange={e => setGuestEmail(e.target.value)}
+                    placeholder="your@email.com"
+                    className="w-full bg-[#1A0A02] border border-[#5C3015] rounded-lg px-3 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#C8860A] transition-colors"
+                  />
+                </div>
+              </div>
+            )}
+            
             <div>
               <p className="text-white/50 text-xs mb-2 font-medium uppercase tracking-wide">Your Rating</p>
               <StarRating value={rating} onChange={setRating} size={26} />
@@ -172,12 +249,27 @@ export default function ReviewsSection() {
                 value={comment}
                 onChange={e => setComment(e.target.value)}
                 placeholder="Tell us about your experience..."
-                rows={3}
+                rows={4}
                 className="w-full bg-[#1A0A02] border border-[#5C3015] rounded-lg px-3 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#C8860A] resize-none transition-colors"
+                required
               />
             </div>
+            
+            {!user && (
+              <p className="text-white/40 text-xs">
+                * Your review will be visible after admin approval to ensure quality.
+              </p>
+            )}
+            
             <div className="flex gap-3">
-              <button type="button" onClick={() => { setShowForm(false); setEditingId(null); setComment(""); setRating(5) }}
+              <button type="button" onClick={() => { 
+                setShowForm(false); 
+                setEditingId(null); 
+                setComment(""); 
+                setRating(5);
+                setGuestName("");
+                setGuestEmail("");
+              }}
                 className="flex-1 py-2.5 border border-[#5C3015] text-[#DDB87A] rounded-lg text-sm hover:border-[#C8860A]/50 transition-colors">
                 Cancel
               </button>

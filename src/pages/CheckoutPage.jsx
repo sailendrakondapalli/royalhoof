@@ -12,7 +12,7 @@ import { formatINR } from "../utils/format"
 import toast from "react-hot-toast"
 
 const UPI_ID = "sivasri3545-5@okicici"
-const ADMIN_WHATSAPP = "918639006849"
+const ADMIN_WHATSAPP = "919994441363"
 // Generate QR dynamically from UPI ID using Google Charts API
 const getQRUrl = (upiId, amount) =>
   `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(`upi://pay?pa=${upiId}&pn=Rudhraksha+Store&am=${Math.ceil(amount)}&cu=INR&tn=Rudhraksha+Store+Order`)}`

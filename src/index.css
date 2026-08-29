@@ -1,21 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
 
 @layer base {
   :root {
-    /* ── Stone Temple Palette ── */
-    /* Backgrounds */
-    --stone-bg:       #EAE0D3;    /* Main background - warm stone */
-    --stone-panel:    #F2EAE0;    /* Recessed panels - lighter */
-    --rudraksha:      #734129;    /* Deep Rudraksha brown */
-    --saffron:        #FABE1A;    /* Traditional saffron yellow */
+    /* ── Rudhraksha Brown Palette ── */
+    /* Brown Foundation ~65% */
+    --charcoal:           #8B4513;    /* Primary background - saddle brown */
+    --charcoal-light:     #A0522D;    /* Secondary surfaces - sienna */
+    --charcoal-deep:      #654321;    /* Deepest contrast - dark brown */
     
-    /* Additional shades for depth */
-    --body-text:      #A67560;    /* Body text brown */
-    --shadow-dark:    #C5B5A5;    /* Shadow for carved effect */
-    --shadow-light:   #F8F3ED;    /* Highlight for carved effect */
-    --border-carved:  #D4C4B4;    /* Engraved borders */
+    /* Cream/Gold Typography ~20% */
+    --cream:              #F3EBDD;    /* Primary text */
+    --sand:               #CDBC91;    /* Warm golden accents */
     
-    /* Legacy dark theme (for admin) */
+    /* Dust/Taupe Supporting ~10% */
+    --dust:               #B6A58F;    /* Supporting surfaces */
+    
+    /* Bronze Premium Accents ~5% */
+    --bronze:             #9A7650;    /* Muted bronze - very selective */
+    
+    /* Legacy (for admin panel) */
     --brown:        #6B2D0F;
     --brown-light:  #8B3D1A;
     --brown-dark:   #1A0A02;
@@ -40,11 +44,13 @@
     margin: 0;
     padding: 0;
     width: 100%;
-    background-color: #1C0D05;
-    color: #F5E6C8;
-    font-family: 'Lato', 'Georgia', sans-serif;
+    background-color: #8B4513;
+    color: #F3EBDD;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    font-weight: 400;
   }
 
   #root {
@@ -53,105 +59,134 @@
     max-width: 100%;
   }
 
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: #2A1408; }
-  ::-webkit-scrollbar-thumb { background: #C8860A; border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: #E5A020; }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #8B4513; }
+  ::-webkit-scrollbar-thumb { background: #9A7650; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #B6A58F; }
 
   h1, h2, h3, h4, h5, h6 {
-    color: #C8860A;
-    font-family: 'Cinzel', 'Georgia', serif;
-    letter-spacing: 0.03em;
+    color: #F3EBDD;
+    font-family: 'Playfair Display', 'Georgia', serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
   }
 }
 
 @layer utilities {
-  /* Stone temple carved panel effect */
-  .stone-panel {
-    background: #F2EAE0;
-    box-shadow: inset 3px 3px 8px #C5B5A5, inset -2px -2px 6px #F8F3ED;
-    border: 1px solid #D4C4B4;
+  /* ── Equestrian Design System ── */
+  
+  /* Premium Card Surface */
+  .equestrian-card {
+    background: #22201D;
+    border: 1px solid rgba(182, 165, 143, 0.15);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .equestrian-card:hover {
+    border-color: rgba(154, 118, 80, 0.3);
+    transform: translateY(-4px);
   }
 
-  /* Raised embossed element (like a carved relief) */
-  .stone-raised {
-    background: #EAE0D3;
-    box-shadow: 3px 3px 8px #C5B5A5, -2px -2px 6px #F8F3ED;
+  /* Dust Surface (use sparingly ~10%) */
+  .dust-surface {
+    background: #B6A58F;
   }
 
-  /* Inset/recessed effect */
-  .stone-inset {
-    background: #F2EAE0;
-    box-shadow: inset 2px 2px 6px #C5B5A5, inset -1px -1px 4px #F8F3ED;
-  }
-
-  /* Bas-relief SVG engraving background */
-  .bas-relief-bg {
-    background-color: #1C0D05;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Cdefs%3E%3Cfilter id='emboss'%3E%3CfeConvolveMatrix order='3' kernelMatrix='-2 -1 0 -1 1 1 0 1 2' preserveAlpha='true'/%3E%3C/filter%3E%3C/defs%3E%3Cg fill='none' stroke='%23C5B5A5' stroke-width='0.8' opacity='0.5' filter='url(%23emboss)'%3E%3C!-- Banyan tree trunk --%3E%3Cpath d='M200 380 L200 220 M200 260 L180 240 L170 220 M200 260 L220 240 L230 220 M190 280 L165 265 L155 245 M210 280 L235 265 L245 245'/%3E%3C!-- Aerial roots --%3E%3Cpath d='M175 270 L172 310 L170 380 M225 270 L228 310 L230 380 M160 260 L158 300 L155 380 M240 260 L242 300 L245 380'/%3E%3C!-- Canopy --%3E%3Cpath d='M200 220 Q160 180 130 160 Q110 140 120 120 Q140 100 165 115 Q180 90 200 80 Q220 90 235 115 Q260 100 280 120 Q290 140 270 160 Q240 180 200 220Z'/%3E%3C!-- Leaves --%3E%3Cpath d='M140 150 Q130 140 135 130 Q145 125 150 135 Q148 145 140 150Z M170 120 Q165 108 172 102 Q182 100 184 110 Q180 120 170 120Z M200 90 Q196 78 204 74 Q214 73 215 83 Q210 92 200 90Z M230 120 Q232 108 240 104 Q250 105 250 115 Q244 122 230 120Z M260 150 Q265 138 272 138 Q278 143 274 152 Q268 157 260 150Z'/%3E%3C!-- Sacred lotuses at base --%3E%3Cpath d='M100 370 Q110 355 120 360 Q115 375 100 370Z M100 370 Q105 352 115 356 Q117 370 100 370Z M300 370 Q290 355 280 360 Q285 375 300 370Z M300 370 Q295 352 285 356 Q283 370 300 370Z'/%3E%3C!-- Decorative border vines --%3E%3Cpath d='M20 20 Q40 30 30 50 Q50 40 60 60 Q80 50 70 70 Q90 60 100 80'/%3E%3Cpath d='M380 20 Q360 30 370 50 Q350 40 340 60 Q320 50 330 70 Q310 60 300 80'/%3E%3Cpath d='M20 380 Q40 370 30 350 Q50 360 60 340 Q80 350 70 330 Q90 340 100 320'/%3E%3Cpath d='M380 380 Q360 370 370 350 Q350 360 340 340 Q320 350 330 330 Q310 340 300 320'/%3E%3C!-- Om symbol suggestion in center top --%3E%3Ccircle cx='200' cy='40' r='15' stroke-width='0.6'/%3E%3Cpath d='M190 40 Q195 32 203 35 Q208 38 205 44 Q200 48 196 46 Q200 50 205 52' stroke-width='0.8'/%3E%3Cpath d='M193 46 Q197 50 194 54' stroke-width='0.8'/%3E%3Cpath d='M188 36 Q186 30 190 28' stroke-width='0.8'/%3E%3C/g%3E%3C/svg%3E");
-    background-repeat: repeat;
-    background-size: 400px 400px;
-  }
-
-  /* Saffron CTA button */
-  .btn-saffron {
-    background: #FABE1A;
-    color: #734129;
-    font-weight: 700;
+  /* Elegant Divider */
+  .equestrian-divider {
     border: none;
-    transition: all 0.2s ease;
-    box-shadow: 2px 2px 6px #C5B5A5, -1px -1px 3px #F8F3ED;
-  }
-  .btn-saffron:hover {
-    background: #f5b400;
-    box-shadow: 3px 3px 10px #C5B5A5, -1px -1px 4px #F8F3ED;
-    transform: translateY(-1px);
-  }
-  .btn-saffron:active {
-    box-shadow: inset 2px 2px 5px #C5B5A5;
-    transform: translateY(0);
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(182, 165, 143, 0.3) 30%, rgba(182, 165, 143, 0.3) 70%, transparent);
   }
 
-  /* Outlined saffron button */
-  .btn-saffron-outline {
+  /* Primary Button - Cream/Sand */
+  .btn-primary-equestrian {
+    background: #D8C7AE;
+    color: #8B4513;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.875rem 2rem;
+    border: none;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+  }
+  .btn-primary-equestrian:hover {
+    background: #F3EBDD;
+    transform: translateY(-2px);
+  }
+
+  /* Secondary Button - Transparent with border */
+  .btn-secondary-equestrian {
     background: transparent;
-    color: #734129;
-    font-weight: 700;
-    border: 2px solid #FABE1A;
-    transition: all 0.2s ease;
+    color: #F3EBDD;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.875rem 2rem;
+    border: 1px solid #D8C7AE;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
   }
-  .btn-saffron-outline:hover {
-    background: #FABE1A;
-    color: #734129;
-  }
-
-  /* Carved divider */
-  .divider-carved {
-    border: none;
-    height: 2px;
-    background: linear-gradient(to right, transparent, #C5B5A5 20%, #D4C4B4 50%, #C5B5A5 80%, transparent);
-    box-shadow: 0 1px 0 #F8F3ED;
+  .btn-secondary-equestrian:hover {
+    background: rgba(216, 199, 174, 0.1);
+    border-color: #F3EBDD;
   }
 
-  /* Text styles */
-  .heading-temple {
-    color: #C8860A;
-    font-family: 'Cinzel', 'Georgia', serif;
-    letter-spacing: 0.06em;
-  }
-  .text-body {
-    color: #F5E6C8;
-    font-family: 'Lato', sans-serif;
-    font-weight: 400;
+  /* Bronze Accent (very selective ~5%) */
+  .bronze-accent {
+    color: #9A7650;
   }
 
-  /* Icon brass finish */
-  .icon-brass {
-    color: #734129;
-    filter: drop-shadow(0 1px 1px #C5B5A5);
+  /* Eyebrow Label */
+  .eyebrow-label {
+    font-size: 0.6875rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #B6A58F;
+    font-family: 'Inter', sans-serif;
   }
 
-  /* Legacy dark utilities (for admin panel) */
+  /* Editorial Heading */
+  .heading-editorial {
+    font-family: 'Playfair Display', 'Georgia', serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: #F3EBDD;
+    line-height: 1.2;
+  }
+
+  /* Image Zoom on Hover */
+  .image-zoom-wrapper {
+    overflow: hidden;
+  }
+  .image-zoom-wrapper img {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .image-zoom-wrapper:hover img {
+    transform: scale(1.08);
+  }
+
+  /* Smooth Reveal Animation */
+  .reveal-up {
+    animation: revealUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  @keyframes revealUp {
+    from {
+      opacity: 0;
+      transform: translateY(32px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Legacy utilities (for admin panel) */
   .divine-gradient  { background: linear-gradient(135deg, #1A0A02, #3D1F0A); }
   .gold-gradient    { background: linear-gradient(135deg, #C8860A, #E5A020); }
   .text-brown       { color: #6B2D0F; }

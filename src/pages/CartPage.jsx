@@ -51,7 +51,7 @@ export default function CartPage() {
   useEffect(() => {
     if (items.length === 0) return
     const timer = setTimeout(() => {
-      const phone = "918639006849"
+      const phone = "919994441363"
       const msg = encodeURIComponent("Hi! You have items waiting in your cart at Rudhraksha Store ?? Complete your order before they sell out!")
       toast(
         (t) => (

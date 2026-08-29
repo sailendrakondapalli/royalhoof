@@ -1,6 +1,10 @@
-import { Navigate } from "react-router-dom"
-import { useAuthStore } from "../store/authStore"
+// AdminRoute - Allows direct access to admin pages without authentication
+export default function AdminRoute({ children }) {
+  // No authentication check - direct access allowed
+  return children
+}
 
+// Keep admin email list for potential future use
 const ADMIN_EMAILS = [
   "sailendrakondapalli@gmail.com",
   "adduriaswani@gmail.com",
@@ -17,21 +21,4 @@ const ADMIN_EMAILS = [
 export const isAdmin = (user) => {
   if (!user) return false
   return ADMIN_EMAILS.includes(user.email?.toLowerCase())
-}
-
-export default function AdminRoute({ children }) {
-  const { user, loading } = useAuthStore()
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-[#D97706] border-t-transparent rounded-full animate-spin" />
-      </div>
-    )
-  }
-
-  if (!user) return <Navigate to="/login" replace />
-  if (!isAdmin(user)) return <Navigate to="/" replace />
-
-  return children
 }

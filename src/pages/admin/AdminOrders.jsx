@@ -379,7 +379,7 @@ export default function AdminOrders() {
       const addr = (() => { try { return typeof order.address === "object" ? order.address : JSON.parse(order.address) } catch { return {} } })()
       const phone = addr.phone?.replace(/\D/g, "")
       if (phone) {
-        const msg = encodeURIComponent(`*Order Cancelled - Rudhraksha Store*\n\nHi ${addr.full_name||"Customer"},\n\nYour order *${order.display_order_id||"#"+String(order.id).slice(-6).toUpperCase()}* has been cancelled.\nAmount: ₹${order.total_amount?.toLocaleString("en-IN")}\n\nIf you paid, your refund will be processed within 5-7 business days.\n\nFor queries: +91 8639006849\n\nRudhraksha Store`)
+        const msg = encodeURIComponent(`*Order Cancelled - Rudhraksha Store*\n\nHi ${addr.full_name||"Customer"},\n\nYour order *${order.display_order_id||"#"+String(order.id).slice(-6).toUpperCase()}* has been cancelled.\nAmount: ₹${order.total_amount?.toLocaleString("en-IN")}\n\nIf you paid, your refund will be processed within 5-7 business days.\n\nFor queries: +91 99944 41363\n\nRudhraksha Store`)
         window.open(`https://wa.me/91${phone}?text=${msg}`, "_blank")
       }
     }
@@ -405,7 +405,7 @@ export default function AdminOrders() {
       const addr = (() => { try { return typeof order.address === "object" ? order.address : JSON.parse(order.address) } catch { return {} } })()
       const phone = addr.phone?.replace(/\D/g, "")
       if (phone) {
-        const msg = encodeURIComponent(`*Order Rejected - Rudhraksha Store*\n\nHi ${addr.full_name||"Customer"},\n\nYour order *${order.display_order_id||"#"+String(order.id).slice(-6).toUpperCase()}* has been rejected due to payment verification failure.\nAmount: ₹${order.total_amount?.toLocaleString("en-IN")}\n\nContact us at +91 8639006849.\n\nRudhraksha Store`)
+        const msg = encodeURIComponent(`*Order Rejected - Rudhraksha Store*\n\nHi ${addr.full_name||"Customer"},\n\nYour order *${order.display_order_id||"#"+String(order.id).slice(-6).toUpperCase()}* has been rejected due to payment verification failure.\nAmount: ₹${order.total_amount?.toLocaleString("en-IN")}\n\nContact us at +91 99944 41363.\n\nRudhraksha Store`)
         window.open(`https://wa.me/91${phone}?text=${msg}`, "_blank")
       }
     }
