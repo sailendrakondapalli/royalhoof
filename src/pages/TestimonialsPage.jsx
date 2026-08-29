@@ -1,58 +1,39 @@
+import { useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Star, Quote } from 'lucide-react'
-
-const TESTIMONIALS = [
-  {
-    id: 1,
-    name: 'Rajesh Kumar',
-    role: 'Member since 2022',
-    rating: 5,
-    text: 'Excellent training facilities and professional instructors. My daughter has improved tremendously in just 6 months. Highly recommended!',
-    image: 'https://ui-avatars.com/api/?name=Rajesh+Kumar&background=9A7650&color=fff'
-  },
-  {
-    id: 2,
-    name: 'Priya Sharma',
-    role: 'Premium Member',
-    rating: 5,
-    text: 'The academy provides world-class coaching and infrastructure. The staff is very supportive and the environment is perfect for learning.',
-    image: 'https://ui-avatars.com/api/?name=Priya+Sharma&background=9A7650&color=fff'
-  },
-  {
-    id: 3,
-    name: 'Arun Patel',
-    role: 'Parent',
-    rating: 5,
-    text: 'Amazing experience! My son loves attending the sessions. The coaches are patient and skilled. Great value for money.',
-    image: 'https://ui-avatars.com/api/?name=Arun+Patel&background=9A7650&color=fff'
-  },
-  {
-    id: 4,
-    name: 'Sneha Reddy',
-    role: 'Member since 2021',
-    rating: 5,
-    text: 'Professional setup with excellent training programs. The academy has helped me achieve my goals and build confidence.',
-    image: 'https://ui-avatars.com/api/?name=Sneha+Reddy&background=9A7650&color=fff'
-  },
-  {
-    id: 5,
-    name: 'Vikram Singh',
-    role: 'Premium Member',
-    rating: 5,
-    text: 'Outstanding facilities and dedicated coaches. The personalized attention and systematic training approach makes all the difference.',
-    image: 'https://ui-avatars.com/api/?name=Vikram+Singh&background=9A7650&color=fff'
-  },
-  {
-    id: 6,
-    name: 'Meera Iyer',
-    role: 'Member since 2023',
-    rating: 5,
-    text: 'Best academy in the city! Clean, safe environment with top-notch equipment. My kids absolutely love it here.',
-    image: 'https://ui-avatars.com/api/?name=Meera+Iyer&background=9A7650&color=fff'
-  },
-]
+import { supabase } from '../lib/supabase'
 
 export default function TestimonialsPage() {
+  const [testimonials, setTestimonials] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('testimonials')
+          .select('*')
+          .eq('is_approved', true)
+          .eq('is_active', true)
+          .order('display_order', { ascending: true })
+          .order('created_at', { ascending: false })
+        
+        if (error) throw error
+        setTestimonials(data || [])
+      } catch (error) {
+        console.error('Error fetching testimonials:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchTestimonials()
+  }, [])
+
+  const averageRating = testimonials.length > 0 
+    ? (testimonials.reduce((sum, t) => sum + t.rating, 0) / testimonials.length).toFixed(1)
+    : 5.0
+
   return (
     <>
       <Helmet>
@@ -78,9 +59,9 @@ export default function TestimonialsPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
             {[
               { value: '500+', label: 'Happy Members' },
-              { value: '4.9/5', label: 'Average Rating' },
+              { value: `${averageRating}/5`, label: 'Average Rating' },
               { value: '95%', label: 'Satisfaction Rate' },
-              { value: '200+', label: 'Reviews' },
+              { value: `${testimonials.length}+`, label: 'Reviews' },
             ].map((stat, i) => (
               <div key={i} className="equestrian-card rounded-lg p-6 text-center">
                 <p className="heading-editorial text-3xl mb-2 text-[#9A7650]">{stat.value}</p>
@@ -90,41 +71,75 @@ export default function TestimonialsPage() {
           </div>
 
           {/* Testimonials Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {TESTIMONIALS.map(testimonial => (
-              <div key={testimonial.id} className="equestrian-card rounded-lg p-6 relative">
-                {/* Quote Icon */}
-                <div className="absolute top-6 right-6 opacity-10">
-                  <Quote size={48} className="text-[#9A7650]" />
-                </div>
-
-                {/* Rating */}
-                <div className="flex gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} size={16} fill="#9A7650" stroke="none" />
-                  ))}
-                </div>
-
-                {/* Review Text */}
-                <p className="text-[#D8C7AE] text-sm leading-relaxed mb-6">
-                  "{testimonial.text}"
-                </p>
-
-                {/* Author */}
-                <div className="flex items-center gap-3 pt-4 border-t border-[#3A3836]">
-                  <img 
-                    src={testimonial.image} 
-                    alt={testimonial.name}
-                    className="w-12 h-12 rounded-full"
-                  />
-                  <div>
-                    <p className="text-[#F3EBDD] font-medium">{testimonial.name}</p>
-                    <p className="text-[#B6A58F] text-xs">{testimonial.role}</p>
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+              {[1, 2, 3, 4, 5, 6].map(i => (
+                <div key={i} className="equestrian-card rounded-lg p-6 animate-pulse">
+                  <div className="flex gap-1 mb-4">
+                    {[1, 2, 3, 4, 5].map(j => (
+                      <div key={j} className="w-4 h-4 bg-[#3A3836] rounded-sm" />
+                    ))}
+                  </div>
+                  <div className="space-y-2 mb-6">
+                    <div className="h-4 bg-[#3A3836] rounded" />
+                    <div className="h-4 bg-[#3A3836] rounded w-5/6" />
+                    <div className="h-4 bg-[#3A3836] rounded w-4/6" />
+                  </div>
+                  <div className="flex items-center gap-3 pt-4 border-t border-[#3A3836]">
+                    <div className="w-12 h-12 bg-[#3A3836] rounded-full" />
+                    <div className="space-y-1">
+                      <div className="h-4 bg-[#3A3836] rounded w-20" />
+                      <div className="h-3 bg-[#3A3836] rounded w-16" />
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : testimonials.length === 0 ? (
+            <div className="text-center py-16">
+              <p className="text-[#D8C7AE] text-lg mb-4">No testimonials available yet.</p>
+              <p className="text-[#B6A58F] text-sm">Check back soon for member reviews!</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+              {testimonials.map(testimonial => (
+                <div key={testimonial.id} className="equestrian-card rounded-lg p-6 relative">
+                  {/* Quote Icon */}
+                  <div className="absolute top-6 right-6 opacity-10">
+                    <Quote size={48} className="text-[#9A7650]" />
+                  </div>
+
+                  {/* Rating */}
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} size={16} fill="#9A7650" stroke="none" />
+                    ))}
+                  </div>
+
+                  {/* Review Text */}
+                  <p className="text-[#D8C7AE] text-sm leading-relaxed mb-6">
+                    "{testimonial.review}"
+                  </p>
+
+                  {/* Author */}
+                  <div className="flex items-center gap-3 pt-4 border-t border-[#3A3836]">
+                    <img 
+                      src={testimonial.image_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonial.name)}&background=9A7650&color=fff`}
+                      alt={testimonial.name}
+                      className="w-12 h-12 rounded-full"
+                      onError={(e) => {
+                        e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonial.name)}&background=9A7650&color=fff`
+                      }}
+                    />
+                    <div>
+                      <p className="text-[#F3EBDD] font-medium">{testimonial.name}</p>
+                      {testimonial.role && <p className="text-[#B6A58F] text-xs">{testimonial.role}</p>}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* CTA Section */}
           <div className="mt-16 text-center equestrian-card rounded-lg p-10">

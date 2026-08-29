@@ -29,7 +29,7 @@ function StarRating({ value, onChange, size = 20 }) {
 
 function ReviewCard({ review, currentUserId, onEdit, onDelete }) {
   const isOwn = review.user_id === currentUserId
-  const initials = (review.user_name || "U").slice(0, 2).toUpperCase()
+  const initials = (review.name || "U").slice(0, 2).toUpperCase()
 
   return (
     <motion.div
@@ -42,7 +42,7 @@ function ReviewCard({ review, currentUserId, onEdit, onDelete }) {
             {initials}
           </div>
           <div>
-            <p className="text-white text-sm font-semibold">{review.user_name || "Customer"}</p>
+            <p className="text-white text-sm font-semibold">{review.name || "Customer"}</p>
             <p className="text-white/60 text-xs">{new Date(review.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</p>
           </div>
         </div>
@@ -56,7 +56,7 @@ function ReviewCard({ review, currentUserId, onEdit, onDelete }) {
           )}
         </div>
       </div>
-      <p className="text-[#DDB87A] text-sm mt-3 leading-relaxed">{review.comment}</p>
+      <p className="text-[#DDB87A] text-sm mt-3 leading-relaxed">{review.review}</p>
     </motion.div>
   )
 }
@@ -78,10 +78,11 @@ export default function ReviewsSection() {
   const avgRating = reviews.length ? (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1) : null
 
   useEffect(() => {
-    // Only fetch approved reviews for public display
-    supabase.from("reviews")
+    // Only fetch approved testimonials for public display
+    supabase.from("testimonials")
       .select("*")
       .eq("is_approved", true)
+      .eq("is_active", true)
       .order("created_at", { ascending: false })
       .then(({ data, error }) => { 
         if (error) {
@@ -117,8 +118,8 @@ export default function ReviewsSection() {
       }
       
       if (editingId) {
-        const { data, error } = await supabase.from("reviews")
-          .update({ rating, comment: comment.trim() })
+        const { data, error } = await supabase.from("testimonials")
+          .update({ rating, review: comment.trim() })
           .eq("id", editingId).select().single()
         if (error) throw error
         setReviews(p => p.map(r => r.id === editingId ? data : r))
@@ -126,10 +127,12 @@ export default function ReviewsSection() {
       } else {
         const reviewData = {
           user_id: userId,
-          user_name: userName,
+          name: userName,
           rating,
-          comment: comment.trim(),
-          is_approved: false // All reviews start as unapproved for admin moderation
+          review: comment.trim(),
+          is_approved: false, // All reviews start as unapproved for admin moderation
+          is_active: true,
+          display_order: 0
         }
         
         // Add email for anonymous users
@@ -137,7 +140,7 @@ export default function ReviewsSection() {
           reviewData.guest_email = guestEmail.trim()
         }
         
-        const { data, error } = await supabase.from("reviews")
+        const { data, error } = await supabase.from("testimonials")
           .insert(reviewData)
           .select().single()
         if (error) throw error
@@ -164,14 +167,14 @@ export default function ReviewsSection() {
   const handleEdit = (review) => {
     setEditingId(review.id)
     setRating(review.rating)
-    setComment(review.comment)
+    setComment(review.review)
     setShowForm(true)
     setTimeout(() => document.getElementById("review-form")?.scrollIntoView({ behavior: "smooth", block: "center" }), 100)
   }
 
   const handleDelete = async (id) => {
     if (!confirm("Delete your review?")) return
-    const { error } = await supabase.from("reviews").delete().eq("id", id)
+    const { error } = await supabase.from("testimonials").delete().eq("id", id)
     if (!error) { setReviews(p => p.filter(r => r.id !== id)); toast.success("Review deleted") }
     else toast.error("Failed to delete")
   }
