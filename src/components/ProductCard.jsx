@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom'
+﻿import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Heart, ShoppingCart, ArrowRight, CheckCircle, MapPin, Sparkles } from 'lucide-react'
 import { useAuthStore } from '../store/authStore'
@@ -8,7 +8,7 @@ import { formatINR } from '../utils/format'
 import toast from 'react-hot-toast'
 
 const isVideo = (url) => url && /\.(mp4|mov|webm|ogg)(\?|$)/i.test(url)
-const FALLBACK_IMG = '/rudraksha-fallback.webp'
+const FALLBACK_IMG = '/Horse Riding-fallback.webp'
 
 function TagBadges({ tags }) {
   if (!tags?.length) return null

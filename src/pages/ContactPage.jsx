@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async'
 import toast from 'react-hot-toast'
 import { supabase } from '../lib/supabase'
 
-const WHATSAPP_NUMBER = "919994441363"
+const WHATSAPP_NUMBER = "919043700776"
 
 export default function ContactPage() {
   const [name, setName] = useState("")
@@ -30,147 +30,420 @@ export default function ContactPage() {
 
     setSubmitting(true)
     try {
-      // Save to database
       const { error } = await supabase
         .from('enquiries')
-        .insert([
-          {
-            name: name.trim(),
-            email: email.trim() || null,
-            phone: phone.trim(),
-            message: message.trim(),
-            enquiry_type: 'general',
-            status: 'new'
-          }
-        ])
+        .insert([{
+          name: name.trim(),
+          email: email.trim() || null,
+          phone: phone.trim(),
+          message: message.trim(),
+          enquiry_type: 'general',
+          status: 'new'
+        }])
 
       if (error) throw error
 
-      // Show success message
-      toast.success('Your message has been sent successfully! We will contact you soon.')
-      
-      // Also open WhatsApp for immediate contact
-      const text = `Hi Rudhraksha Store! 👋\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`
+      toast.success('Message sent! We will get back to you soon.')
+
+      const text = `Hi Royal Hoof! 🐴\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank")
 
-      // Reset form
-      setName("")
-      setEmail("")
-      setPhone("")
-      setMessage("")
-      
-    } catch (error) {
-      console.error('Error submitting contact form:', error)
-      toast.error('Failed to send message. Please try again or contact us directly via WhatsApp.')
-      
-      // Fallback to WhatsApp only
-      const text = `Hi Rudhraksha Store! 👋\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`
+      setName(""); setEmail(""); setPhone(""); setMessage("")
+    } catch (err) {
+      console.error('Error submitting contact form:', err)
+      toast.error('Could not send message. Redirecting to WhatsApp.')
+      const text = `Hi Royal Hoof! 🐴\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank")
     } finally {
       setSubmitting(false)
     }
   }
 
+  const contactInfo = [
+    {
+      icon: <Phone size={20} />,
+      label: 'Phone / WhatsApp',
+      value: '+91 90437 00776',
+      href: 'tel:+919043700776',
+    },
+    {
+      icon: <Mail size={20} />,
+      label: 'Website',
+      value: 'www.royalhoof.com',
+      href: 'https://www.royalhoof.com',
+    },
+    {
+      icon: <Clock size={20} />,
+      label: 'Hours',
+      value: 'Mon – Sun, 6:00 am – 8:00 pm',
+      href: null,
+    },
+    {
+      icon: <MapPin size={20} />,
+      label: 'Address',
+      value: 'GIRI FARMS, Uniworld City, Aspen Greens, Nallambakkam, Tamil Nadu',
+      href: 'https://maps.google.com/?q=Nallambakkam,Tamil+Nadu',
+    },
+  ]
+
+  const inputClass = `
+    w-full rounded-sm px-4 py-3 text-sm text-[#F3EBDD]
+    placeholder-[#F3EBDD]/30 focus:outline-none transition-all duration-200
+  `
+  const inputStyle = {
+    background: "rgba(255,255,255,0.06)",
+    border: "1px solid rgba(255,255,255,0.12)",
+    fontFamily: "'Inter', sans-serif",
+  }
+  const inputFocusStyle = {
+    borderColor: "rgba(216,199,174,0.5)",
+  }
+
   return (
     <>
       <Helmet>
-        <title>Contact Us - Rudhraksha Store</title>
-        <meta name="description" content="Get in touch with us. We'd love to hear from you and answer any questions." />
+        <title>Contact Us – Royal Hoof Horse Riding Academy</title>
+        <meta name="description" content="Contact Royal Hoof Horse Riding Academy. Located at GIRI FARMS, Nallambakkam, Tamil Nadu. Call us at +91 90437 00776." />
       </Helmet>
 
-      <div className="max-w-3xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold text-[#1C1006] mb-2" style={{ fontFamily: 'Georgia, serif' }}>
-        <span style={{ color: "#DDD4CF" }}>Contact</span> <span style={{ color: "#8B4938", fontStyle: "italic" }}>Us</span>
-      </h1>
-      <p className="text-[#4B3420] mb-10">We'd love to hear from you. Reach out anytime.</p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
-        {[
-          { icon: <Mail size={20} />, label: 'Email', value: 'sivasri3545@gmail.com' },
-          { icon: <Phone size={20} />, label: 'Phone / WhatsApp', value: '+91 99944 41363' },
-          { icon: <Clock size={20} />, label: 'Hours', value: 'Mon–Sun, 9:00am–9:00pm IST' },
-          { icon: <MapPin size={20} />, label: 'Location', value: 'India' },
-        ].map((c, i) => (
-          <div key={i} className="bg-white border border-[#E5D8C8] rounded-xl p-5 flex items-start gap-4 shadow-sm">
-            <div className="text-[#5D3A1A] mt-0.5">{c.icon}</div>
+      {/* Page wrapper — dark theme matching the rest of the site */}
+      <div style={{ background: "#1A1714", minHeight: "100vh" }}>
+
+        {/* Hero banner */}
+        <div style={{
+          background: "linear-gradient(to bottom, #2C2C2C, #1A1714)",
+          padding: "60px 24px 48px",
+          textAlign: "center",
+          borderBottom: "1px solid rgba(255,255,255,0.06)",
+        }}>
+          <p style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: "0.75rem",
+            letterSpacing: "0.25em",
+            textTransform: "uppercase",
+            color: "#D8C7AE",
+            marginBottom: "12px",
+          }}>
+            GET IN TOUCH
+          </p>
+          <h1 style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: "clamp(2rem, 5vw, 3.25rem)",
+            fontWeight: 600,
+            color: "#F3EBDD",
+            lineHeight: 1.15,
+            marginBottom: "16px",
+          }}>
+            Contact Us
+          </h1>
+          <p style={{
+            color: "#B6A58F",
+            fontSize: "1rem",
+            maxWidth: "480px",
+            margin: "0 auto",
+            fontFamily: "'Inter', sans-serif",
+            lineHeight: 1.6,
+          }}>
+            Reach out to Royal Hoof Horse Riding Academy. We're happy to answer any questions about our packages, events, or riding sessions.
+          </p>
+        </div>
+
+        {/* Main content */}
+        <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "48px 24px 80px" }}>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px" }} className="contact-grid">
+
+            {/* LEFT — Info cards */}
             <div>
-              <p className="text-[#8B6A4A] text-xs mb-1">{c.label}</p>
-              <p className="text-[#1C1006] text-sm font-medium">{c.value}</p>
+              <h2 style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "1.375rem",
+                fontWeight: 600,
+                color: "#DDD4CF",
+                marginBottom: "24px",
+                letterSpacing: "0.02em",
+              }}>
+                Our Details
+              </h2>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                {contactInfo.map((item, i) => (
+                  <div key={i} style={{
+                    background: "rgba(255,255,255,0.04)",
+                    border: "1px solid rgba(255,255,255,0.08)",
+                    borderRadius: "6px",
+                    padding: "18px 20px",
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: "16px",
+                  }}>
+                    <div style={{ color: "#D8C7AE", flexShrink: 0, marginTop: "2px" }}>
+                      {item.icon}
+                    </div>
+                    <div>
+                      <p style={{
+                        color: "#B6A58F",
+                        fontSize: "0.6875rem",
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                        marginBottom: "4px",
+                        fontFamily: "'Inter', sans-serif",
+                      }}>
+                        {item.label}
+                      </p>
+                      {item.href ? (
+                        <a href={item.href} target={item.href.startsWith('http') ? "_blank" : undefined}
+                          rel="noopener noreferrer"
+                          style={{
+                            color: "#F3EBDD",
+                            fontSize: "0.9375rem",
+                            fontFamily: "'Inter', sans-serif",
+                            textDecoration: "none",
+                            lineHeight: 1.5,
+                          }}
+                          onMouseEnter={e => e.currentTarget.style.color = "#D8C7AE"}
+                          onMouseLeave={e => e.currentTarget.style.color = "#F3EBDD"}
+                        >
+                          {item.value}
+                        </a>
+                      ) : (
+                        <p style={{
+                          color: "#F3EBDD",
+                          fontSize: "0.9375rem",
+                          fontFamily: "'Inter', sans-serif",
+                          lineHeight: 1.5,
+                          margin: 0,
+                        }}>
+                          {item.value}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* WhatsApp CTA */}
+              <div style={{ marginTop: "28px" }}>
+                <a
+                  href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "10px",
+                    background: "#25D366",
+                    color: "#fff",
+                    padding: "12px 24px",
+                    borderRadius: "4px",
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "0.875rem",
+                    fontWeight: 600,
+                    textDecoration: "none",
+                    letterSpacing: "0.02em",
+                    transition: "background 0.2s",
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.background = "#1ebe5d"}
+                  onMouseLeave={e => e.currentTarget.style.background = "#25D366"}
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                  </svg>
+                  Chat on WhatsApp
+                </a>
+              </div>
             </div>
+
+            {/* RIGHT — Contact form */}
+            <div>
+              <h2 style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "1.375rem",
+                fontWeight: 600,
+                color: "#DDD4CF",
+                marginBottom: "24px",
+                letterSpacing: "0.02em",
+              }}>
+                Send a Message
+              </h2>
+
+              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                {/* Name */}
+                <div>
+                  <label style={{
+                    display: "block",
+                    color: "#B6A58F",
+                    fontSize: "0.75rem",
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    marginBottom: "6px",
+                    fontFamily: "'Inter', sans-serif",
+                  }}>
+                    Name *
+                  </label>
+                  <input
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    placeholder="Your full name"
+                    className={inputClass}
+                    style={inputStyle}
+                    onFocus={e => Object.assign(e.target.style, inputFocusStyle)}
+                    onBlur={e => Object.assign(e.target.style, inputStyle)}
+                  />
+                  {errors.name && <p style={{ color: "#f87171", fontSize: "0.75rem", marginTop: "4px" }}>{errors.name}</p>}
+                </div>
+
+                {/* Phone */}
+                <div>
+                  <label style={{
+                    display: "block",
+                    color: "#B6A58F",
+                    fontSize: "0.75rem",
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    marginBottom: "6px",
+                    fontFamily: "'Inter', sans-serif",
+                  }}>
+                    Phone *
+                  </label>
+                  <input
+                    type="tel"
+                    value={phone}
+                    onChange={e => setPhone(e.target.value)}
+                    placeholder="+91 XXXXX XXXXX"
+                    className={inputClass}
+                    style={inputStyle}
+                    onFocus={e => Object.assign(e.target.style, inputFocusStyle)}
+                    onBlur={e => Object.assign(e.target.style, inputStyle)}
+                  />
+                  {errors.phone && <p style={{ color: "#f87171", fontSize: "0.75rem", marginTop: "4px" }}>{errors.phone}</p>}
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label style={{
+                    display: "block",
+                    color: "#B6A58F",
+                    fontSize: "0.75rem",
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    marginBottom: "6px",
+                    fontFamily: "'Inter', sans-serif",
+                  }}>
+                    Email <span style={{ color: "#B6A58F", fontWeight: 400 }}>(optional)</span>
+                  </label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    placeholder="your@email.com"
+                    className={inputClass}
+                    style={inputStyle}
+                    onFocus={e => Object.assign(e.target.style, inputFocusStyle)}
+                    onBlur={e => Object.assign(e.target.style, inputStyle)}
+                  />
+                  {errors.email && <p style={{ color: "#f87171", fontSize: "0.75rem", marginTop: "4px" }}>{errors.email}</p>}
+                </div>
+
+                {/* Message */}
+                <div>
+                  <label style={{
+                    display: "block",
+                    color: "#B6A58F",
+                    fontSize: "0.75rem",
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    marginBottom: "6px",
+                    fontFamily: "'Inter', sans-serif",
+                  }}>
+                    Message *
+                  </label>
+                  <textarea
+                    rows={5}
+                    value={message}
+                    onChange={e => setMessage(e.target.value)}
+                    placeholder="How can we help you?"
+                    className={inputClass}
+                    style={{ ...inputStyle, resize: "none" }}
+                    onFocus={e => Object.assign(e.target.style, { ...inputStyle, ...inputFocusStyle, resize: "none" })}
+                    onBlur={e => Object.assign(e.target.style, { ...inputStyle, resize: "none" })}
+                  />
+                  {errors.message && <p style={{ color: "#f87171", fontSize: "0.75rem", marginTop: "4px" }}>{errors.message}</p>}
+                </div>
+
+                {/* Submit */}
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  style={{
+                    background: submitting ? "rgba(216,199,174,0.5)" : "#D8C7AE",
+                    color: "#171614",
+                    border: "none",
+                    borderRadius: "4px",
+                    padding: "13px 28px",
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "0.875rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.06em",
+                    textTransform: "uppercase",
+                    cursor: submitting ? "not-allowed" : "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "8px",
+                    transition: "background 0.2s",
+                    alignSelf: "flex-start",
+                  }}
+                  onMouseEnter={e => { if (!submitting) e.currentTarget.style.background = "#E5D4C1" }}
+                  onMouseLeave={e => { if (!submitting) e.currentTarget.style.background = "#D8C7AE" }}
+                >
+                  {submitting ? (
+                    <>
+                      <div style={{
+                        width: "16px", height: "16px",
+                        border: "2px solid #171614",
+                        borderTopColor: "transparent",
+                        borderRadius: "50%",
+                        animation: "spin 0.7s linear infinite",
+                      }} />
+                      Sending...
+                    </>
+                  ) : (
+                    "Send Message"
+                  )}
+                </button>
+              </form>
+            </div>
+
           </div>
-        ))}
+
+          {/* Google Maps embed */}
+          <div style={{
+            marginTop: "56px",
+            borderRadius: "6px",
+            overflow: "hidden",
+            border: "1px solid rgba(255,255,255,0.08)",
+          }}>
+            <iframe
+              title="Royal Hoof Location"
+              src="https://maps.google.com/maps?q=Nallambakkam,Tamil+Nadu,India&output=embed"
+              width="100%"
+              height="320"
+              style={{ display: "block", border: 0 }}
+              loading="lazy"
+              allowFullScreen
+            />
+          </div>
+
+        </div>
       </div>
 
-      {/* Social Links */}
-      <div className="flex items-center gap-4 mb-8">
-        <a href="https://wa.me/919994441363" target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-2 px-4 py-2 bg-[#25D366] text-white rounded-lg text-sm font-medium hover:bg-[#1ebe5d] transition-all">
-          <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-          </svg>
-          WhatsApp
-        </a>
-        <a href="https://www.instagram.com/rudhraksha.store" target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-all">
-          <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-          </svg>
-          Instagram
-        </a>
-      </div>
-
-      <div className="bg-white border border-[#E5D8C8] rounded-2xl p-6 shadow-sm">
-        <h2 className="text-[#1C1006] font-semibold mb-1">Send a Message</h2>
-        <p className="text-[#8B6A4A] text-xs mb-4">Submitting will open WhatsApp with your message pre-filled.</p>
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="text-xs text-[#4B3420] mb-1 block font-medium">Name *</label>
-              <input value={name} onChange={e => setName(e.target.value)} minLength={3}
-                className="w-full bg-[#FAFAFA] border border-[#E5D8C8] rounded-lg px-3 py-2.5 text-sm text-[#1C1006] focus:outline-none focus:border-[#5D3A1A]" placeholder="Your name (min 3 chars)" />
-              {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
-            </div>
-            <div>
-              <label className="text-xs text-[#4B3420] mb-1 block font-medium">Phone *</label>
-              <input 
-                type="tel" 
-                value={phone} 
-                onChange={e => setPhone(e.target.value)}
-                className="w-full bg-[#FAFAFA] border border-[#E5D8C8] rounded-lg px-3 py-2.5 text-sm text-[#1C1006] focus:outline-none focus:border-[#5D3A1A]" 
-                placeholder="Your phone number" 
-              />
-              {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
-            </div>
-            <div>
-              <label className="text-xs text-[#4B3420] mb-1 block font-medium">Email</label>
-              <input type="email" value={email} onChange={e => setEmail(e.target.value)}
-                className="w-full bg-[#FAFAFA] border border-[#E5D8C8] rounded-lg px-3 py-2.5 text-sm text-[#1C1006] focus:outline-none focus:border-[#5D3A1A]" placeholder="your@email.com" />
-              {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
-            </div>
-          </div>
-          <div>
-            <label className="text-xs text-[#4B3420] mb-1 block font-medium">Message *</label>
-            <textarea required rows={4} value={message} onChange={e => setMessage(e.target.value)}
-              className="w-full bg-[#FAFAFA] border border-[#E5D8C8] rounded-lg px-3 py-2.5 text-sm text-[#1C1006] focus:outline-none focus:border-[#5D3A1A] resize-none" placeholder="How can we help?" />
-            {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
-          </div>
-          <button type="submit" disabled={submitting} className="px-6 py-2.5 bg-[#25D366] text-white font-semibold rounded-lg hover:bg-[#1ebe5d] transition-all text-sm flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
-            {submitting ? (
-              <>
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                Sending...
-              </>
-            ) : (
-              <>
-                <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                </svg>
-                Send Message
-              </>
-            )}
-          </button>
-        </form>
-      </div>
-    </div>
+      <style>{`
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @media (max-width: 640px) {
+          .contact-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </>
   )
 }

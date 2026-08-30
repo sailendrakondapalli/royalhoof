@@ -4,7 +4,7 @@ import { Calendar, MapPin, Clock, Users } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { supabase } from '../lib/supabase'
 
-const WHATSAPP_NUMBER = "919994441363"
+const WHATSAPP_NUMBER = "919043700776"
 
 export default function EventsPage() {
   const [activeTab, setActiveTab] = useState('upcoming')

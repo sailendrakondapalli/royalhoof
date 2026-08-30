@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
 import { User, Mail, MapPin, Plus, Edit2, Trash2, Star, LogOut } from 'lucide-react'
@@ -152,7 +152,7 @@ export default function ProfilePage() {
   return (
     <>
       <Helmet>
-        <title>My Profile - Rudhraksha Store</title>
+        <title>My Profile - Royal Hoof</title>
       </Helmet>
       <div className="max-w-2xl mx-auto px-4 py-8 space-y-6">
         <h1 className="text-3xl font-bold text-[#1C1006]" style={{ fontFamily: 'Georgia, serif' }}>My Profile</h1>

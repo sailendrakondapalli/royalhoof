@@ -8,12 +8,12 @@ import { supabase } from "../../lib/supabase"
 import toast from "react-hot-toast"
 
 const STATUS_TABS = [
-  { key: "all",       label: "All",       color: "bg-gray-200 text-gray-700" },
-  { key: "pending",   label: "Pending",   color: "bg-yellow-100 text-yellow-700" },
-  { key: "confirmed", label: "Confirmed", color: "bg-blue-100 text-blue-700" },
-  { key: "shipping",  label: "Shipped",   color: "bg-orange-100 text-orange-700" },
-  { key: "delivered", label: "Delivered", color: "bg-green-100 text-green-700" },
-  { key: "cancelled", label: "Cancelled", color: "bg-red-100 text-red-700" },
+  { key: "all",       label: "All",       color: "bg-gray-700 text-gray-300" },
+  { key: "pending",   label: "Pending",   color: "bg-yellow-900/40 text-yellow-400" },
+  { key: "confirmed", label: "Confirmed", color: "bg-blue-900/40 text-blue-400" },
+  { key: "shipping",  label: "Shipped",   color: "bg-orange-900/40 text-orange-400" },
+  { key: "delivered", label: "Delivered", color: "bg-green-900/40 text-green-400" },
+  { key: "cancelled", label: "Cancelled", color: "bg-red-900/40 text-red-400" },
 ]
 
 const ORDER_STATUSES = [
@@ -379,7 +379,7 @@ export default function AdminOrders() {
       const addr = (() => { try { return typeof order.address === "object" ? order.address : JSON.parse(order.address) } catch { return {} } })()
       const phone = addr.phone?.replace(/\D/g, "")
       if (phone) {
-        const msg = encodeURIComponent(`*Order Cancelled - Rudhraksha Store*\n\nHi ${addr.full_name||"Customer"},\n\nYour order *${order.display_order_id||"#"+String(order.id).slice(-6).toUpperCase()}* has been cancelled.\nAmount: ₹${order.total_amount?.toLocaleString("en-IN")}\n\nIf you paid, your refund will be processed within 5-7 business days.\n\nFor queries: +91 99944 41363\n\nRudhraksha Store`)
+        const msg = encodeURIComponent(`*Order Cancelled - Royal Hoof*\n\nHi ${addr.full_name||"Customer"},\n\nYour order *${order.display_order_id||"#"+String(order.id).slice(-6).toUpperCase()}* has been cancelled.\nAmount: ₹${order.total_amount?.toLocaleString("en-IN")}\n\nIf you paid, your refund will be processed within 5-7 business days.\n\nFor queries: +91 90437 00776\n\nRoyal Hoof`)
         window.open(`https://wa.me/91${phone}?text=${msg}`, "_blank")
       }
     }
@@ -405,7 +405,7 @@ export default function AdminOrders() {
       const addr = (() => { try { return typeof order.address === "object" ? order.address : JSON.parse(order.address) } catch { return {} } })()
       const phone = addr.phone?.replace(/\D/g, "")
       if (phone) {
-        const msg = encodeURIComponent(`*Order Rejected - Rudhraksha Store*\n\nHi ${addr.full_name||"Customer"},\n\nYour order *${order.display_order_id||"#"+String(order.id).slice(-6).toUpperCase()}* has been rejected due to payment verification failure.\nAmount: ₹${order.total_amount?.toLocaleString("en-IN")}\n\nContact us at +91 99944 41363.\n\nRudhraksha Store`)
+        const msg = encodeURIComponent(`*Order Rejected - Royal Hoof*\n\nHi ${addr.full_name||"Customer"},\n\nYour order *${order.display_order_id||"#"+String(order.id).slice(-6).toUpperCase()}* has been rejected due to payment verification failure.\nAmount: ₹${order.total_amount?.toLocaleString("en-IN")}\n\nContact us at +91 90437 00776.\n\nRoyal Hoof`)
         window.open(`https://wa.me/91${phone}?text=${msg}`, "_blank")
       }
     }
@@ -414,7 +414,7 @@ export default function AdminOrders() {
   const notifyCustomer = (order, addr) => {
     const phone = addr.phone?.replace(/\D/g, "")
     if (!phone) { toast.error("No phone number"); return }
-    const msg = encodeURIComponent(`*Order Update - Rudhraksha Store*\n\nHi ${addr.full_name||"Customer"},\nOrder ${order.display_order_id||"#"+String(order.id).slice(-6).toUpperCase()} status: ${order.order_status||"confirmed"}\nAmount: ₹${order.total_amount?.toLocaleString("en-IN")}\n\nRudhraksha Store`)
+    const msg = encodeURIComponent(`*Order Update - Royal Hoof*\n\nHi ${addr.full_name||"Customer"},\nOrder ${order.display_order_id||"#"+String(order.id).slice(-6).toUpperCase()} status: ${order.order_status||"confirmed"}\nAmount: ₹${order.total_amount?.toLocaleString("en-IN")}\n\nRoyal Hoof`)
     window.open(`https://wa.me/91${phone}?text=${msg}`, "_blank")
   }
 
@@ -429,17 +429,17 @@ export default function AdminOrders() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#5D3A1A]" style={{ fontFamily: "Georgia, serif" }}>
+          <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.75rem", fontWeight: 700, color: "#F3EBDD" }}>
             {filterToday ? "Today's Orders" : "Orders"}
           </h1>
-          <p className="text-gray-500 text-sm mt-0.5">
+          <p style={{ color: "rgba(243,235,221,0.45)", fontSize: "0.875rem", marginTop: 2, fontFamily: "'Inter', sans-serif" }}>
             {filtered.length === localOrders.length
               ? `${localOrders.length} total orders`
               : `${filtered.length} of ${localOrders.length} orders`}
           </p>
         </div>
         <button onClick={handleRefresh} disabled={refreshing}
-          className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-sm text-gray-600 hover:border-gray-300 hover:bg-gray-50 transition-all disabled:opacity-50">
+          style={{ display: "flex", alignItems: "center", gap: 8, background: "rgba(255,255,255,0.06)", color: "rgba(243,235,221,0.7)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 5, padding: "8px 16px", cursor: "pointer", fontSize: "0.875rem", fontFamily: "'Inter', sans-serif" }}>
           <RefreshCw size={14} className={refreshing ? "animate-spin" : ""} />
           Refresh
         </button>
@@ -447,10 +447,10 @@ export default function AdminOrders() {
 
       {/* Search */}
       <div className="relative">
-        <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+        <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "rgba(243,235,221,0.3)" }} />
         <input value={search} onChange={e => { setSearch(e.target.value); setPage(1) }}
           placeholder="Search by name, phone, order ID..."
-          className="w-full bg-white border border-gray-200 rounded-lg pl-9 pr-4 py-2.5 text-sm text-[#1C1006] placeholder-gray-400 focus:outline-none focus:border-[#5D3A1A]" />
+          style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 5, paddingLeft: 36, paddingRight: 16, paddingTop: 10, paddingBottom: 10, fontSize: "0.875rem", color: "#F3EBDD", outline: "none", fontFamily: "'Inter', sans-serif", boxSizing: "border-box" }} />
       </div>
 
       {/* Status tabs */}
@@ -460,13 +460,16 @@ export default function AdminOrders() {
           const isActive = activeTab === tab.key
           return (
             <button key={tab.key} onClick={() => { setActiveTab(tab.key); setPage(1) }}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all border ${
-                isActive
-                  ? "bg-[#D97706] text-white border-[#D97706]"
-                  : "bg-white border-gray-200 text-gray-600 hover:border-[#D97706] hover:text-[#D97706]"
-              }`}>
+              style={{
+                display: "flex", alignItems: "center", gap: 6, padding: "6px 12px", borderRadius: 5,
+                fontSize: "0.8125rem", fontWeight: 500, cursor: "pointer", border: "1px solid",
+                background: isActive ? "#D8C7AE" : "transparent",
+                color: isActive ? "#171614" : "rgba(243,235,221,0.55)",
+                borderColor: isActive ? "#D8C7AE" : "rgba(255,255,255,0.1)",
+                fontFamily: "'Inter', sans-serif",
+              }}>
               {tab.label}
-              <span className={`px-1.5 py-0.5 rounded-full text-xs font-bold ${isActive ? "bg-white/30 text-white" : tab.color}`}>
+              <span style={{ padding: "1px 6px", borderRadius: 9999, fontSize: "0.6875rem", fontWeight: 700, background: isActive ? "rgba(23,22,20,0.2)" : "rgba(255,255,255,0.08)", color: isActive ? "#171614" : "rgba(243,235,221,0.6)" }}>
                 {count}
               </span>
             </button>
@@ -475,7 +478,7 @@ export default function AdminOrders() {
       </div>
 
       {/* Orders list */}
-      <div className="bg-white border border-gray-200 rounded-xl p-4">
+      <div style={{ background: "#242120", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, padding: 16 }}>
         {filtered.length === 0 ? (
           <p className="text-gray-400 text-sm text-center py-12">No orders found</p>
         ) : (

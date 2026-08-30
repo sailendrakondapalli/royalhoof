@@ -1,4 +1,4 @@
-// AdminRoute - Allows direct access to admin pages without authentication
+﻿// AdminRoute - Allows direct access to admin pages without authentication
 export default function AdminRoute({ children }) {
   // No authentication check - direct access allowed
   return children
@@ -9,11 +9,11 @@ const ADMIN_EMAILS = [
   "sailendrakondapalli@gmail.com",
   "adduriaswani@gmail.com",
   "susmithajewlaries@gmail.com",
-  "rudhraksha@gmail.com",
+  "info@royalhoof.com",
   "naveenreddygandluri51@gmail.com",
   "aswaniadduri11@gmail.com",
   "ssbmanogna@gmail.com",
-  "sivasri3545@gmail.com",
+  "info@royalhoof.com",
   "ashforkiro@gmail.com",
   "aswaniasshu11@gmail.com",
 ]

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
@@ -178,7 +178,7 @@ export default function OrdersPage() {
   return (
     <>
       <Helmet>
-        <title>My Orders - Rudhraksha Store</title>
+        <title>My Orders - Royal Hoof</title>
       </Helmet>
       <div className="max-w-2xl mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold text-[#1C1006] mb-6" style={{ fontFamily: 'Georgia, serif' }}>My Orders</h1>
@@ -210,7 +210,7 @@ export default function OrdersPage() {
                 <p className="text-[#4B3420] text-lg font-semibold mb-2">No orders yet</p>
                 <p className="text-[#8B6A4A] text-sm mb-6">Your sacred bead orders will appear here</p>
                 <Link to="/products" className="px-6 py-2.5 bg-[#5D3A1A] text-white rounded-lg text-sm font-semibold hover:bg-[#7A4E28] transition-all">
-                  Shop Rudraksha
+                  Shop Horse Riding
                 </Link>
               </>
             )}

@@ -1,10 +1,10 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import toast from 'react-hot-toast'
 import { Calendar, User, Mail, Phone, MessageSquare } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 
-const WHATSAPP_NUMBER = "919994441363"
+const WHATSAPP_NUMBER = "919043700776"
 
 export default function EnquiryPage() {
   const [activeForm, setActiveForm] = useState('enquiry') // enquiry or demo
@@ -354,7 +354,7 @@ export default function EnquiryPage() {
             <p className="text-sm">You can also reach us directly:</p>
             <p className="text-lg font-medium text-[#D8C7AE] mt-2">
               <Phone size={18} className="inline-block mr-2 mb-1" />
-              +91 99944 41363
+              +91 90437 00776
             </p>
           </div>
         </div>

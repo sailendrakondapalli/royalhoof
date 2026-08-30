@@ -2,7 +2,7 @@
 
 export const CATEGORIES = [
   "1 MUKHI", "2 MUKHI", "5 MUKHI", "7 MUKHI", "8 MUKHI",
-  "GAURI SHANKAR", "GANESH RUDRAKSHA", "RUDRAKSHA MALA", "BRACELET"
+  "GAURI SHANKAR", "GANESH Horse Riding", "Horse Riding MALA", "BRACELET"
 ]
 
 export const TAGS = ["certified", "nepal", "java", "rare", "premium"]

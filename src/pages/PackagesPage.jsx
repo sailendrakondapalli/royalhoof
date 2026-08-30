@@ -4,7 +4,7 @@ import { Check, Star } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { supabase } from '../lib/supabase'
 
-const WHATSAPP_NUMBER = "919994441363"
+const WHATSAPP_NUMBER = "919043700776"
 
 export default function PackagesPage() {
   const [activeTab, setActiveTab] = useState('adult') // adult or kids

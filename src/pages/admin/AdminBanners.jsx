@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react"
+﻿import { useState, useEffect, useRef } from "react"
 import { useAdminStore } from "../../store/adminStore"
 import { motion, AnimatePresence } from "framer-motion"
 import { Plus, Trash2, Edit2, Save, ChevronUp, ChevronDown, Loader2, ImagePlus, Image } from "lucide-react"
@@ -24,8 +24,8 @@ const LINK_OPTIONS = [
   { label: "7 Mukhi", value: "/products?category=7+Mukhi" },
   { label: "8 Mukhi", value: "/products?category=8+Mukhi" },
   { label: "Gauri Shankar", value: "/products?category=Gauri+Shankar" },
-  { label: "Ganesh Rudraksha", value: "/products?category=Ganesh+Rudraksha" },
-  { label: "Rudraksha Mala", value: "/products?category=Rudraksha+Mala" },
+  { label: "Ganesh Horse Riding", value: "/products?category=Ganesh+Horse Riding" },
+  { label: "Horse Riding Mala", value: "/products?category=Horse Riding+Mala" },
   { label: "Bracelet", value: "/products?category=Bracelet" },
   { label: "Certified Collection", value: "/products?tags=certified" },
   { label: "Nepal Origin", value: "/products?tags=nepal" },
@@ -138,7 +138,7 @@ function BannerForm({ initial, onSave, onCancel }) {
         </div>
         <div>
           <label className={lbl}>Title *</label>
-          <input value={form.title||""} onChange={e=>setForm(f=>({...f,title:e.target.value}))} placeholder="e.g. Certified Rudraksha" className={inp} />
+          <input value={form.title||""} onChange={e=>setForm(f=>({...f,title:e.target.value}))} placeholder="e.g. Certified Horse Riding" className={inp} />
         </div>
         <div>
           <label className={lbl}>Subtitle</label>

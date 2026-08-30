@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
@@ -82,7 +82,7 @@ export default function ProductDetailPage() {
       <div className="text-center py-20">
         <p className="text-[#4B3420] text-lg">Product not found</p>
         <button onClick={() => navigate('/products')} className="mt-4 px-6 py-2 bg-[#5D3A1A] text-white rounded-lg text-sm">
-          Browse Rudraksha
+          Browse Horse Riding
         </button>
       </div>
     )
@@ -90,7 +90,7 @@ export default function ProductDetailPage() {
 
   const images = Array.isArray(product.images) && product.images.length > 0
     ? product.images
-    : ['/rudraksha-fallback.webp']
+    : ['/Horse Riding-fallback.webp']
 
   const currentMedia = images[imgIdx]
   const isCurrentVideo = isVideoUrl(currentMedia)
@@ -111,14 +111,14 @@ export default function ProductDetailPage() {
   return (
     <>
       <Helmet>
-        <title>{product.name} – Buy Online | Rudhraksha Divines</title>
-        <meta name="description" content={`Buy authentic ${product.name} online. ${product.description ? product.description.slice(0, 140) : `Certified ${product.category} Rudraksha from Nepal & India.`} ₹${product.price}. Free delivery available.`} />
-        <meta name="keywords" content={`${product.name}, buy ${product.category}, authentic rudraksha, ${product.tags?.join(', ')}, rudraksha online india`} />
-        <link rel="canonical" href={`https://www.rudrakshadivines.com/products/${product.id}`} />
-        <meta property="og:title" content={`${product.name} – Rudhraksha Divines`} />
-        <meta property="og:description" content={product.description || `Authentic ${product.category} Rudraksha. Certified and sourced from Nepal & India.`} />
-        <meta property="og:image" content={product.images?.[0] || 'https://www.rudrakshadivines.com/og-image.png'} />
-        <meta property="og:url" content={`https://www.rudrakshadivines.com/products/${product.id}`} />
+        <title>{product.name} – Buy Online | Royal Hoof</title>
+        <meta name="description" content={`Buy authentic ${product.name} online. ${product.description ? product.description.slice(0, 140) : `Certified ${product.category} Horse Riding from Nepal & India.`} ₹${product.price}. Free delivery available.`} />
+        <meta name="keywords" content={`${product.name}, buy ${product.category}, authentic Horse Riding, ${product.tags?.join(', ')}, Horse Riding online india`} />
+        <link rel="canonical" href={`https://www.royalhoof.com/products/${product.id}`} />
+        <meta property="og:title" content={`${product.name} – Royal Hoof`} />
+        <meta property="og:description" content={product.description || `Authentic ${product.category} Horse Riding. Certified and sourced from Nepal & India.`} />
+        <meta property="og:image" content={product.images?.[0] || 'https://www.royalhoof.com/og-image.png'} />
+        <meta property="og:url" content={`https://www.royalhoof.com/products/${product.id}`} />
         <meta property="og:type" content="product" />
         <meta property="product:price:amount" content={String(product.price)} />
         <meta property="product:price:currency" content="INR" />
@@ -127,16 +127,16 @@ export default function ProductDetailPage() {
           "@type": "Product",
           "name": product.name,
           "image": product.images || [],
-          "description": product.description || `Authentic ${product.category} Rudraksha`,
+          "description": product.description || `Authentic ${product.category} Horse Riding`,
           "sku": product.custom_id || product.id,
-          "brand": { "@type": "Brand", "name": "Rudhraksha Divines" },
+          "brand": { "@type": "Brand", "name": "Royal Hoof" },
           "offers": {
             "@type": "Offer",
-            "url": `https://www.rudrakshadivines.com/products/${product.id}`,
+            "url": `https://www.royalhoof.com/products/${product.id}`,
             "priceCurrency": "INR",
             "price": product.price,
             "availability": product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-            "seller": { "@type": "Organization", "name": "Rudhraksha Divines" }
+            "seller": { "@type": "Organization", "name": "Royal Hoof" }
           },
           "aggregateRating": {
             "@type": "AggregateRating",
@@ -151,7 +151,7 @@ export default function ProductDetailPage() {
         <div className="flex items-center gap-2 text-xs text-[#DDB87A]/60 mb-6">
           <Link to="/" className="hover:text-[#C8860A] transition-colors">Home</Link>
           <span>/</span>
-          <Link to="/products" className="hover:text-[#C8860A] transition-colors">All Rudraksha</Link>
+          <Link to="/products" className="hover:text-[#C8860A] transition-colors">All Horse Riding</Link>
           <span>/</span>
           <Link to={`/products?category=${encodeURIComponent(product.category)}`} className="hover:text-[#C8860A] transition-colors">{product.category}</Link>
           <span>/</span>
@@ -169,7 +169,7 @@ export default function ProductDetailPage() {
                     <video src={currentMedia} autoPlay muted loop playsInline className="w-full h-full object-cover" />
                   ) : (
                     <img src={currentMedia} alt={product.name} className="w-full h-full object-cover"
-                      onError={e => { e.target.src = '/rudraksha-fallback.webp' }} />
+                      onError={e => { e.target.src = '/Horse Riding-fallback.webp' }} />
                   )}
                 </motion.div>
               </AnimatePresence>
@@ -197,7 +197,7 @@ export default function ProductDetailPage() {
                       <video src={img} muted playsInline className="w-full h-full object-cover bg-black" />
                     ) : (
                       <img src={img} alt="" className="w-full h-full object-cover"
-                        onError={e => { e.target.src = '/rudraksha-fallback.webp' }} />
+                        onError={e => { e.target.src = '/Horse Riding-fallback.webp' }} />
                     )}
                   </button>
                 ))}
@@ -333,7 +333,7 @@ export default function ProductDetailPage() {
                     ) : (
                       <img src={p.images?.[0]} alt={p.name} loading="lazy"
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        onError={e => { e.target.src = '/rudraksha-fallback.webp' }} />
+                        onError={e => { e.target.src = '/Horse Riding-fallback.webp' }} />
                     )}
                   </div>
                   <div className="p-3">

@@ -1,10 +1,10 @@
-import { useEffect, useState, useCallback } from "react"
+﻿import { useEffect, useState, useCallback } from "react"
 import { Users, ShoppingBag, DollarSign, Search, Heart, ShoppingCart, ChevronDown, ChevronUp, RefreshCw } from "lucide-react"
 import { useAdminStore } from "../../store/adminStore"
 import { formatINR } from "../../utils/format"
 import { supabase } from "../../lib/supabase"
 
-const ADMIN_WHATSAPP = "919994441363"
+const ADMIN_WHATSAPP = "919043700776"
 
 export default function AdminUsers() {
   const { orders, loadOrders } = useAdminStore()
@@ -117,12 +117,12 @@ export default function AdminUsers() {
     let msg = ""
     if (type === "cart" && details?.cart?.length) {
       const items = details.cart.map(i => `${i.products?.name} (₹${i.products?.price})`).join(", ")
-      msg = encodeURIComponent(`Hi ${user.name}! 👋\n\nYou have items in your cart at Rudhraksha Store:\n${items}\n\nComplete your purchase now: https://www.rudhraksha.in/cart\n\n✨ Rudhraksha Store`)
+      msg = encodeURIComponent(`Hi ${user.name}! 👋\n\nYou have items in your cart at Royal Hoof:\n${items}\n\nComplete your purchase now: https://www.royalhoof.com/cart\n\n✨ Royal Hoof`)
     } else if (type === "wishlist" && details?.wishlist?.length) {
       const items = details.wishlist.map(i => `${i.products?.name} (₹${i.products?.price})`).join(", ")
-      msg = encodeURIComponent(`Hi ${user.name}! 👋\n\nYour wishlist at Rudhraksha Store:\n${items}\n\nShop now before they sell out: https://www.rudhraksha.in/wishlist\n\n✨ Rudhraksha Store`)
+      msg = encodeURIComponent(`Hi ${user.name}! 👋\n\nYour wishlist at Royal Hoof:\n${items}\n\nShop now before they sell out: https://www.royalhoof.com/wishlist\n\n✨ Royal Hoof`)
     } else {
-      msg = encodeURIComponent(`Hi ${user.name}! 👋\n\nCheck out our latest Rudraksha collection at Rudhraksha Store!\nhttps://www.rudhraksha.in\n\n🔱 Rudhraksha Store`)
+      msg = encodeURIComponent(`Hi ${user.name}! 👋\n\nCheck out our latest Horse Riding collection at Royal Hoof!\nhttps://www.royalhoof.com\n\n🔱 Royal Hoof`)
     }
     if (phone) window.open(`https://wa.me/91${phone}?text=${msg}`, "_blank")
     else window.open(`https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(`Customer ${user.name} has no phone on file`)}`, "_blank")

@@ -2,35 +2,33 @@ import { useState, useRef, useEffect } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import {
-  LayoutDashboard, Package, ShoppingBag, BarChart3, Users, Bell, Menu, X,
+  LayoutDashboard, ShoppingBag, BarChart3, Users, Bell, Menu, X,
   LogOut, ChevronRight, AlertTriangle, Store, Calendar, MessageSquare,
-  TrendingUp, Clock, AlertCircle, Image, Gift
+  Image, Gift, FileText
 } from "lucide-react"
 import { useAuthStore } from "../../store/authStore"
 import { useAdminStore } from "../../store/adminStore"
 import { supabase } from "../../lib/supabase"
 import toast from "react-hot-toast"
 
+// Royal Hoof dark theme palette
+// bg: #1A1714  sidebar: #2C2C2C  card: #242120  accent: #D8C7AE  text: #F3EBDD
+
 const NAV = [
   { path: "/admin", label: "Dashboard", icon: LayoutDashboard },
-  { path: "/admin/products", label: "Products", icon: Package },
-  { path: "/admin/orders", label: "Orders", icon: ShoppingBag },
   { path: "/admin/events", label: "Events", icon: Calendar },
   { path: "/admin/packages", label: "Packages", icon: Gift },
   { path: "/admin/gallery", label: "Gallery", icon: Image },
   { path: "/admin/enquiries", label: "Enquiries", icon: MessageSquare },
-  { path: "/admin/users", label: "Users", icon: Users },
+  { path: "/admin/testimonials", label: "Testimonials", icon: Users },
+  { path: "/admin/about", label: "About Section", icon: FileText },
+  { path: "/admin/orders", label: "Orders", icon: ShoppingBag },
   { path: "/admin/analytics", label: "Analytics", icon: BarChart3 },
 ]
 
-function Sidebar({ pathname, onSignOut, onNavClick, user, pendingCount, lowStockCount }) {
-  const initials = (user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email || "A")
-    .split(" ")
-    .map(w => w[0])
-    .slice(0, 2)
-    .join("")
-    .toUpperCase()
+function Sidebar({ pathname, onSignOut, onNavClick, user, pendingCount }) {
   const displayName = user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email?.split("@")[0] || "Admin"
+  const initials = displayName.split(" ").map(w => w[0]).slice(0, 2).join("").toUpperCase()
 
   return (
     <motion.aside
@@ -38,81 +36,116 @@ function Sidebar({ pathname, onSignOut, onNavClick, user, pendingCount, lowStock
       animate={{ width: 248, opacity: 1 }}
       exit={{ width: 0, opacity: 0 }}
       transition={{ duration: 0.2 }}
-      className="flex-shrink-0 bg-[#3B2310] flex flex-col overflow-hidden border-r border-[#5D3A1A]/60"
+      style={{ background: "#2C2C2C", borderRight: "1px solid rgba(255,255,255,0.06)" }}
+      className="flex-shrink-0 flex flex-col overflow-hidden"
     >
       {/* Logo */}
-      <div className="px-5 py-4 border-b border-white/10">
-        <Link to="/admin" onClick={onNavClick} className="flex items-center gap-2.5 select-none group">
-          <span className="text-2xl leading-none">🔱</span>
+      <div style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }} className="px-5 py-5">
+        <Link to="/admin" onClick={onNavClick} className="flex items-center gap-3 select-none">
+          <div style={{
+            width: 36, height: 36, borderRadius: 4,
+            background: "rgba(216,199,174,0.12)",
+            border: "1px solid rgba(216,199,174,0.2)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: "1.1rem"
+          }}>
+            🐴
+          </div>
           <div>
-            <span className="text-white font-bold text-sm tracking-wide block" style={{ fontFamily: "Georgia, serif" }}>
-              Rudhraksha
+            <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1rem", fontWeight: 700, color: "#F3EBDD", letterSpacing: "0.06em", display: "block" }}>
+              ROYALHOOF
             </span>
-            <span className="text-[#F59E0B] text-[10px] font-semibold uppercase tracking-widest">Admin Panel</span>
+            <span style={{ fontSize: "0.625rem", letterSpacing: "0.18em", color: "#D8C7AE", textTransform: "uppercase", display: "block" }}>
+              Admin Panel
+            </span>
           </div>
         </Link>
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 px-3 py-3 space-y-0.5 overflow-y-auto">
+      <nav className="flex-1 px-3 py-3 overflow-y-auto" style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
         {NAV.map(({ path, label, icon: Icon }) => {
           const active = pathname === path || (path !== "/admin" && pathname.startsWith(path))
-          const badge = label === "Orders" && pendingCount > 0 ? pendingCount : null
-          const stockBadge = label === "Products" && lowStockCount > 0 ? lowStockCount : null
+          const badge = label === "Enquiries" && pendingCount > 0 ? pendingCount : null
           return (
             <Link
               key={path}
               to={path}
               onClick={onNavClick}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all relative group/item ${
-                active
-                  ? "bg-white/15 text-white font-semibold border-l-2 border-[#F59E0B] pl-[10px]"
-                  : "text-white/70 hover:text-white hover:bg-white/10 border-l-2 border-transparent pl-[10px]"
-              }`}
+              style={{
+                display: "flex", alignItems: "center", gap: "10px",
+                padding: "10px 12px",
+                borderRadius: "5px",
+                textDecoration: "none",
+                transition: "background 0.15s, color 0.15s",
+                background: active ? "rgba(216,199,174,0.12)" : "transparent",
+                borderLeft: active ? "2px solid #D8C7AE" : "2px solid transparent",
+                paddingLeft: active ? "10px" : "10px",
+                color: active ? "#F3EBDD" : "rgba(243,235,221,0.55)",
+              }}
+              onMouseEnter={e => { if (!active) e.currentTarget.style.background = "rgba(255,255,255,0.05)" }}
+              onMouseLeave={e => { if (!active) e.currentTarget.style.background = "transparent" }}
             >
-              <Icon size={16} className={active ? "text-[#F59E0B]" : ""} />
-              <span className="flex-1">{label}</span>
+              <Icon size={15} style={{ color: active ? "#D8C7AE" : "currentColor", flexShrink: 0 }} />
+              <span style={{ flex: 1, fontSize: "0.8125rem", fontFamily: "'Inter', sans-serif", fontWeight: active ? 600 : 400 }}>{label}</span>
               {badge && (
-                <span className="bg-[#D97706] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center leading-none">
+                <span style={{ background: "#D8C7AE", color: "#171614", fontSize: "0.625rem", fontWeight: 700, padding: "2px 6px", borderRadius: "9999px", minWidth: 18, textAlign: "center" }}>
                   {badge > 99 ? "99+" : badge}
                 </span>
               )}
-              {!badge && stockBadge && (
-                <span className="bg-yellow-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center leading-none">
-                  {stockBadge}
-                </span>
-              )}
-              {active && <ChevronRight size={13} className="ml-auto text-[#F59E0B]" />}
+              {active && <ChevronRight size={12} style={{ color: "#D8C7AE", marginLeft: "auto" }} />}
             </Link>
           )
         })}
       </nav>
 
-      {/* Bottom: store link + user card */}
-      <div className="p-3 border-t border-white/10 space-y-1">
+      {/* Bottom */}
+      <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", padding: "12px" }}>
         <Link
           to="/"
-          className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-white/70 hover:text-white hover:bg-white/10 transition-all border-l-2 border-transparent pl-[10px]"
+          style={{
+            display: "flex", alignItems: "center", gap: "10px",
+            padding: "10px 12px", borderRadius: "5px", textDecoration: "none",
+            color: "rgba(243,235,221,0.55)", fontSize: "0.8125rem", fontFamily: "'Inter', sans-serif",
+            transition: "background 0.15s",
+          }}
+          onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.05)"}
+          onMouseLeave={e => e.currentTarget.style.background = "transparent"}
         >
-          <Store size={16} />
-          <span>View Store</span>
+          <Store size={15} /> View Website
         </Link>
         <button
           onClick={onSignOut}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-white/70 hover:text-red-300 hover:bg-red-900/20 transition-all border-l-2 border-transparent pl-[10px]"
+          style={{
+            display: "flex", alignItems: "center", gap: "10px", width: "100%",
+            padding: "10px 12px", borderRadius: "5px", border: "none", cursor: "pointer",
+            background: "transparent", color: "rgba(243,235,221,0.55)", fontSize: "0.8125rem",
+            fontFamily: "'Inter', sans-serif", transition: "background 0.15s, color 0.15s",
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = "rgba(239,68,68,0.1)"; e.currentTarget.style.color = "#f87171" }}
+          onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "rgba(243,235,221,0.55)" }}
         >
-          <LogOut size={16} /> Logout
+          <LogOut size={15} /> Logout
         </button>
 
         {/* Admin user card */}
-        <div className="mt-2 pt-2 border-t border-white/10 flex items-center gap-2.5 px-2 py-2 rounded-lg bg-white/5">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#D97706] to-[#5D3A1A] flex items-center justify-center flex-shrink-0 text-white font-bold text-xs">
+        <div style={{
+          marginTop: "8px", paddingTop: "8px", borderTop: "1px solid rgba(255,255,255,0.06)",
+          display: "flex", alignItems: "center", gap: "10px", padding: "10px 12px",
+          background: "rgba(255,255,255,0.03)", borderRadius: "5px",
+        }}>
+          <div style={{
+            width: 32, height: 32, borderRadius: "50%",
+            background: "linear-gradient(135deg, #D8C7AE, #9A8870)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            flexShrink: 0, color: "#171614", fontWeight: 700, fontSize: "0.75rem",
+          }}>
             {initials}
           </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-white text-xs font-semibold truncate">{displayName}</p>
-            <span className="inline-block text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-[#D97706]/30 text-[#F59E0B] mt-0.5">
-              Admin
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <p style={{ color: "#F3EBDD", fontSize: "0.75rem", fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontFamily: "'Inter', sans-serif" }}>{displayName}</p>
+            <span style={{ fontSize: "0.5625rem", fontWeight: 700, padding: "2px 6px", borderRadius: "9999px", background: "rgba(216,199,174,0.15)", color: "#D8C7AE", display: "inline-block", letterSpacing: "0.08em" }}>
+              ADMIN
             </span>
           </div>
         </div>
@@ -131,68 +164,23 @@ export default function AdminLayout({ children }) {
   }, [])
 
   const [notifOpen, setNotifOpen] = useState(false)
-  const [profileOpen, setProfileOpen] = useState(false)
   const { pathname } = useLocation()
   const { signOut, user } = useAuthStore()
-  const { notifications, clearNotification, addNotification, orders, products, stats, loadOrders, loadProducts, computeStats } = useAdminStore()
+  const { notifications, clearNotification, addNotification, orders, products, loadOrders, loadProducts, computeStats } = useAdminStore()
   const navigate = useNavigate()
   const notifRef = useRef(null)
-  const profileRef = useRef(null)
 
-  // Load data for stats strip
-  useEffect(() => {
-    loadOrders()
-    loadProducts()
-  }, [])
+  useEffect(() => { loadOrders(); loadProducts() }, [])
 
-  useEffect(() => {
-    if (orders.length > 0 || products.length > 0) computeStats()
-  }, [orders, products])
-
-  // Quick stats derived
-  const pendingCount = orders.filter(o => o.payment_status === "pending").length
-  const lowStockCount = products.filter(p => (p.stock || 0) < 10).length
-  const today = new Date().toDateString()
-  const todayOrders = orders.filter(o =>
-    new Date(o.created_at).toDateString() === today &&
-    o.order_status !== "cancelled" &&
-    o.payment_status !== "failed"
-  ).length
+  const pendingCount = orders.filter(o => o.status === "new" || o.payment_status === "pending").length
 
   useEffect(() => {
     const handler = (e) => {
       if (notifRef.current && !notifRef.current.contains(e.target)) setNotifOpen(false)
-      if (profileRef.current && !profileRef.current.contains(e.target)) setProfileOpen(false)
     }
     document.addEventListener("mousedown", handler)
-    document.addEventListener("touchstart", handler)
-    return () => {
-      document.removeEventListener("mousedown", handler)
-      document.removeEventListener("touchstart", handler)
-    }
+    return () => document.removeEventListener("mousedown", handler)
   }, [])
-
-  const handleBellClick = () => {
-    if (notifOpen) {
-      const current = useAdminStore.getState().notifications
-      current.forEach(n => clearNotification(n.id))
-    }
-    setNotifOpen(o => !o)
-  }
-
-  const getNotifLink = (n) => {
-    const msg = n.msg?.toLowerCase() || ""
-    if (msg.includes("stock")) return "/admin/products"
-    if (msg.includes("order")) return "/admin/orders"
-    if (msg.includes("user")) return "/admin/users"
-    return "/admin"
-  }
-
-  const handleNotifClick = (n) => {
-    clearNotification(n.id)
-    setNotifOpen(false)
-    navigate(getNotifLink(n))
-  }
 
   const handleSignOut = async () => { await signOut(); toast.success("Signed out"); navigate("/") }
 
@@ -202,24 +190,18 @@ export default function AdminLayout({ children }) {
       .channel("admin-new-orders")
       .on("postgres_changes", { event: "INSERT", schema: "public", table: "orders" }, (payload) => {
         const order = payload.new
-        const addrObj = (() => { try { return typeof order.address === "string" ? JSON.parse(order.address) : (order.address || {}) } catch { return {} } })()
-        const name = addrObj.full_name || "A customer"
-        const amount = order.total_amount ? `₹${Math.ceil(order.total_amount).toLocaleString("en-IN")}` : ""
-        const orderId = order.display_order_id || `#${String(order.id).slice(-6).toUpperCase()}`
-        addNotification(`🛍️ New order ${orderId} from ${name} ${amount}`, "info")
-        useAdminStore.getState().loadOrders(true)
+        addNotification(`New order from ${order.name || "a customer"}`, "info")
       })
       .subscribe()
     return () => supabase.removeChannel(channel)
   }, [])
 
   const currentPageLabel = NAV.find(n => pathname === n.path || (n.path !== "/admin" && pathname.startsWith(n.path)))?.label || "Admin Panel"
-
   const initials = (user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email || "A")
     .split(" ").map(w => w[0]).slice(0, 2).join("").toUpperCase()
 
   return (
-    <div className="flex h-screen bg-[#F8F5F0] overflow-hidden">
+    <div className="flex h-screen overflow-hidden" style={{ background: "#1A1714" }}>
       <AnimatePresence initial={false}>
         {sidebarOpen && (
           <Sidebar
@@ -228,63 +210,56 @@ export default function AdminLayout({ children }) {
             onNavClick={() => { if (window.innerWidth < 1024) setSidebarOpen(false) }}
             user={user}
             pendingCount={pendingCount}
-            lowStockCount={lowStockCount}
           />
         )}
       </AnimatePresence>
 
       <div className="flex-1 flex flex-col overflow-hidden">
-        {/* ── Header ── */}
-        <header className="flex-shrink-0 bg-white border-b border-gray-200 shadow-sm">
-          {/* Main header row */}
+        {/* Header */}
+        <header style={{
+          background: "#2C2C2C",
+          borderBottom: "1px solid rgba(255,255,255,0.06)",
+          flexShrink: 0,
+        }}>
           <div className="h-14 flex items-center justify-between px-4">
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setSidebarOpen(o => !o)}
-                className="text-gray-500 hover:text-[#5D3A1A] p-1 transition-colors rounded-lg hover:bg-[#FAFAFA]"
+                style={{ color: "#D8C7AE", background: "none", border: "none", cursor: "pointer", padding: "6px", borderRadius: "4px" }}
+                onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.06)"}
+                onMouseLeave={e => e.currentTarget.style.background = "none"}
               >
                 <Menu size={20} />
               </button>
-              <span className="text-gray-700 text-sm font-semibold hidden sm:block">{currentPageLabel}</span>
+              <span style={{ color: "#F3EBDD", fontSize: "0.875rem", fontWeight: 600, fontFamily: "'Inter', sans-serif" }}
+                className="hidden sm:block">
+                {currentPageLabel}
+              </span>
             </div>
 
-            {/* Quick stats strip — inline in header */}
-            <div className="hidden md:flex items-center gap-1 bg-[#F8F5F0] rounded-xl px-3 py-1.5 border border-gray-200">
-              <Link to="/admin/orders" className="flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-white transition-colors group/stat">
-                <TrendingUp size={13} className="text-green-500" />
-                <div className="text-left">
-                  <p className="text-[10px] text-gray-400 leading-none">Today</p>
-                  <p className="text-xs font-bold text-gray-700 leading-tight">{todayOrders}</p>
-                </div>
-              </Link>
-              <div className="w-px h-6 bg-gray-200" />
-              <Link to="/admin/orders" className="flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-white transition-colors">
-                <Clock size={13} className="text-[#D97706]" />
-                <div className="text-left">
-                  <p className="text-[10px] text-gray-400 leading-none">Pending</p>
-                  <p className={`text-xs font-bold leading-tight ${pendingCount > 0 ? "text-[#D97706]" : "text-gray-700"}`}>{pendingCount}</p>
-                </div>
-              </Link>
-              <div className="w-px h-6 bg-gray-200" />
-              <Link to="/admin/products" className="flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-white transition-colors">
-                <AlertCircle size={13} className="text-yellow-500" />
-                <div className="text-left">
-                  <p className="text-[10px] text-gray-400 leading-none">Low Stock</p>
-                  <p className={`text-xs font-bold leading-tight ${lowStockCount > 0 ? "text-yellow-600" : "text-gray-700"}`}>{lowStockCount}</p>
-                </div>
-              </Link>
-            </div>
+            {/* Brand in center on mobile */}
+            <span style={{ fontFamily: "'Cormorant Garamond', serif", color: "#D8C7AE", fontSize: "1rem", fontWeight: 600, letterSpacing: "0.06em" }}
+              className="sm:hidden">
+              ROYALHOOF
+            </span>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               {/* Bell */}
               <div className="relative" ref={notifRef}>
                 <button
-                  onClick={handleBellClick}
-                  className="relative text-gray-500 hover:text-[#5D3A1A] p-1.5 rounded-lg hover:bg-[#FAFAFA] transition-colors"
+                  onClick={() => setNotifOpen(o => !o)}
+                  style={{ color: "rgba(243,235,221,0.6)", background: "none", border: "none", cursor: "pointer", padding: "6px", borderRadius: "4px", position: "relative" }}
+                  onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.06)"}
+                  onMouseLeave={e => e.currentTarget.style.background = "none"}
                 >
                   <Bell size={18} />
                   {notifications.length > 0 && (
-                    <span className="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-[9px] rounded-full w-4 h-4 flex items-center justify-center font-bold">
+                    <span style={{
+                      position: "absolute", top: 2, right: 2,
+                      background: "#ef4444", color: "#fff", fontSize: "0.5625rem",
+                      borderRadius: "9999px", width: 14, height: 14,
+                      display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700,
+                    }}>
                       {notifications.length > 9 ? "9+" : notifications.length}
                     </span>
                   )}
@@ -293,34 +268,32 @@ export default function AdminLayout({ children }) {
                   {notifOpen && (
                     <motion.div
                       initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }}
-                      className="absolute right-0 top-full mt-2 w-72 bg-white border border-gray-200 rounded-xl shadow-xl z-[100] overflow-hidden"
+                      style={{
+                        position: "absolute", right: 0, top: "100%", marginTop: 8,
+                        width: 280, background: "#2C2C2C",
+                        border: "1px solid rgba(255,255,255,0.1)",
+                        borderRadius: 8, boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+                        zIndex: 100, overflow: "hidden",
+                      }}
                     >
-                      <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-gray-50">
-                        <span className="text-gray-800 text-sm font-semibold">Notifications</span>
-                        <div className="flex items-center gap-2">
-                          {notifications.length > 0 && (
-                            <button onClick={() => notifications.forEach(n => clearNotification(n.id))}
-                              className="text-xs text-[#5D3A1A] hover:underline">Clear all</button>
-                          )}
-                          <button onClick={() => setNotifOpen(false)} className="text-gray-400 hover:text-gray-600">
-                            <X size={14} />
-                          </button>
-                        </div>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                        <span style={{ color: "#F3EBDD", fontSize: "0.875rem", fontWeight: 600 }}>Notifications</span>
+                        <button onClick={() => setNotifOpen(false)} style={{ color: "rgba(243,235,221,0.4)", background: "none", border: "none", cursor: "pointer" }}>
+                          <X size={14} />
+                        </button>
                       </div>
-                      <div className="max-h-64 overflow-y-auto">
+                      <div style={{ maxHeight: 240, overflowY: "auto" }}>
                         {notifications.length === 0
-                          ? <p className="text-gray-400 text-xs text-center py-6">No notifications</p>
+                          ? <p style={{ color: "rgba(243,235,221,0.3)", fontSize: "0.75rem", textAlign: "center", padding: "24px" }}>No notifications</p>
                           : notifications.map(n => (
-                            <div key={n.id}
-                              className="flex items-start gap-3 px-4 py-3 hover:bg-gray-50 border-b border-gray-50 cursor-pointer"
-                              onClick={() => handleNotifClick(n)}>
-                              <AlertTriangle size={14} className={`mt-0.5 ${n.type === "warning" ? "text-yellow-500" : "text-[#D97706]"}`} />
-                              <div className="flex-1 min-w-0">
-                                <p className="text-gray-700 text-xs">{n.msg}</p>
-                                <p className="text-gray-400 text-xs mt-0.5">{new Date(n.time).toLocaleTimeString()}</p>
+                            <div key={n.id} style={{ display: "flex", alignItems: "flex-start", gap: 12, padding: "12px 16px", borderBottom: "1px solid rgba(255,255,255,0.04)", cursor: "pointer" }}>
+                              <AlertTriangle size={13} style={{ color: "#D8C7AE", marginTop: 2 }} />
+                              <div style={{ flex: 1 }}>
+                                <p style={{ color: "rgba(243,235,221,0.8)", fontSize: "0.75rem" }}>{n.msg}</p>
+                                <p style={{ color: "rgba(243,235,221,0.3)", fontSize: "0.6875rem", marginTop: 2 }}>{new Date(n.time).toLocaleTimeString()}</p>
                               </div>
-                              <button onClick={e => { e.stopPropagation(); clearNotification(n.id) }} className="text-gray-300 hover:text-gray-500">
-                                <X size={12} />
+                              <button onClick={() => clearNotification(n.id)} style={{ color: "rgba(243,235,221,0.3)", background: "none", border: "none", cursor: "pointer" }}>
+                                <X size={11} />
                               </button>
                             </div>
                           ))
@@ -332,52 +305,29 @@ export default function AdminLayout({ children }) {
               </div>
 
               {/* Profile */}
-              <div className="flex items-center gap-2 relative" ref={profileRef}>
-                <button
-                  onClick={() => setProfileOpen(o => !o)}
-                  className="flex items-center gap-2 hover:opacity-85 transition-opacity"
-                >
-                  <div className="w-7 h-7 bg-gradient-to-br from-[#D97706] to-[#5D3A1A] rounded-full flex items-center justify-center border-2 border-white shadow-sm">
-                    <span className="text-white text-xs font-bold">{initials}</span>
-                  </div>
-                  <span className="text-gray-600 text-xs hidden sm:block font-medium">
-                    {user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email?.split("@")[0]}
-                  </span>
-                </button>
-                <AnimatePresence>
-                  {profileOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }}
-                      className="absolute right-0 top-full mt-2 w-52 bg-white border border-gray-200 rounded-xl shadow-xl z-[100] overflow-hidden"
-                    >
-                      <div className="px-4 py-3 border-b border-gray-100 bg-gradient-to-r from-[#FAFAFA] to-white">
-                        <p className="text-gray-800 text-xs font-semibold truncate">
-                          {user?.user_metadata?.full_name || user?.user_metadata?.name || "Admin"}
-                        </p>
-                        <p className="text-gray-400 text-xs truncate">{user?.email}</p>
-                        <span className="inline-block mt-1 text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-[#5D3A1A]/10 text-[#5D3A1A]">
-                          Administrator
-                        </span>
-                      </div>
-                      <Link to="/" onClick={() => setProfileOpen(false)}
-                        className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 transition-colors">
-                        <Store size={14} /> View Store
-                      </Link>
-                      <button
-                        onClick={() => { setProfileOpen(false); handleSignOut() }}
-                        className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors"
-                      >
-                        <LogOut size={14} /> Logout
-                      </button>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <div style={{
+                  width: 30, height: 30, borderRadius: "50%",
+                  background: "linear-gradient(135deg, #D8C7AE, #9A8870)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  color: "#171614", fontWeight: 700, fontSize: "0.6875rem",
+                  border: "2px solid rgba(216,199,174,0.3)",
+                  flexShrink: 0, cursor: "default",
+                }}>
+                  {initials}
+                </div>
+                <span style={{ color: "rgba(243,235,221,0.6)", fontSize: "0.75rem", fontFamily: "'Inter', sans-serif" }}
+                  className="hidden sm:block">
+                  {user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email?.split("@")[0]}
+                </span>
               </div>
             </div>
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-6">{children}</main>
+        <main className="flex-1 overflow-y-auto" style={{ background: "#1A1714", padding: "24px" }}>
+          {children}
+        </main>
       </div>
     </div>
   )

@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from 'react'
+﻿import { lazy, Suspense, useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import { Toaster } from 'react-hot-toast'
@@ -32,7 +32,7 @@ const PolicyPage = lazy(() => import('./pages/PolicyPage'))
 
 // Admin pages (code split)
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'))
-const AdminProducts = lazy(() => import('./pages/admin/AdminProducts'))
+const AdminAbout = lazy(() => import('./pages/admin/AdminAbout'))
 const AdminOrders = lazy(() => import('./pages/admin/AdminOrders'))
 const AdminAnalytics = lazy(() => import('./pages/admin/AdminAnalytics'))
 const AdminUsers = lazy(() => import('./pages/admin/AdminUsers'))
@@ -97,7 +97,7 @@ export default function App() {
                   <Suspense fallback={<PageLoader />}>
                     <Routes>
                       <Route index element={<AdminDashboard />} />
-                      <Route path="products" element={<AdminProducts />} />
+                      <Route path="about" element={<AdminAbout />} />
                       <Route path="orders" element={<AdminOrders />} />
                       <Route path="events" element={<AdminEvents />} />
                       <Route path="packages" element={<AdminPackages />} />

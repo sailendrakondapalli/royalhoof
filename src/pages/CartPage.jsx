@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom'
+﻿import { Link, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Trash2, Plus, Minus, ShoppingBag, ArrowRight, Heart } from 'lucide-react'
 import { useCartStore } from '../store/cartStore'
@@ -51,8 +51,8 @@ export default function CartPage() {
   useEffect(() => {
     if (items.length === 0) return
     const timer = setTimeout(() => {
-      const phone = "919994441363"
-      const msg = encodeURIComponent("Hi! You have items waiting in your cart at Rudhraksha Store ?? Complete your order before they sell out!")
+      const phone = "919043700776"
+      const msg = encodeURIComponent("Hi! You have items waiting in your cart at Royal Hoof ?? Complete your order before they sell out!")
       toast(
         (t) => (
           <div className="flex flex-col gap-2">
@@ -104,7 +104,7 @@ export default function CartPage() {
       <div className="max-w-2xl mx-auto px-4 py-20 text-center">
         <ShoppingBag size={64} className="text-[#D97706] mx-auto mb-4" />
         <h2 className="text-2xl font-bold text-[#1C1006] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Your cart is empty</h2>
-        <p className="text-[#8B6A4A] mb-6">Discover our sacred Rudraksha collection</p>
+        <p className="text-[#8B6A4A] mb-6">Discover our sacred Horse Riding collection</p>
         <Link to="/products" className="px-8 py-3 bg-[#5D3A1A] text-white font-semibold rounded-lg hover:bg-[#7A4E28] transition-all">
           Shop Now
         </Link>
@@ -140,7 +140,7 @@ export default function CartPage() {
             {items.map(item => {
               const product = item.products || {}
               const mediaUrl = product.images?.[0]
-              const fallback = '/rudraksha-fallback.webp'
+              const fallback = '/Horse Riding-fallback.webp'
               const key = item.id || item.product_id
               const isSelected = selectedIds.has(key)
               return (

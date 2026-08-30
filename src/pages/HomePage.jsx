@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from "react"
+﻿import { useState, useEffect, useRef } from "react"
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
 import { Helmet } from "react-helmet-async"
-import { ArrowRight, Shield, Truck, Headphones, CheckCircle, Star, Award, Users, Calendar, MapPin, ChevronLeft, ChevronRight, Mail, Phone, MessageSquare } from "lucide-react"
+import { ArrowRight, Shield, CheckCircle, Star, Award, Users, Calendar, MapPin, ChevronLeft, ChevronRight, Mail, Phone, MessageSquare } from "lucide-react"
 import { CATEGORIES } from "../data/products"
 import { fetchProducts } from "../services/productService"
 import { getSetting } from "../services/settingsService"
@@ -19,7 +19,7 @@ const LOCAL_HERO_FALLBACK = hero1Img
 const FALLBACK_CAT_IMG = "https://images.unsplash.com/photo-1614703012479-0fe5f6a89be0?w=600&q=80"
 const CAT_DESC = {
   "1-14 Mukhi": "Premium riding equipment",
-  "Rudraksha Mala": "Professional gear collection",
+  "Horse Riding Mala": "Professional gear collection",
   "Bracelets": "Elegant accessories",
   "Rare Collectibles": "Exclusive collection",
 }
@@ -124,31 +124,33 @@ function HeroSlider() {
 
 /* ─── About Section ─── */
 function AboutSection() {
-  const { t, lang } = useLanguage()
   const [dbData, setDbData] = useState(null)
+  const [imageUrl, setImageUrl] = useState("")
 
   useEffect(() => {
-    const key = lang === "te" ? "about_section_te" : "about_section_en"
-    getSetting(key).then(val => {
+    getSetting("about_section_en").then(val => {
       if (val) { try { setDbData(JSON.parse(val)) } catch {} }
     }).catch(() => {})
-  }, [lang])
+    getSetting("about_image_url").then(url => {
+      if (url) setImageUrl(url)
+    }).catch(() => {})
+  }, [])
 
   const d = dbData || {
-    title: "Our Heritage", 
-    subtitle: "Craftsmanship & Tradition",
-    p1: "Founded on principles of excellence and authenticity, our collection represents generations of equestrian craftsmanship.",
-    p2: "Each piece in our collection is carefully selected for its quality, durability, and timeless aesthetic.",
-    p3: "We partner with master artisans and established manufacturers to bring you equipment that performs as beautifully as it looks.",
-    p4: "From competition rings to countryside trails, our gear accompanies riders on every journey.",
-    p5: "We believe that proper equipment is not a luxury but an essential foundation for the partnership between horse and rider.",
-    p6: "Join our community of riders who demand excellence and appreciate the finer details.",
-    years: "25+",
-    yearsLabel: "Years Heritage",
-    authentic: "100%",
-    authenticLabel: "Authentic Quality",
-    customers: "10K+",
-    customersLabel: "Satisfied Riders",
+    title: "Royal Hoof Horse Riding Academy",
+    subtitle: "Nallambakkam, Tamil Nadu",
+    p1: "Welcome to Royal Hoof Horse Riding Academy, located at GIRI FARMS in Nallambakkam, Tamil Nadu. We offer professional horse riding lessons for all ages in a safe, nurturing environment.",
+    p2: "Our certified trainers are passionate about equestrian sports and dedicated to building a strong foundation for every rider — from complete beginners to experienced equestrians.",
+    p3: "We offer a wide range of programmes including beginner lessons, advanced training, competitive riding, and special kids' sessions designed to build confidence and develop lifelong skills.",
+    p4: "Safety is our top priority. All sessions are supervised by experienced professionals, and our horses are well-trained, healthy, and temperament-tested for rider compatibility.",
+    p5: "Located conveniently within the Uniworld City, Aspen Greens community, our facility is equipped with quality arena space, stables, and training equipment.",
+    p6: "Join our growing family of riders and experience the joy, freedom, and discipline that horse riding brings.",
+    years: "GIRI FARMS",
+    yearsLabel: "Our Home",
+    authentic: "All Ages",
+    authenticLabel: "Welcome",
+    customers: "Mon – Sun",
+    customersLabel: "6 AM – 8 PM",
   }
 
   const stats = [
@@ -157,18 +159,20 @@ function AboutSection() {
     { value: d.customers, label: d.customersLabel, icon: <Users size={22} /> },
   ]
 
+  const displayImage = imageUrl || "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800&q=80"
+
   return (
     <section className={`w-full py-20 bg-[#171614] ${PX}`}>
       <ScrollReveal>
         <div className="max-w-6xl mx-auto">
           {/* Eyebrow */}
-          <p className="text-center eyebrow-label mb-3">About Our Collection</p>
+          <p className="text-center eyebrow-label mb-3">About Us</p>
           
           {/* Title */}
           <div className="text-center mb-4">
             <h2 className="heading-editorial inline-block"
               style={{ fontSize: "clamp(1.75rem, 3vw, 2.5rem)" }}>
-              Our <span style={{ color: "#8B4938", fontStyle: "italic" }}>Heritage</span>
+              {d.title}
             </h2>
             <span className="block text-base mt-2 font-medium" style={{ color: "#B6A58F", fontFamily: "'Inter', sans-serif" }}>
               {d.subtitle}
@@ -177,29 +181,38 @@ function AboutSection() {
           <div className="equestrian-divider w-24 mx-auto mb-12" />
 
           <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 items-start">
-            {/* Heritage Image - Shows on both mobile and desktop */}
+            {/* Image */}
             <div className="w-full">
               <div className="relative w-full overflow-hidden rounded-sm" style={{ aspectRatio: "4/3" }}>
-                <img 
-                  src="https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800&q=80" 
-                  alt="Heritage Horse"
+                <img
+                  src={displayImage}
+                  alt="About Royal Hoof"
                   className="absolute inset-0 w-full h-full object-cover"
                   onError={e => { e.target.src = hero1Img }}
                 />
               </div>
-            </div>
 
-            {/* Text content and Stats Column */}
-            <div className="w-full space-y-8">
-              {/* Text content */}
-              <div className="space-y-5">
-                {[d.p1, d.p2, d.p3, d.p4, d.p5, d.p6].map((para, i) => (
-                  <p key={i} className="leading-relaxed text-base"
-                    style={{ color: "#D8C7AE", fontFamily: "'Inter', sans-serif", lineHeight: "1.8" }}>
-                    {para}
-                  </p>
+              {/* Stats below image */}
+              <div className="grid grid-cols-3 gap-4 mt-6">
+                {stats.map((s, i) => (
+                  <div key={i} className="text-center py-5 rounded-sm"
+                    style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(216,199,174,0.1)" }}>
+                    <div className="flex justify-center mb-2" style={{ color: "#D8C7AE" }}>{s.icon}</div>
+                    <p className="font-bold text-base" style={{ color: "#F3EBDD", fontFamily: "'Cormorant Garamond', serif" }}>{s.value}</p>
+                    <p className="text-xs mt-1" style={{ color: "#B6A58F", fontFamily: "'Inter', sans-serif" }}>{s.label}</p>
+                  </div>
                 ))}
               </div>
+            </div>
+
+            {/* Text content */}
+            <div className="w-full space-y-5">
+              {[d.p1, d.p2, d.p3, d.p4, d.p5, d.p6].filter(Boolean).map((para, i) => (
+                <p key={i} className="leading-relaxed text-base"
+                  style={{ color: "#D8C7AE", fontFamily: "'Inter', sans-serif", lineHeight: "1.8" }}>
+                  {para}
+                </p>
+              ))}
             </div>
           </div>
         </div>
@@ -485,7 +498,7 @@ function QuickContactSection() {
                   </div>
                   <div>
                     <p className="text-[#F3EBDD] font-medium">Call or WhatsApp</p>
-                    <p className="text-[#B6A58F] text-sm">+91 99944 41363</p>
+                    <p className="text-[#B6A58F] text-sm">+91 90437 00776</p>
                   </div>
                 </div>
                 
@@ -495,7 +508,7 @@ function QuickContactSection() {
                   </div>
                   <div>
                     <p className="text-[#F3EBDD] font-medium">Email Us</p>
-                    <p className="text-[#B6A58F] text-sm">sivasri3545@gmail.com</p>
+                    <p className="text-[#B6A58F] text-sm">info@royalhoof.com</p>
                   </div>
                 </div>
               </div>
@@ -932,10 +945,10 @@ export default function HomePage() {
   }
 
   const FEATURES = [
-    { icon: <CheckCircle size={24} strokeWidth={1.5} />, title: "CERTIFIED QUALITY", sub: "Authentic equipment" },
-    { icon: <Shield size={24} strokeWidth={1.5} />, title: "GUARANTEED", sub: "Premium materials" },
-    { icon: <Headphones size={24} strokeWidth={1.5} />, title: "EXPERT SUPPORT", sub: "Dedicated assistance" },
-    { icon: <Truck size={24} strokeWidth={1.5} />, title: "WORLDWIDE DELIVERY", sub: "Fast shipping" },
+    { icon: <Shield size={24} strokeWidth={1.5} />, title: "SAFE & SECURE", sub: "Safety-first environment" },
+    { icon: <CheckCircle size={24} strokeWidth={1.5} />, title: "CERTIFIED TRAINERS", sub: "Professional instructors" },
+    { icon: <Star size={24} strokeWidth={1.5} />, title: "ALL AGES WELCOME", sub: "Kids & adults" },
+    { icon: <Users size={24} strokeWidth={1.5} />, title: "SMALL BATCH CLASSES", sub: "Personalised attention" },
   ]
 
   const displayFeatures = features

@@ -1,72 +1,61 @@
-import { useLocation } from 'react-router-dom'
+﻿import { useLocation } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 
 const policies = {
   'shipping-policy': {
-    title: 'Shipping Policy',
-    content: [
+    title: 'Booking & Scheduling Policy',
+    sections: [
       {
-        heading: 'Processing Time',
-        text: 'All confirmed orders are processed and dispatched within 24–48 hours (excluding Sundays and public holidays).\n\nIn case of delays due to stock availability or unforeseen reasons, customers will be informed promptly.'
+        heading: 'Session Booking',
+        text: 'All riding sessions must be booked at least 24 hours in advance. Walk-in bookings are subject to horse and trainer availability.\n\nPlease contact us via WhatsApp or phone to confirm your slot.'
       },
       {
-        heading: 'Shipping Options & Charges',
-        text: 'Standard Shipping:\n• ₹80 per order within Andhra Pradesh and Telangana\n• ₹100 for all other states\n\nDelivery timeline: 5–7 business days (after dispatch)\n\nNOTE: Currently, we do not offer free shipping on any orders.'
+        heading: 'Session Timings',
+        text: 'Sessions run Monday to Sunday, 6:00 AM – 8:00 PM IST.\n\nMorning slots (6 AM – 9 AM) and evening slots (5 PM – 8 PM) are most popular — book early to secure your preferred time.'
       },
       {
-        heading: 'Delivery Information',
-        text: 'Orders are shipped via trusted courier partners.\n\nDelivery timelines may vary based on location, courier performance, weather conditions, or other factors beyond our control.\n\nCustomers are responsible for providing a complete and accurate shipping address. Incorrect addresses may lead to delays or non-delivery.'
+        heading: 'Cancellation by You',
+        text: 'If you need to cancel, please notify us at least 12 hours before your session.\n\nCancellations made less than 12 hours before the session may not be eligible for a rescheduling.'
       },
       {
-        heading: 'Tracking Orders',
-        text: 'Once shipped, customers will receive a tracking ID via WhatsApp/email to track their order in real-time.'
+        heading: 'Cancellation by Us',
+        text: 'In cases of extreme weather, horse health issues, or other unforeseen circumstances, we may need to reschedule your session.\n\nWe will notify you as early as possible and offer an alternative slot.'
       },
       {
-        heading: 'International Shipping',
-        text: 'At present, we do not offer international shipping. Orders are delivered only within India.'
-      },
-      {
-        heading: 'Contact Us',
-        text: 'For shipping-related queries, please contact:\n📞 Phone / WhatsApp: +91 99944 41363\n📧 Email: rudhraksha@gmail.com'
+        heading: 'Contact',
+        text: '📞 Phone / WhatsApp: +91 90437 00776\n📧 info@royalhoof.com\n📍 GIRI FARMS, Uniworld City, Aspen Greens, Nallambakkam, Tamil Nadu'
       },
     ]
   },
   'refund-policy': {
-    title: 'Refund & Return Policy',
-    content: [
+    title: 'Refund Policy',
+    sections: [
       {
-        heading: '😊 Rudhraksha Store — Customer First',
-        text: 'Customer satisfaction is very important to us. Every product is carefully checked and packed before dispatch to ensure it reaches you in the best condition.\n\nPlease go through our policy to understand how we handle returns, replacements, and refunds.'
+        heading: 'Package Refunds',
+        text: 'If you have purchased a riding package and wish to cancel before your first session, a full refund will be issued within 5–7 working days.\n\nOnce sessions have commenced, refunds are available on a pro-rated basis for unused sessions only.'
       },
       {
-        heading: 'General Policy',
-        text: 'We follow a No Return / No Exchange policy for all orders once delivered.\n\nReturns are not accepted for reasons such as change of mind, dislike of design, or minor variations in color/finish (as some variation may occur due to photography and screen display).'
+        heading: 'Single Session Refunds',
+        text: 'Single session fees are non-refundable after the session has taken place.\n\nIf a session is cancelled by Royal Hoof, a full refund or complimentary rescheduling will be offered.'
       },
       {
-        heading: 'Damaged or Defective Products',
-        text: 'If you receive a damaged or defective product, we are committed to resolving it quickly.\n\n• Inform us within 24 hours of receiving the order.\n• OPENING VIDEO IS MANDATORY. Share a clear unboxing video of the damaged product.\n• Before opening the package, the package should be focused at the tearing side properly.\n• ❌ NO ZOOM  ❌ NO EDITING\n• NOTE: 360° view of the package must be recorded before tearing it open.'
+        heading: 'How to Request a Refund',
+        text: 'Contact us via WhatsApp or email with your name, booking details, and reason for the refund request.\n\n📱 WhatsApp: +91 90437 00776\n📧 info@royalhoof.com\n\nRefunds are processed within 5–7 working days after approval.'
       },
       {
-        heading: 'How to Report',
-        text: 'Send the proof via:\n📱 WhatsApp: +91 99944 41363\n📧 Email: rudhraksha@gmail.com\n\nOnce verified by our team, we will:\n• Offer a replacement of the same product, or\n• Provide a refund if replacement is not possible.'
-      },
-      {
-        heading: 'Refunds',
-        text: 'Refunds will be processed to the original payment method within 5–7 working days after approval.\n\nShipping charges are non-refundable.'
-      },
-      {
-        heading: 'Contact Us',
-        text: 'For all return or refund related queries, please contact us:\n📞 Phone / WhatsApp: +91 99944 41363\n📧 Email: rudhraksha@gmail.com'
+        heading: 'Non-Refundable Items',
+        text: 'Riding equipment rental fees, coaching consultation fees, and event registration fees are non-refundable once the service has been rendered.'
       },
     ]
   },
   'privacy-policy': {
     title: 'Privacy Policy',
-    content: [
-      { heading: 'Information We Collect', text: 'We collect your name, email, phone number, and delivery address when you place an order or create an account.' },
-      { heading: 'How We Use It', text: 'Your information is used solely to process orders, send shipping updates, and improve your shopping experience. We never sell your data.' },
-      { heading: 'Payment Security', text: 'All payments are processed securely. We do not store your card or payment details.' },
-      { heading: 'Cookies', text: 'We use cookies to remember your preferences and improve site performance. You can disable cookies in your browser settings.' },
-      { heading: 'Contact', text: 'For any privacy concerns, email us at rudhraksha@gmail.com.' },
+    sections: [
+      { heading: 'Information We Collect', text: 'We collect your name, email address, phone number, and booking details when you make an enquiry or book a session.' },
+      { heading: 'How We Use It', text: 'Your information is used solely to confirm bookings, send reminders, and communicate updates. We do not sell or share your data with third parties.' },
+      { heading: 'Data Security', text: 'All data is stored securely. Payment transactions are handled via trusted third-party processors and we do not store card details.' },
+      { heading: 'Cookies', text: 'We use cookies to improve site performance and remember your preferences. You can disable cookies in your browser settings.' },
+      { heading: 'Contact', text: 'For any privacy concerns:\n📧 info@royalhoof.com\n📞 +91 90437 00776' },
     ]
   }
 }
@@ -78,24 +67,55 @@ export default function PolicyPage() {
 
   if (!policy) {
     return (
-      <div className="max-w-2xl mx-auto px-4 py-20 text-center">
-        <p className="text-gray-400">Page not found.</p>
+      <div style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#1A1714" }}>
+        <p style={{ color: "rgba(243,235,221,0.4)", fontFamily: "'Inter', sans-serif" }}>Page not found.</p>
       </div>
     )
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold text-[#1C1006] mb-8" style={{ fontFamily: 'Georgia, serif' }}>{policy.title}</h1>
-      <div className="space-y-6">
-        {policy.content.map((section, i) => (
-          <div key={i} className="bg-white border border-[#E5D8C8] rounded-xl p-5 shadow-sm">
-            <h2 className="text-[#5D3A1A] font-semibold mb-2">{section.heading}</h2>
-            <p className="text-[#4B3420] text-sm leading-relaxed whitespace-pre-line">{section.text}</p>
+    <>
+      <Helmet>
+        <title>{policy.title} – Royal Hoof Horse Riding Academy</title>
+      </Helmet>
+
+      <div style={{ background: "#1A1714", minHeight: "100vh", padding: "48px 24px 80px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+
+          {/* Page header */}
+          <div style={{ marginBottom: 40, paddingBottom: 24, borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.75rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "#D8C7AE", marginBottom: 10 }}>
+              Royal Hoof Horse Riding Academy
+            </p>
+            <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 700, color: "#F3EBDD", lineHeight: 1.15 }}>
+              {policy.title}
+            </h1>
           </div>
-        ))}
+
+          {/* Sections */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {policy.sections.map((section, i) => (
+              <div key={i} style={{
+                background: "#242120",
+                border: "1px solid rgba(255,255,255,0.07)",
+                borderRadius: 8,
+                padding: "20px 24px",
+              }}>
+                <h2 style={{ color: "#D8C7AE", fontWeight: 600, fontSize: "1rem", marginBottom: 10, fontFamily: "'Inter', sans-serif" }}>
+                  {section.heading}
+                </h2>
+                <p style={{ color: "rgba(243,235,221,0.7)", fontSize: "0.9rem", lineHeight: 1.7, whiteSpace: "pre-line", fontFamily: "'Inter', sans-serif" }}>
+                  {section.text}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <p style={{ color: "rgba(243,235,221,0.25)", fontSize: "0.75rem", textAlign: "center", marginTop: 40, fontFamily: "'Inter', sans-serif" }}>
+            Last updated: August 2026 · Royal Hoof Horse Riding Academy
+          </p>
+        </div>
       </div>
-      <p className="text-[#8B6A4A] text-xs mt-8 text-center">Last updated: May 2026 · Rudhraksha Store</p>
-    </div>
+    </>
   )
 }

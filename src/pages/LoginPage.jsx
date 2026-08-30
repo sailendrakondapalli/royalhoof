@@ -1,4 +1,4 @@
-import { useState } from "react"
+﻿import { useState } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { Eye, EyeOff, Mail, Lock, User, ArrowLeft } from "lucide-react"
@@ -92,7 +92,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center px-4 py-12">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-[#5D3A1A] mb-2" style={{ fontFamily: "Georgia, serif" }}>?? Rudhraksha Store</h1>
+          <h1 className="text-3xl font-bold text-[#5D3A1A] mb-2" style={{ fontFamily: "Georgia, serif" }}>?? Royal Hoof</h1>
           <p className="text-[#4B3420] text-sm">
             {mode === "login" ? "Welcome back" : mode === "signup" ? "Create your account" : "Reset your password"}
           </p>

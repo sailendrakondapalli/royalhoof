@@ -1,4 +1,4 @@
-import { Heart } from 'lucide-react'
+﻿import { Heart } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useWishlistStore } from '../store/wishlistStore'
 import ProductCard from '../components/ProductCard'
@@ -14,7 +14,7 @@ export default function WishlistPage() {
         <h2 className="text-2xl font-bold text-[#1C1006] mb-2" style={{ fontFamily: 'Georgia, serif' }}>Your wishlist is empty</h2>
         <p className="text-[#8B6A4A] mb-6">Save beads you love to revisit later</p>
         <Link to="/products" className="px-8 py-3 bg-[#5D3A1A] text-white font-semibold rounded-lg hover:bg-[#7A4E28] transition-all">
-          Browse Rudraksha
+          Browse Horse Riding
         </Link>
       </div>
     )

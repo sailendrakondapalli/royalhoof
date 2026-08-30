@@ -1,127 +1,56 @@
-import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
-  LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
-  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
+  LineChart, Line, BarChart, Bar,
+  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts'
-import { ShoppingBag, DollarSign, Package, AlertTriangle, TrendingUp, Clock, Video, Upload, Loader2 } from 'lucide-react'
+import {
+  ShoppingBag, Calendar, Package, MessageSquare,
+  TrendingUp, Clock, Image, Users
+} from 'lucide-react'
 import { useAdminStore } from '../../store/adminStore'
 import { formatINR } from '../../utils/format'
-import { getSetting, setSetting } from '../../services/settingsService'
-import { supabase } from '../../lib/supabase'
-import toast from 'react-hot-toast'
 
-const GOLD_COLORS = ['#5D3A1A', '#7A4E28', '#D97706', '#B45309', '#3B2310', '#B5501A', '#D4760C', '#A03020']
+// Royal Hoof palette
+const CARD_BG = "#242120"
+const CARD_BORDER = "rgba(255,255,255,0.07)"
+const TEXT_PRIMARY = "#F3EBDD"
+const TEXT_MUTED = "rgba(243,235,221,0.45)"
+const ACCENT = "#D8C7AE"
 
-// Hero Video Manager component
-function HeroVideoManager() {
-  const [currentUrl, setCurrentUrl] = useState('')
-  const [uploading, setUploading] = useState(false)
-  const [saving, setSaving] = useState(false)
-  const [manualUrl, setManualUrl] = useState('')
-
-  useEffect(() => {
-    getSetting('hero_video_url').then(url => {
-      if (url) { setCurrentUrl(url); setManualUrl(url) }
-    }).catch(() => {})
-  }, [])
-
-  const handleFileUpload = async (e) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    if (!file.type.startsWith('video/')) { toast.error('Please select a video file'); return }
-    if (file.size > 50 * 1024 * 1024) { toast.error('Video must be under 50MB'); return }
-    setUploading(true)
-    try {
-      const fileName = `hero_${Date.now()}.${file.name.split('.').pop()}`
-      const { error: uploadError } = await supabase.storage
-        .from('product-images')
-        .upload(`hero/${fileName}`, file, { cacheControl: '3600', upsert: true, contentType: file.type })
-      if (uploadError) throw uploadError
-      const { data } = supabase.storage.from('product-images').getPublicUrl(`hero/${fileName}`)
-      await setSetting('hero_video_url', data.publicUrl)
-      setCurrentUrl(data.publicUrl)
-      setManualUrl(data.publicUrl)
-      toast.success('Hero video updated!')
-    } catch (e) {
-      toast.error(e.message || 'Upload failed')
-    } finally {
-      setUploading(false)
-    }
-  }
-
-  const handleSaveUrl = async () => {
-    if (!manualUrl.trim()) return
-    setSaving(true)
-    try {
-      await setSetting('hero_video_url', manualUrl.trim())
-      setCurrentUrl(manualUrl.trim())
-      toast.success('Hero video URL saved!')
-    } catch (e) {
-      toast.error(e.message || 'Failed to save')
-    } finally {
-      setSaving(false)
-    }
-  }
-
-  return (
-    <div className="bg-white border border-gray-200 rounded-xl p-5">
-      <h3 className="text-[#5D3A1A] font-medium mb-4 flex items-center gap-2">
-        <Video size={16} className="text-[#5D3A1A]" /> Hero Video
-      </h3>
-      {currentUrl && (
-        <video src={currentUrl} className="w-full h-32 object-cover rounded-lg mb-4 bg-gray-50" muted />
-      )}
-      <div className="space-y-3">
-        {/* Upload from device */}
-        <div>
-          <label className="text-xs text-gray-400 mb-1 block">Upload from device (max 50MB)</label>
-          <label className="flex items-center gap-2 px-4 py-2.5 border border-dashed border-[#5D3A1A]/30 rounded-lg cursor-pointer hover:border-[#D97706]/60 transition-all">
-            <input type="file" accept="video/*" className="hidden" onChange={handleFileUpload} disabled={uploading} />
-            {uploading
-              ? <><Loader2 size={15} className="text-[#5D3A1A] animate-spin" /><span className="text-gray-400 text-sm">Uploading...</span></>
-              : <><Upload size={15} className="text-[#5D3A1A]" /><span className="text-gray-400 text-sm">Choose video file</span></>
-            }
-          </label>
-        </div>
-        {/* Or paste URL */}
-        <div>
-          <label className="text-xs text-gray-400 mb-1 block">Or paste video URL</label>
-          <div className="flex gap-2">
-            <input
-              value={manualUrl}
-              onChange={e => setManualUrl(e.target.value)}
-              placeholder="https://..."
-              className="flex-1 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm text-[#1C1006] placeholder-gray-600 focus:outline-none focus:border-[#5D3A1A]"
-            />
-            <button onClick={handleSaveUrl} disabled={saving || !manualUrl.trim()}
-              className="px-4 py-2 bg-[#5D3A1A] text-white text-sm font-medium rounded-lg hover:bg-[#7A4E28] disabled:opacity-60 flex items-center gap-1">
-              {saving && <Loader2 size={13} className="animate-spin" />}
-              Save
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-const StatCard = ({ icon: Icon, label, value, sub, color = 'gold', to }) => (
-  <Link to={to || '#'} className="cursor-pointer">
+const StatCard = ({ icon: Icon, label, value, sub, to, accent }) => (
+  <Link to={to || "#"} style={{ textDecoration: "none" }}>
     <motion.div
-      whileHover={{ y: -2, boxShadow: '0 4px 20px rgba(27,43,94,0.12)' }}
+      whileHover={{ y: -2 }}
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white border border-gray-200 rounded-xl p-5 cursor-pointer transition-all hover:border-[#5D3A1A]/30 h-full min-h-[130px] flex flex-col justify-between"
+      style={{
+        background: CARD_BG,
+        border: `1px solid ${CARD_BORDER}`,
+        borderRadius: 8,
+        padding: "20px",
+        display: "flex",
+        flexDirection: "column",
+        gap: 12,
+        cursor: "pointer",
+        transition: "border-color 0.2s",
+        minHeight: 120,
+      }}
+      onMouseEnter={e => e.currentTarget.style.borderColor = "rgba(216,199,174,0.3)"}
+      onMouseLeave={e => e.currentTarget.style.borderColor = CARD_BORDER}
     >
-      <div className={`p-2 rounded-lg w-fit ${color === 'gold' ? 'bg-[#5D3A1A]/15' : color === 'green' ? 'bg-green-500/15' : color === 'red' ? 'bg-red-500/15' : 'bg-blue-500/15'}`}>
-        <Icon size={18} className={color === 'gold' ? 'text-[#5D3A1A]' : color === 'green' ? 'text-green-400' : color === 'red' ? 'text-red-400' : 'text-blue-400'} />
+      <div style={{
+        width: 36, height: 36, borderRadius: 6,
+        background: "rgba(216,199,174,0.1)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+      }}>
+        <Icon size={17} style={{ color: ACCENT }} />
       </div>
       <div>
-        <p className="text-2xl font-bold text-[#5D3A1A] mb-1">{value}</p>
-        <p className="text-gray-400 text-sm">{label}</p>
-        {sub && <p className="text-xs text-gray-600 mt-1">{sub}</p>}
+        <p style={{ fontSize: "1.5rem", fontWeight: 700, color: TEXT_PRIMARY, fontFamily: "'Inter', sans-serif", lineHeight: 1 }}>{value}</p>
+        <p style={{ fontSize: "0.8125rem", color: TEXT_MUTED, marginTop: 4, fontFamily: "'Inter', sans-serif" }}>{label}</p>
+        {sub && <p style={{ fontSize: "0.6875rem", color: TEXT_MUTED, marginTop: 2 }}>{sub}</p>}
       </div>
     </motion.div>
   </Link>
@@ -130,168 +59,92 @@ const StatCard = ({ icon: Icon, label, value, sub, color = 'gold', to }) => (
 const ChartTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null
   return (
-    <div className="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs">
-      <p className="text-gray-400 mb-1">{label}</p>
+    <div style={{ background: "#2C2C2C", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, padding: "8px 12px", fontSize: 11 }}>
+      <p style={{ color: TEXT_MUTED, marginBottom: 4 }}>{label}</p>
       {payload.map((p, i) => (
-        <p key={i} style={{ color: p.color }}>{p.name}: {p.name === 'revenue' ? formatINR(p.value) : p.value}</p>
+        <p key={i} style={{ color: ACCENT }}>{p.name}: {p.name === "revenue" ? formatINR(p.value) : p.value}</p>
       ))}
     </div>
   )
 }
 
 export default function AdminDashboard() {
-  const { stats, orders, products, loadOrders, loadProducts, computeStats, addNotification, notifications, startupNotified } = useAdminStore()
+  const { stats, orders, loadOrders, loadProducts, computeStats } = useAdminStore()
 
   useEffect(() => {
-    Promise.all([loadOrders(), loadProducts()]).then(() => {
-      computeStats()
-    })
+    Promise.all([loadOrders(), loadProducts()]).then(() => computeStats())
   }, [])
-
-  useEffect(() => {
-    if (!stats || startupNotified) return
-    useAdminStore.setState({ startupNotified: true })
-    if (stats.lowStockCount > 0) {
-      addNotification(`${stats.lowStockCount} products have low stock (< 10 items)`, 'warning')
-    }
-    if (stats.todayOrdersCount > 0) {
-      addNotification(`${stats.todayOrdersCount} new orders today`, 'info')
-    }
-  }, [stats])
 
   if (!stats) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-2 border-[#5D3A1A] border-t-transparent rounded-full animate-spin" />
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 240 }}>
+        <div style={{ width: 32, height: 32, border: `2px solid ${ACCENT}`, borderTopColor: "transparent", borderRadius: "50%", animation: "spin 0.7s linear infinite" }} />
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     )
   }
 
+  // Derive quick counts from orders
+  const today = new Date().toDateString()
+  const todayOrders = orders.filter(o => new Date(o.created_at).toDateString() === today).length
+  const pendingEnquiries = stats.totalOrders || 0
+
   return (
-    <div className="space-y-6">
+    <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+      {/* Page header */}
       <div>
-        <h1 className="text-2xl font-bold text-[#5D3A1A]" style={{ fontFamily: 'Georgia, serif' }}>Dashboard</h1>
-        <p className="text-gray-500 text-sm mt-1">Welcome back. Here's what's happening.</p>
+        <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.75rem", fontWeight: 700, color: TEXT_PRIMARY, marginBottom: 4 }}>
+          Dashboard
+        </h1>
+        <p style={{ color: TEXT_MUTED, fontSize: "0.875rem", fontFamily: "'Inter', sans-serif" }}>
+          Welcome back. Here's what's happening at Royal Hoof.
+        </p>
       </div>
 
-      {/* Stat Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-        <StatCard icon={ShoppingBag} label="Total Orders" value={stats.totalOrders} sub={`${stats.paidOrders} paid`} color="gold" to="/admin/orders" />
-        <StatCard icon={DollarSign} label="Total Revenue" value={formatINR(stats.totalRevenue)} sub="from paid orders" color="green" to="/admin/analytics" />
-        <StatCard icon={Package} label="Products" value={stats.totalProducts} color="blue" to="/admin/products" />
-        <StatCard icon={AlertTriangle} label="Low Stock" value={stats.lowStockCount} sub="< 10 items" color="red" to="/admin/products?stock=low" />
-        <StatCard icon={Clock} label="Today's Orders" value={stats.todayOrdersCount} color="gold" to="/admin/orders?filter=today" />
+      {/* Stat cards */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <StatCard icon={MessageSquare} label="Total Enquiries" value={stats.totalOrders ?? 0} sub="All time" to="/admin/enquiries" />
+        <StatCard icon={Calendar} label="Events" value={stats.totalProducts ?? 0} sub="Active events" to="/admin/events" />
+        <StatCard icon={Clock} label="Today's Enquiries" value={todayOrders} to="/admin/enquiries?filter=today" />
+        <StatCard icon={Users} label="Testimonials" value={stats.lowStockCount ?? 0} sub="Pending approval" to="/admin/testimonials" />
       </div>
 
-      {/* Charts Row 1 */}
+      {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Orders + Revenue Line Chart */}
-        <div className="bg-white border border-gray-200 rounded-xl p-5">
-          <h3 className="text-[#5D3A1A] font-medium mb-4 flex items-center gap-2">
-            <TrendingUp size={16} className="text-[#5D3A1A]" /> Orders (Last 14 Days)
+        {/* Enquiries Line Chart */}
+        <div style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderRadius: 8, padding: 20 }}>
+          <h3 style={{ color: TEXT_PRIMARY, fontSize: "0.9375rem", fontWeight: 600, marginBottom: 16, display: "flex", alignItems: "center", gap: 8, fontFamily: "'Inter', sans-serif" }}>
+            <TrendingUp size={15} style={{ color: ACCENT }} /> Enquiries — Last 14 Days
           </h3>
-          <ResponsiveContainer width="100%" height={220}>
-            <LineChart data={stats.last14Days}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis dataKey="date" tick={{ fill: '#666', fontSize: 10 }} />
-              <YAxis tick={{ fill: '#666', fontSize: 10 }} />
+          <ResponsiveContainer width="100%" height={200}>
+            <LineChart data={stats.last14Days || []}>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+              <XAxis dataKey="date" tick={{ fill: TEXT_MUTED, fontSize: 10 }} />
+              <YAxis tick={{ fill: TEXT_MUTED, fontSize: 10 }} />
               <Tooltip content={<ChartTooltip />} />
-              <Line type="monotone" dataKey="orders" stroke="#5D3A1A" strokeWidth={2} dot={{ fill: '#5D3A1A', r: 3 }} name="orders" />
+              <Line type="monotone" dataKey="orders" stroke={ACCENT} strokeWidth={2} dot={{ fill: ACCENT, r: 3 }} name="enquiries" />
             </LineChart>
           </ResponsiveContainer>
         </div>
 
-        {/* Revenue Bar Chart */}
-        <div className="bg-white border border-gray-200 rounded-xl p-5">
-          <h3 className="text-[#5D3A1A] font-medium mb-4">Revenue (Last 14 Days)</h3>
-          <ResponsiveContainer width="100%" height={220}>
-            <BarChart data={stats.last14Days}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis dataKey="date" tick={{ fill: '#666', fontSize: 10 }} />
-              <YAxis tick={{ fill: '#666', fontSize: 10 }} tickFormatter={v => `₹${(v/1000).toFixed(0)}k`} />
-              <Tooltip content={<ChartTooltip />} />
-              <Bar dataKey="revenue" fill="#5D3A1A" radius={[3, 3, 0, 0]} name="revenue" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-
-      {/* Charts Row 2 */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Category Pie */}
-        <div className="bg-white border border-gray-200 rounded-xl p-5">
-          <h3 className="text-[#5D3A1A] font-medium mb-4">Category Sales</h3>
-          <ResponsiveContainer width="100%" height={200}>
-            <PieChart>
-              <Pie data={stats.categorySales} cx="50%" cy="50%" innerRadius={50} outerRadius={80} dataKey="value" nameKey="name">
-                {stats.categorySales.map((_, i) => <Cell key={i} fill={GOLD_COLORS[i % GOLD_COLORS.length]} />)}
-              </Pie>
-              <Tooltip formatter={(v) => formatINR(v)} contentStyle={{ background: '#fff', border: '1px solid rgba(27,43,94,0.2)', borderRadius: 8, fontSize: 11 }} />
-              <Legend iconSize={8} wrapperStyle={{ fontSize: 11, color: '#999' }} />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* City Distribution */}
-        <div className="bg-white border border-gray-200 rounded-xl p-5">
-          <h3 className="text-[#5D3A1A] font-medium mb-4">Orders by City</h3>
-          <ResponsiveContainer width="100%" height={200}>
-            <BarChart data={stats.cityData} layout="vertical">
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis type="number" tick={{ fill: '#666', fontSize: 10 }} />
-              <YAxis dataKey="city" type="category" tick={{ fill: '#999', fontSize: 10 }} width={70} />
-              <Tooltip contentStyle={{ background: '#fff', border: '1px solid rgba(27,43,94,0.2)', borderRadius: 8, fontSize: 11 }} />
-              <Bar dataKey="count" fill="#7A4E28" radius={[0, 3, 3, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* Top Products */}
-        <div className="bg-white border border-gray-200 rounded-xl p-5">
-          <h3 className="text-[#5D3A1A] font-medium mb-4">Top Products</h3>
-          <div className="space-y-2">
-            {stats.topProducts.slice(0, 6).map((p, i) => (
-              <div key={i} className="flex items-center gap-2">
-                <span className="text-[#5D3A1A] text-xs w-4">{i + 1}</span>
-                <div className="flex-1 min-w-0">
-                  <p className="text-gray-600 text-xs truncate">{p.name}</p>
-                  <div className="h-1.5 bg-gray-50 rounded-full mt-1">
-                    <div
-                      className="h-full bg-[#5D3A1A] rounded-full"
-                      style={{ width: `${(p.qty / stats.topProducts[0].qty) * 100}%` }}
-                    />
-                  </div>
-                </div>
-                <span className="text-gray-500 text-xs">{p.qty}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Low Stock Alert */}
-      {stats.lowStockProducts?.length > 0 && (
-        <div className="bg-white border border-red-500/20 rounded-xl p-5">
-          <h3 className="text-[#5D3A1A] font-medium mb-3 flex items-center gap-2">
-            <AlertTriangle size={16} className="text-red-400" /> Low Stock Alert
+        {/* Revenue / Revenue Bar Chart */}
+        <div style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderRadius: 8, padding: 20 }}>
+          <h3 style={{ color: TEXT_PRIMARY, fontSize: "0.9375rem", fontWeight: 600, marginBottom: 16, fontFamily: "'Inter', sans-serif" }}>
+            Revenue — Last 14 Days
           </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {stats.lowStockProducts.slice(0, 8).map(p => (
-              <div key={p.id} className="bg-gray-50 rounded-lg p-3">
-                <p className="text-[#1C1006] text-xs font-medium truncate">{p.name}</p>
-                <p className="text-red-400 text-xs mt-1">{p.stock} left</p>
-              </div>
-            ))}
-          </div>
+          <ResponsiveContainer width="100%" height={200}>
+            <BarChart data={stats.last14Days || []}>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+              <XAxis dataKey="date" tick={{ fill: TEXT_MUTED, fontSize: 10 }} />
+              <YAxis tick={{ fill: TEXT_MUTED, fontSize: 10 }} tickFormatter={v => `₹${(v / 1000).toFixed(0)}k`} />
+              <Tooltip content={<ChartTooltip />} />
+              <Bar dataKey="revenue" fill={ACCENT} radius={[3, 3, 0, 0]} name="revenue" />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
-      )}
+      </div>
 
-      {/* Hero Video Manager */}
-      <HeroVideoManager />
-      <FeaturesBarManager />
-      <ProductsPerPageManager />
-
-      {/* Recent Orders — grouped by day (last 3 days) */}
+      {/* Recent orders/enquiries */}
       {(() => {
         const days = []
         for (let i = 0; i < 3; i++) {
@@ -300,64 +153,59 @@ export default function AdminDashboard() {
           const ds = d.toDateString()
           const label = i === 0 ? "Today" : i === 1 ? "Yesterday" : d.toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "short" })
           const dayOrders = orders.filter(o => new Date(o.created_at).toDateString() === ds)
-          days.push({ label, date: ds, orders: dayOrders })
+          days.push({ label, orders: dayOrders })
         }
         const hasAny = days.some(d => d.orders.length > 0)
         return (
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-[#5D3A1A] font-medium">Recent Orders <span className="text-gray-400 text-xs font-normal ml-1">({orders.length} total)</span></h3>
-              <Link to="/admin/orders" className="text-xs text-[#5D3A1A] hover:underline font-medium">View all →</Link>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <h3 style={{ color: TEXT_PRIMARY, fontSize: "0.9375rem", fontWeight: 600, fontFamily: "'Inter', sans-serif" }}>
+                Recent Orders
+                <span style={{ color: TEXT_MUTED, fontWeight: 400, fontSize: "0.75rem", marginLeft: 8 }}>({orders.length} total)</span>
+              </h3>
+              <Link to="/admin/orders" style={{ color: ACCENT, fontSize: "0.75rem", textDecoration: "none" }}>View all →</Link>
             </div>
+
             {!hasAny && (
-              <div className="bg-white border border-gray-200 rounded-xl p-8 text-center text-gray-400 text-sm">No orders in the last 3 days</div>
+              <div style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderRadius: 8, padding: "32px", textAlign: "center", color: TEXT_MUTED, fontSize: "0.875rem" }}>
+                No orders in the last 3 days
+              </div>
             )}
+
             {days.map(({ label, orders: dayOrders }) => dayOrders.length === 0 ? null : (
-              <div key={label} className="bg-white border border-gray-200 rounded-xl overflow-hidden">
-                {/* Day header */}
-                <div className="flex items-center justify-between px-4 py-2.5 bg-[#F8F5F0] border-b border-gray-200">
-                  <span className="text-[#5D3A1A] text-xs font-semibold">{label}</span>
-                  <span className="text-gray-400 text-xs">{dayOrders.length} order{dayOrders.length !== 1 ? "s" : ""} &middot; {formatINR(dayOrders.filter(o => o.payment_status === "paid").reduce((s, o) => s + (o.total_amount || 0), 0))} revenue</span>
+              <div key={label} style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderRadius: 8, overflow: "hidden" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 16px", borderBottom: `1px solid ${CARD_BORDER}`, background: "rgba(255,255,255,0.02)" }}>
+                  <span style={{ color: ACCENT, fontSize: "0.75rem", fontWeight: 600, fontFamily: "'Inter', sans-serif" }}>{label}</span>
+                  <span style={{ color: TEXT_MUTED, fontSize: "0.6875rem" }}>{dayOrders.length} order{dayOrders.length !== 1 ? "s" : ""}</span>
                 </div>
-                {/* Orders table */}
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
+                <div style={{ overflowX: "auto" }}>
+                  <table style={{ width: "100%", borderCollapse: "collapse" }}>
                     <thead>
-                      <tr className="border-b border-gray-100">
-                        <th className="text-left text-gray-400 text-xs px-4 py-2 font-medium">Order ID</th>
-                        <th className="text-left text-gray-400 text-xs px-4 py-2 font-medium">Customer</th>
-                        <th className="text-left text-gray-400 text-xs px-4 py-2 font-medium">Amount</th>
-                        <th className="text-left text-gray-400 text-xs px-4 py-2 font-medium">Status</th>
-                        <th className="text-left text-gray-400 text-xs px-4 py-2 font-medium">Time</th>
+                      <tr>
+                        {["Order ID", "Customer", "Amount", "Status", "Time"].map(h => (
+                          <th key={h} style={{ textAlign: "left", color: TEXT_MUTED, fontSize: "0.6875rem", padding: "8px 16px", fontWeight: 500, fontFamily: "'Inter', sans-serif" }}>{h}</th>
+                        ))}
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-50">
+                    <tbody>
                       {dayOrders.map(o => {
                         const addr = (() => { try { return typeof o.address === "object" ? o.address : JSON.parse(o.address || "{}") } catch { return {} } })()
                         const customerName = addr.full_name || o.users?.email || "Guest"
                         return (
-                          <tr key={o.id} className="hover:bg-gray-50 transition-colors">
-                            <td className="px-4 py-2.5 text-[#5D3A1A] text-xs font-mono font-semibold">{o.display_order_id || "#" + String(o.id).slice(-6).toUpperCase()}</td>
-                            <td className="px-4 py-2.5 text-gray-600 text-xs truncate max-w-[120px]">{customerName}</td>
-                            <td className="px-4 py-2.5 text-[#5D3A1A] text-xs font-medium">{formatINR(o.total_amount)}</td>
-                            <td className="px-4 py-2.5">
-                              <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                                o.payment_status === "paid"
-                                  ? o.order_status === "delivered" ? "bg-green-500 text-white"
-                                  : o.order_status === "shipping" ? "bg-orange-500 text-white"
-                                  : "bg-blue-500 text-white"
-                                  : o.payment_status === "pending_verification" ? "bg-orange-500/20 text-orange-500"
-                                  : o.payment_status === "failed" ? "bg-red-500/20 text-red-500"
-                                  : "bg-yellow-500/20 text-yellow-600"
-                              }`}>
-                                {o.payment_status === "paid"
-                                  ? (o.order_status === "delivered" ? "Delivered" : o.order_status === "shipping" ? "Shipped" : "Confirmed")
-                                  : o.payment_status === "pending_verification" ? "Verify"
-                                  : o.payment_status === "failed" ? "Failed"
-                                  : "Pending"}
+                          <tr key={o.id} style={{ borderTop: `1px solid ${CARD_BORDER}` }}>
+                            <td style={{ padding: "10px 16px", color: ACCENT, fontSize: "0.75rem", fontFamily: "monospace", fontWeight: 600 }}>{o.display_order_id || "#" + String(o.id).slice(-6).toUpperCase()}</td>
+                            <td style={{ padding: "10px 16px", color: TEXT_PRIMARY, fontSize: "0.75rem", maxWidth: 120, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{customerName}</td>
+                            <td style={{ padding: "10px 16px", color: TEXT_PRIMARY, fontSize: "0.75rem" }}>{formatINR(o.total_amount)}</td>
+                            <td style={{ padding: "10px 16px" }}>
+                              <span style={{
+                                fontSize: "0.6875rem", padding: "3px 8px", borderRadius: 9999, fontWeight: 500,
+                                background: o.payment_status === "paid" ? "rgba(34,197,94,0.15)" : "rgba(234,179,8,0.15)",
+                                color: o.payment_status === "paid" ? "#4ade80" : "#fbbf24",
+                              }}>
+                                {o.payment_status === "paid" ? "Paid" : "Pending"}
                               </span>
                             </td>
-                            <td className="px-4 py-2.5 text-gray-400 text-xs">{new Date(o.created_at).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" })}</td>
+                            <td style={{ padding: "10px 16px", color: TEXT_MUTED, fontSize: "0.6875rem" }}>{new Date(o.created_at).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" })}</td>
                           </tr>
                         )
                       })}
@@ -366,121 +214,11 @@ export default function AdminDashboard() {
                 </div>
               </div>
             ))}
-            <div className="text-center">
-              <Link to="/admin/orders" className="text-xs text-[#5D3A1A] hover:underline">View all {orders.length} orders →</Link>
-            </div>
           </div>
         )
       })()}
-    </div>
-  )
-}
 
-// Features Bar Manager - edit the 4 trust badges shown on homepage
-function FeaturesBarManager() {
-  const DEFAULT_FEATURES = [
-    { id: 1, title: 'Lab Certified', desc: '100% Authentic Rudraksha' },
-    { id: 2, title: 'Fast Shipping', desc: 'Across India' },
-    { id: 3, title: 'Easy Returns', desc: '7 Day Return Policy' },
-    { id: 4, title: 'Nepal & Java', desc: 'Original Source Beads' },
-  ]
-  const [features, setFeatures] = useState(DEFAULT_FEATURES)
-  const [saving, setSaving] = useState(false)
-
-  useEffect(() => {
-    getSetting('features_bar').then(val => {
-      if (val) { try { const p = JSON.parse(val); if (Array.isArray(p) && p.length) setFeatures(p) } catch {} }
-    }).catch(() => {})
-  }, [])
-
-  const save = async (updated) => {
-    setSaving(true)
-    try { await setSetting('features_bar', JSON.stringify(updated)); toast.success('Features bar updated!') }
-    catch (e) { toast.error(e.message) }
-    finally { setSaving(false) }
-  }
-
-  const update = (id, field, value) => {
-    setFeatures(prev => prev.map(f => f.id === id ? { ...f, [field]: value } : f))
-  }
-
-  return (
-    <div className="bg-white border border-gray-200 rounded-xl p-5">
-      <h3 className="text-[#5D3A1A] font-medium mb-1 flex items-center gap-2">
-        ✦ Homepage Trust Badges
-      </h3>
-      <p className="text-xs text-gray-400 mb-4">Edit the 4 feature badges shown below the hero on the homepage.</p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
-        {features.map(f => (
-          <div key={f.id} className="bg-gray-50 rounded-lg p-3 space-y-2">
-            <input value={f.title} onChange={e => update(f.id, 'title', e.target.value)}
-              placeholder="Title e.g. Fast Shipping"
-              className="w-full bg-white border border-gray-200 rounded-lg px-3 py-1.5 text-sm text-[#1C1006] focus:outline-none focus:border-[#5D3A1A]" />
-            <input value={f.desc} onChange={e => update(f.id, 'desc', e.target.value)}
-              placeholder="Description e.g. Across India"
-              className="w-full bg-white border border-gray-200 rounded-lg px-3 py-1.5 text-sm text-gray-500 focus:outline-none focus:border-[#5D3A1A]" />
-          </div>
-        ))}
-      </div>
-      <button onClick={() => save(features)} disabled={saving}
-        className="px-4 py-2 bg-[#5D3A1A] text-white text-sm font-semibold rounded-lg hover:bg-[#7A4E28] disabled:opacity-60 transition-all">
-        {saving ? 'Saving...' : 'Save Changes'}
-      </button>
-    </div>
-  )
-}
-
-// Products Per Page Manager - controls how many products users see per page on /products
-function ProductsPerPageManager() {
-  const PAGE_SIZE_OPTIONS = [8, 12, 24, 48]
-  const [value, setValue] = useState(12)
-  const [saving, setSaving] = useState(false)
-
-  useEffect(() => {
-    getSetting('products_per_page').then(val => {
-      const n = parseInt(val)
-      if (n && PAGE_SIZE_OPTIONS.includes(n)) setValue(n)
-    }).catch(() => {})
-  }, [])
-
-  const save = async (n) => {
-    setSaving(true)
-    try {
-      await setSetting('products_per_page', String(n))
-      setValue(n)
-      toast.success(`Products per page set to ${n}`)
-    } catch (e) {
-      toast.error(e.message || 'Failed to save')
-    } finally {
-      setSaving(false)
-    }
-  }
-
-  return (
-    <div className="bg-white border border-gray-200 rounded-xl p-5">
-      <h3 className="text-[#5D3A1A] font-medium mb-1 flex items-center gap-2">
-        <Package size={15} /> Products Per Page
-        <span className="text-xs text-gray-500 font-normal ml-1">- controls user-facing /products page</span>
-      </h3>
-      <p className="text-gray-400 text-xs mb-4">Choose how many products are shown per page on the shop.</p>
-      <div className="flex items-center gap-3 flex-wrap">
-        {PAGE_SIZE_OPTIONS.map(n => (
-          <button
-            key={n}
-            onClick={() => save(n)}
-            disabled={saving}
-            className={`px-5 py-2 rounded-lg text-sm font-semibold border transition-all ${
-              value === n
-                ? 'bg-[#5D3A1A] text-white border-[#5D3A1A]'
-                : 'bg-gray-50 text-gray-600 border-gray-200 hover:border-[#5D3A1A] hover:text-[#5D3A1A]'
-            } disabled:opacity-60`}
-          >
-            {n}
-          </button>
-        ))}
-        {saving && <span className="text-xs text-gray-400">Saving...</span>}
-      </div>
-      <p className="text-gray-400 text-xs mt-3">Current: <span className="text-[#5D3A1A] font-semibold">{value} products per page</span></p>
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { ChevronDown, Search } from 'lucide-react'
 
@@ -12,7 +12,7 @@ const FAQS = [
       },
       {
         q: 'How can I contact you?',
-        a: 'You can reach us via phone at +91 99944 41363, WhatsApp, or by filling out our enquiry form. We typically respond within 24 hours.'
+        a: 'You can reach us via phone at +91 90437 00776, WhatsApp, or by filling out our enquiry form. We typically respond within 24 hours.'
       },
       {
         q: 'Do you offer a free trial or demo session?',
@@ -214,7 +214,7 @@ export default function FAQPage() {
                 Send Enquiry
               </a>
               <a
-                href="tel:+919994441363"
+                href="tel:+919043700776"
                 className="inline-block bg-[#2A2826] hover:bg-[#3A3836] text-[#F3EBDD] px-8 py-3 rounded-lg font-medium uppercase tracking-wider transition-colors"
               >
                 Call Us

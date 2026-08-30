@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+﻿import { useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -96,14 +96,14 @@ export default function ProductsPage() {
   const totalPages = Math.ceil(products.length / pageSize)
   const pagedProducts = products.slice((page - 1) * pageSize, page * pageSize)
 
-  const pageTitle = category ? `${category} � Rudhraksha Store` : 'All Rudraksha � Rudhraksha Store'
-  const headingText = category || 'All Rudraksha'
+  const pageTitle = category ? `${category} � Royal Hoof` : 'All Horse Riding � Royal Hoof'
+  const headingText = category || 'All Horse Riding'
 
   return (
     <>
       <Helmet>
         <title>{pageTitle}</title>
-        <meta name="description" content={`Shop ${category || 'all'} rudraksha at Rudhraksha Store. Authentic certified sacred beads from Nepal & Java.`} />
+        <meta name="description" content={`Shop ${category || 'all'} Horse Riding at Royal Hoof. Authentic certified sacred beads from Nepal & Java.`} />
       </Helmet>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
@@ -320,7 +320,7 @@ export default function ProductsPage() {
               >
                 <span className="text-6xl mb-4 leading-none">??</span>
                 <h3 className="text-[#C8860A] text-lg font-bold mb-1" style={{ fontFamily: 'Georgia, serif' }}>
-                  No Rudraksha Found
+                  No Horse Riding Found
                 </h3>
                 <p className="text-[#DDB87A] text-sm mb-6 max-w-xs">
                   {search
@@ -331,7 +331,7 @@ export default function ProductsPage() {
                   onClick={clearFilters}
                   className="px-6 py-2.5 bg-[#C8860A] text-[#1A0A02] rounded-xl text-sm font-semibold hover:bg-[#E5A020] transition-all shadow-md hover:shadow-[0_4px_16px_rgba(200,134,10,0.4)]"
                 >
-                  Browse All Rudraksha
+                  Browse All Horse Riding
                 </button>
               </motion.div>
             ) : (

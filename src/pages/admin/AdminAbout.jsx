@@ -1,49 +1,132 @@
-import { useState, useEffect } from "react"
-import { Save, Loader2, RefreshCw } from "lucide-react"
+﻿import { useState, useEffect, useRef } from "react"
+import { Save, Loader2, RefreshCw, Upload, X } from "lucide-react"
 import { getSetting, setSetting } from "../../services/settingsService"
+import { supabase } from "../../lib/supabase"
 import toast from "react-hot-toast"
 
-const DEFAULT_EN = {
-  title: "Dakshinamurthy Astrology Centre",
-  subtitle: "(Vastu)",
-  p1: "We have over 15 years of experience in providing authentic Rudraksha beads. Every Rudraksha is carefully examined using multiple methods to ensure its authenticity, quality, and spiritual effectiveness.",
-  p2: "We thoroughly test each Rudraksha to verify its quality, assess its energy, and determine whether it exhibits positive spiritual vibrations through modern testing techniques before selecting it for our customers.",
-  p3: "There is no doubt that wearing a genuine Rudraksha can bring peace of mind, good health, spiritual growth, prosperity, and relief from astrological doshas (planetary afflictions). It is also believed that those who wear a Rudraksha receive the divine blessings of Lord Shiva.",
-  p4: "Wearing a Rudraksha is considered the result of good deeds (punya) accumulated in previous births.",
-  p5: "Nowadays, many low-quality and counterfeit Rudraksha beads are available in the market. Therefore, it is essential to verify the authenticity and quality of a Rudraksha before wearing it.",
-  p6: "A properly selected and authentic Rudraksha can bring remarkable and beneficial results to the wearer.",
-  years: "15+",
-  yearsLabel: "Years of Experience",
-  authentic: "100%",
-  authenticLabel: "Authentic Products",
-  customers: "10K+",
-  customersLabel: "Happy Customers",
+const CARD_BG = "#242120"
+const CARD_BORDER = "rgba(255,255,255,0.07)"
+const TEXT_PRIMARY = "#F3EBDD"
+const TEXT_MUTED = "rgba(243,235,221,0.45)"
+const ACCENT = "#D8C7AE"
+
+const DEFAULT = {
+  title: "Royal Hoof Horse Riding Academy",
+  subtitle: "Nallambakkam, Tamil Nadu",
+  p1: "Welcome to Royal Hoof Horse Riding Academy, located at GIRI FARMS in Nallambakkam, Tamil Nadu. We offer professional horse riding lessons for all ages in a safe, nurturing environment.",
+  p2: "Our certified trainers are passionate about equestrian sports and dedicated to building a strong foundation for every rider — from complete beginners to experienced equestrians.",
+  p3: "We offer a wide range of programmes including beginner lessons, advanced training, competitive riding, and special kids' sessions designed to build confidence and develop lifelong skills.",
+  p4: "Safety is our top priority. All sessions are supervised by experienced professionals, and our horses are well-trained, healthy, and temperament-tested for rider compatibility.",
+  p5: "Located conveniently within the Uniworld City, Aspen Greens community, our facility is equipped with quality arena space, stables, and training equipment.",
+  p6: "Join our growing family of riders and experience the joy, freedom, and discipline that horse riding brings.",
+  years: "GIRI FARMS",
+  yearsLabel: "Our Home",
+  authentic: "All Ages",
+  authenticLabel: "Welcome",
+  customers: "Mon – Sun",
+  customersLabel: "6 AM – 8 PM",
 }
 
-const DEFAULT_TE = {
-  title: "దక్షిణామూర్తి జ్యోతిష్య కేంద్రం",
-  subtitle: "(వాస్తు)",
-  p1: "మేము 15 సంవత్సరాలకు పైగా అసలైన రుద్రాక్ష పూసలను అందించడంలో అనుభవం కలిగి ఉన్నాము.",
-  p2: "మా కస్టమర్లకు ఎంపిక చేయడానికి ముందు ఆధునిక పరీక్షా పద్ధతుల ద్వారా ప్రతి రుద్రాక్ష యొక్క నాణ్యతను ధృవీకరిస్తాము.",
-  p3: "నిజమైన రుద్రాక్ష ధరించడం మనో శాంతి, ఆరోగ్యం, ఆధ్యాత్మిక వికాసం మరియు శివుని దివ్య ఆశీస్సులు తీసుకొస్తుంది.",
-  p4: "రుద్రాక్ష ధరించడం పూర్వ జన్మలలో చేసిన పుణ్య కర్మల ఫలితంగా భావిస్తారు.",
-  p5: "నేటి కాలంలో మార్కెట్లో అనేక నకిలీ రుద్రాక్ష పూసలు ఉన్నాయి. అందువల్ల ప్రామాణికత ధృవీకరించడం చాలా అవసరం.",
-  p6: "సరిగ్గా ఎంపిక చేయబడిన అసలైన రుద్రాక్ష ధరించే వ్యక్తికి అద్భుతమైన ఫలితాలను అందిస్తుంది.",
-  years: "15+",
-  yearsLabel: "సంవత్సరాల అనుభవం",
-  authentic: "100%",
-  authenticLabel: "అసలైన ఉత్పత్తులు",
-  customers: "10వే+",
-  customersLabel: "సంతుష్ట కస్టమర్లు",
+const inputStyle = {
+  width: "100%",
+  background: "rgba(255,255,255,0.05)",
+  border: "1px solid rgba(255,255,255,0.12)",
+  borderRadius: 5,
+  padding: "9px 12px",
+  color: TEXT_PRIMARY,
+  fontSize: "0.875rem",
+  fontFamily: "'Inter', sans-serif",
+  outline: "none",
+  boxSizing: "border-box",
+  resize: "vertical",
 }
 
-const inp = "w-full bg-white border border-[#E5D8C8] rounded-lg px-3 py-2.5 text-sm text-[#1C1006] placeholder-[#8B6A4A] focus:outline-none focus:border-[#5D3A1A] resize-none"
-const lbl = "text-xs text-[#4B3420] mb-1 block font-medium"
+const labelStyle = {
+  display: "block",
+  color: TEXT_MUTED,
+  fontSize: "0.6875rem",
+  letterSpacing: "0.08em",
+  textTransform: "uppercase",
+  marginBottom: 5,
+  fontFamily: "'Inter', sans-serif",
+}
 
-function LangForm({ lang, data, onChange }) {
+export default function AdminAbout() {
+  const [data, setData] = useState(DEFAULT)
+  const [imageUrl, setImageUrl] = useState("")
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
+  const [uploading, setUploading] = useState(false)
+  const fileRef = useRef(null)
+
+  useEffect(() => {
+    Promise.all([
+      getSetting("about_section_en").catch(() => null),
+      getSetting("about_image_url").catch(() => null),
+    ]).then(([content, img]) => {
+      if (content) { try { setData({ ...DEFAULT, ...JSON.parse(content) }) } catch {} }
+      if (img) setImageUrl(img)
+      setLoading(false)
+    })
+  }, [])
+
+  const set = (key, val) => setData(d => ({ ...d, [key]: val }))
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    if (!file.type.startsWith("image/")) { toast.error("Please select an image file"); return }
+    if (file.size > 10 * 1024 * 1024) { toast.error("Image must be under 10MB"); return }
+
+    setUploading(true)
+    try {
+      const ext = file.name.split(".").pop()
+      const fileName = `about_${Date.now()}.${ext}`
+      const { error: uploadError } = await supabase.storage
+        .from("product-images")
+        .upload(`about/${fileName}`, file, { cacheControl: "3600", upsert: true, contentType: file.type })
+      if (uploadError) throw uploadError
+      const { data: urlData } = supabase.storage.from("product-images").getPublicUrl(`about/${fileName}`)
+      setImageUrl(urlData.publicUrl)
+      toast.success("Image uploaded!")
+    } catch (err) {
+      toast.error(err.message || "Upload failed")
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  const handleSave = async () => {
+    setSaving(true)
+    try {
+      await Promise.all([
+        setSetting("about_section_en", JSON.stringify(data)),
+        setSetting("about_image_url", imageUrl),
+      ])
+      toast.success("About section saved! Changes are live on the website.")
+    } catch (err) {
+      toast.error(err.message || "Failed to save")
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const handleReset = () => {
+    setData(DEFAULT)
+    toast.success("Reset to defaults — click Save to apply")
+  }
+
+  if (loading) {
+    return (
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 240 }}>
+        <Loader2 size={28} className="animate-spin" style={{ color: ACCENT }} />
+      </div>
+    )
+  }
+
   const fields = [
-    { key: "title", label: "Centre Name / Title", rows: 1 },
-    { key: "subtitle", label: "Subtitle (e.g. Vastu)", rows: 1 },
+    { key: "title", label: "Academy Name / Title", rows: 1 },
+    { key: "subtitle", label: "Subtitle / Tagline", rows: 1 },
     { key: "p1", label: "Paragraph 1", rows: 3 },
     { key: "p2", label: "Paragraph 2", rows: 3 },
     { key: "p3", label: "Paragraph 3", rows: 3 },
@@ -51,187 +134,180 @@ function LangForm({ lang, data, onChange }) {
     { key: "p5", label: "Paragraph 5", rows: 2 },
     { key: "p6", label: "Paragraph 6", rows: 2 },
   ]
+
   const stats = [
-    { key: "years", label: "Years Value (e.g. 15+)" },
-    { key: "yearsLabel", label: "Years Label" },
-    { key: "authentic", label: "Authentic Value (e.g. 100%)" },
-    { key: "authenticLabel", label: "Authentic Label" },
-    { key: "customers", label: "Customers Value (e.g. 10K+)" },
-    { key: "customersLabel", label: "Customers Label" },
+    { v: "years", l: "yearsLabel", labelText: "Stat 1 Value & Label" },
+    { v: "authentic", l: "authenticLabel", labelText: "Stat 2 Value & Label" },
+    { v: "customers", l: "customersLabel", labelText: "Stat 3 Value & Label" },
   ]
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center gap-2 mb-3">
-        <span className="px-3 py-1 rounded-full text-xs font-bold" style={{
-          background: lang === "en" ? "#734129" : "#FABE1A",
-          color: lang === "en" ? "#F2EAE0" : "#734129"
-        }}>
-          {lang === "en" ? "🇬🇧 English" : "🇮🇳 Telugu"}
-        </span>
-      </div>
-
-      {/* Text fields */}
-      {fields.map(f => (
-        <div key={f.key}>
-          <label className={lbl}>{f.label}</label>
-          {f.rows === 1
-            ? <input value={data[f.key] || ""} onChange={e => onChange(f.key, e.target.value)} className={inp} />
-            : <textarea rows={f.rows} value={data[f.key] || ""} onChange={e => onChange(f.key, e.target.value)} className={inp} />
-          }
-        </div>
-      ))}
-
-      {/* Stats */}
-      <div className="border-t border-[#E5D8C8] pt-4">
-        <p className="text-xs font-bold text-[#4B3420] mb-3 uppercase tracking-wider">Stats Section</p>
-        <div className="grid grid-cols-2 gap-3">
-          {stats.map(s => (
-            <div key={s.key}>
-              <label className={lbl}>{s.label}</label>
-              <input value={data[s.key] || ""} onChange={e => onChange(s.key, e.target.value)} className={inp} />
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
-}
-
-export default function AdminAbout() {
-  const [enData, setEnData] = useState(DEFAULT_EN)
-  const [teData, setTeData] = useState(DEFAULT_TE)
-  const [loading, setLoading] = useState(true)
-  const [saving, setSaving] = useState(false)
-  const [activeTab, setActiveTab] = useState("en")
-
-  useEffect(() => {
-    Promise.all([
-      getSetting("about_section_en").catch(() => null),
-      getSetting("about_section_te").catch(() => null),
-    ]).then(([en, te]) => {
-      if (en) { try { setEnData({ ...DEFAULT_EN, ...JSON.parse(en) }) } catch {} }
-      if (te) { try { setTeData({ ...DEFAULT_TE, ...JSON.parse(te) }) } catch {} }
-      setLoading(false)
-    })
-  }, [])
-
-  const handleChange = (lang, key, val) => {
-    if (lang === "en") setEnData(d => ({ ...d, [key]: val }))
-    else setTeData(d => ({ ...d, [key]: val }))
-  }
-
-  const handleSave = async () => {
-    setSaving(true)
-    try {
-      await Promise.all([
-        setSetting("about_section_en", JSON.stringify(enData)),
-        setSetting("about_section_te", JSON.stringify(teData)),
-      ])
-      toast.success("About section saved!")
-    } catch (e) {
-      toast.error(e.message || "Failed to save")
-    } finally {
-      setSaving(false)
-    }
-  }
-
-  const handleReset = (lang) => {
-    if (lang === "en") { setEnData(DEFAULT_EN); toast.success("Reset to defaults") }
-    else { setTeData(DEFAULT_TE); toast.success("Reset to defaults") }
-  }
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <Loader2 size={28} className="animate-spin text-[#5D3A1A]" />
-      </div>
-    )
-  }
-
-  return (
-    <div className="space-y-5 max-w-4xl">
-      <div className="flex items-center justify-between flex-wrap gap-3">
+    <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+      {/* Header */}
+      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
         <div>
-          <h1 className="text-2xl font-bold text-[#5D3A1A]" style={{ fontFamily: "Georgia, serif" }}>
+          <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.75rem", fontWeight: 700, color: TEXT_PRIMARY }}>
             About Section
           </h1>
-          <p className="text-gray-500 text-sm mt-1">
-            Edit the "About Us" content shown on the homepage. Changes save to the database and reflect instantly.
+          <p style={{ color: TEXT_MUTED, fontSize: "0.875rem", marginTop: 4, fontFamily: "'Inter', sans-serif" }}>
+            Edit the About Us content on the homepage. Changes are live instantly after saving.
           </p>
         </div>
-        <div className="flex gap-2">
-          <button onClick={() => handleReset(activeTab)}
-            className="flex items-center gap-1.5 px-4 py-2 border border-[#E5D8C8] text-[#4B3420] rounded-lg text-sm hover:bg-[#FFF5EE] transition-all">
-            <RefreshCw size={14} /> Reset to Default
+        <div style={{ display: "flex", gap: 10 }}>
+          <button onClick={handleReset}
+            style={{ display: "flex", alignItems: "center", gap: 6, background: "transparent", color: TEXT_MUTED, border: `1px solid ${CARD_BORDER}`, borderRadius: 4, padding: "8px 16px", cursor: "pointer", fontSize: "0.8125rem", fontFamily: "'Inter', sans-serif" }}>
+            <RefreshCw size={13} /> Reset
           </button>
           <button onClick={handleSave} disabled={saving}
-            className="flex items-center gap-2 px-5 py-2 bg-[#5D3A1A] text-white font-semibold rounded-lg hover:bg-[#7A4E28] transition-all disabled:opacity-60 text-sm">
-            {saving ? <Loader2 size={15} className="animate-spin" /> : <Save size={15} />}
-            Save Changes
+            style={{ display: "flex", alignItems: "center", gap: 6, background: saving ? "rgba(216,199,174,0.5)" : ACCENT, color: "#171614", border: "none", borderRadius: 4, padding: "8px 20px", cursor: saving ? "not-allowed" : "pointer", fontWeight: 700, fontSize: "0.8125rem", fontFamily: "'Inter', sans-serif" }}>
+            {saving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
+            {saving ? "Saving..." : "Save Changes"}
           </button>
         </div>
       </div>
 
-      {/* Language Tabs */}
-      <div className="flex gap-2 border-b border-[#E5D8C8] pb-0">
-        {["en", "te"].map(lang => (
-          <button key={lang} onClick={() => setActiveTab(lang)}
-            className={`px-5 py-2.5 text-sm font-semibold rounded-t-lg transition-all border-b-2 ${
-              activeTab === lang
-                ? "border-[#734129] text-[#734129] bg-white"
-                : "border-transparent text-gray-400 hover:text-[#734129]"
-            }`}>
-            {lang === "en" ? "🇬🇧 English" : "🇮🇳 Telugu"}
-          </button>
-        ))}
-      </div>
+      {/* Two column layout: form + live preview */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, alignItems: "start" }} className="about-grid">
 
-      {/* Form */}
-      <div className="bg-white border border-[#E5D8C8] rounded-xl p-6 shadow-sm">
-        {activeTab === "en"
-          ? <LangForm lang="en" data={enData} onChange={(k, v) => handleChange("en", k, v)} />
-          : <LangForm lang="te" data={teData} onChange={(k, v) => handleChange("te", k, v)} />
-        }
-      </div>
+        {/* LEFT — Edit form */}
+        <div style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderRadius: 8, padding: 24, display: "flex", flexDirection: "column", gap: 16 }}>
+          <p style={{ color: ACCENT, fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", fontFamily: "'Inter', sans-serif" }}>
+            Content
+          </p>
 
-      {/* Live Preview */}
-      <div className="bg-white border border-[#E5D8C8] rounded-xl p-6 shadow-sm">
-        <p className="text-xs font-bold text-[#4B3420] uppercase tracking-wider mb-4">Live Preview</p>
-        <div className="border border-[#D4C4B4] rounded-xl p-5" style={{ background: "#F2EAE0" }}>
-          <p className="text-[10px] uppercase tracking-[0.3em] mb-1 font-bold text-center" style={{ color: "#A67560" }}>
-            {activeTab === "en" ? "About Us" : "మా గురించి"}
-          </p>
-          <h2 className="text-center font-bold text-xl mb-1" style={{ fontFamily: "Cinzel, serif", color: "#734129" }}>
-            {activeTab === "en" ? enData.title : teData.title}
-          </h2>
-          <p className="text-center text-sm mb-4" style={{ color: "#A67560" }}>
-            {activeTab === "en" ? enData.subtitle : teData.subtitle}
-          </p>
-          <div className="space-y-2">
-            {["p1", "p2", "p3"].map(k => (
-              <p key={k} className="text-sm leading-relaxed" style={{ color: "#A67560", fontFamily: "Lato, sans-serif" }}>
-                {activeTab === "en" ? enData[k] : teData[k]}
-              </p>
-            ))}
+          {/* Image upload */}
+          <div>
+            <label style={labelStyle}>About Section Image</label>
+            {imageUrl ? (
+              <div style={{ position: "relative", marginBottom: 10 }}>
+                <img src={imageUrl} alt="About" style={{ width: "100%", aspectRatio: "16/9", objectFit: "cover", borderRadius: 6, border: `1px solid ${CARD_BORDER}` }} />
+                <button
+                  onClick={() => setImageUrl("")}
+                  style={{ position: "absolute", top: 8, right: 8, background: "rgba(0,0,0,0.7)", color: "#fff", border: "none", borderRadius: "50%", width: 24, height: 24, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <X size={12} />
+                </button>
+              </div>
+            ) : (
+              <div
+                onClick={() => fileRef.current?.click()}
+                style={{ border: `2px dashed rgba(216,199,174,0.2)`, borderRadius: 6, padding: "24px", textAlign: "center", cursor: "pointer", marginBottom: 10 }}
+                onMouseEnter={e => e.currentTarget.style.borderColor = "rgba(216,199,174,0.4)"}
+                onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(216,199,174,0.2)"}
+              >
+                {uploading ? (
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+                    <Loader2 size={18} className="animate-spin" style={{ color: ACCENT }} />
+                    <span style={{ color: TEXT_MUTED, fontSize: "0.875rem" }}>Uploading...</span>
+                  </div>
+                ) : (
+                  <>
+                    <Upload size={22} style={{ color: TEXT_MUTED, margin: "0 auto 8px" }} />
+                    <p style={{ color: TEXT_MUTED, fontSize: "0.875rem" }}>Click to upload image</p>
+                    <p style={{ color: "rgba(243,235,221,0.25)", fontSize: "0.75rem", marginTop: 4 }}>JPG, PNG, WEBP · max 10MB</p>
+                  </>
+                )}
+              </div>
+            )}
+            <input ref={fileRef} type="file" accept="image/*" style={{ display: "none" }} onChange={handleImageUpload} />
+            <div>
+              <label style={{ ...labelStyle, marginTop: 6 }}>Or paste image URL</label>
+              <input value={imageUrl} onChange={e => setImageUrl(e.target.value)} style={inputStyle} placeholder="https://..." />
+            </div>
           </div>
-          <div className="grid grid-cols-3 gap-3 mt-4">
-            {[
-              { v: "years", l: "yearsLabel" },
-              { v: "authentic", l: "authenticLabel" },
-              { v: "customers", l: "customersLabel" },
-            ].map(s => {
-              const d = activeTab === "en" ? enData : teData
-              return (
-                <div key={s.v} className="text-center p-3 rounded-xl" style={{ background: "#EAE0D3", border: "1px solid #D4C4B4" }}>
-                  <p className="font-bold text-lg" style={{ color: "#734129", fontFamily: "Cinzel, serif" }}>{d[s.v]}</p>
-                  <p className="text-[10px]" style={{ color: "#A67560" }}>{d[s.l]}</p>
+
+          {/* Text fields */}
+          {fields.map(f => (
+            <div key={f.key}>
+              <label style={labelStyle}>{f.label}</label>
+              {f.rows === 1
+                ? <input value={data[f.key] || ""} onChange={e => set(f.key, e.target.value)} style={inputStyle} />
+                : <textarea rows={f.rows} value={data[f.key] || ""} onChange={e => set(f.key, e.target.value)} style={inputStyle} />
+              }
+            </div>
+          ))}
+
+          {/* Stats */}
+          <div style={{ borderTop: `1px solid ${CARD_BORDER}`, paddingTop: 16 }}>
+            <p style={{ ...labelStyle, fontSize: "0.75rem", marginBottom: 12 }}>Stats / Highlights (3 cards)</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              {stats.map(s => (
+                <div key={s.v} style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                  <div>
+                    <label style={labelStyle}>Value</label>
+                    <input value={data[s.v] || ""} onChange={e => set(s.v, e.target.value)} style={inputStyle} placeholder="e.g. 25+" />
+                  </div>
+                  <div>
+                    <label style={labelStyle}>Label</label>
+                    <input value={data[s.l] || ""} onChange={e => set(s.l, e.target.value)} style={inputStyle} placeholder="e.g. Years Experience" />
+                  </div>
                 </div>
-              )
-            })}
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT — Live preview */}
+        <div style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderRadius: 8, padding: 24, position: "sticky", top: 80 }}>
+          <p style={{ color: ACCENT, fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", fontFamily: "'Inter', sans-serif", marginBottom: 16 }}>
+            Live Preview
+          </p>
+
+          {/* Preview card */}
+          <div style={{ background: "#1A1714", borderRadius: 8, padding: 20, border: `1px solid rgba(255,255,255,0.05)` }}>
+            {/* Eyebrow */}
+            <p style={{ textAlign: "center", fontSize: "0.6875rem", letterSpacing: "0.25em", textTransform: "uppercase", color: ACCENT, marginBottom: 8 }}>
+              About Us
+            </p>
+
+            {/* Title */}
+            <h2 style={{ textAlign: "center", fontFamily: "'Cormorant Garamond', serif", fontSize: "1.375rem", fontWeight: 700, color: TEXT_PRIMARY, marginBottom: 4 }}>
+              {data.title || "Academy Name"}
+            </h2>
+            <p style={{ textAlign: "center", color: TEXT_MUTED, fontSize: "0.8125rem", marginBottom: 16, fontFamily: "'Inter', sans-serif" }}>
+              {data.subtitle}
+            </p>
+
+            {/* Image preview */}
+            {imageUrl ? (
+              <div style={{ width: "100%", aspectRatio: "16/9", overflow: "hidden", borderRadius: 6, marginBottom: 16 }}>
+                <img src={imageUrl} alt="About" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              </div>
+            ) : (
+              <div style={{ width: "100%", aspectRatio: "16/9", background: "rgba(255,255,255,0.04)", borderRadius: 6, marginBottom: 16, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <p style={{ color: TEXT_MUTED, fontSize: "0.75rem" }}>No image selected</p>
+              </div>
+            )}
+
+            {/* Paragraphs preview (first 2) */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 16 }}>
+              {[data.p1, data.p2].map((p, i) => p ? (
+                <p key={i} style={{ color: "rgba(216,199,174,0.8)", fontSize: "0.8125rem", lineHeight: 1.6, fontFamily: "'Inter', sans-serif" }}>
+                  {p}
+                </p>
+              ) : null)}
+              {(data.p3 || data.p4 || data.p5 || data.p6) && (
+                <p style={{ color: TEXT_MUTED, fontSize: "0.75rem", fontStyle: "italic" }}>+ more paragraphs below...</p>
+              )}
+            </div>
+
+            {/* Stats preview */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
+              {stats.map(s => (
+                <div key={s.v} style={{ textAlign: "center", background: "rgba(255,255,255,0.03)", border: `1px solid ${CARD_BORDER}`, borderRadius: 6, padding: "12px 8px" }}>
+                  <p style={{ color: ACCENT, fontFamily: "'Cormorant Garamond', serif", fontSize: "1.1rem", fontWeight: 700 }}>{data[s.v] || "—"}</p>
+                  <p style={{ color: TEXT_MUTED, fontSize: "0.625rem", marginTop: 2, fontFamily: "'Inter', sans-serif" }}>{data[s.l] || "Label"}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .about-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react"
+﻿import { useState, useEffect, useRef } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import { motion } from "framer-motion"
 import { MapPin, Plus, Check, CheckCircle, Upload, Copy, Smartphone, AlertCircle, Loader2, Zap, Ticket, X as XIcon, Lock } from "lucide-react"
@@ -11,11 +11,11 @@ import { supabase } from "../lib/supabase"
 import { formatINR } from "../utils/format"
 import toast from "react-hot-toast"
 
-const UPI_ID = "sivasri3545-5@okicici"
-const ADMIN_WHATSAPP = "919994441363"
+const UPI_ID = "royalhoof@upi"
+const ADMIN_WHATSAPP = "919043700776"
 // Generate QR dynamically from UPI ID using Google Charts API
 const getQRUrl = (upiId, amount) =>
-  `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(`upi://pay?pa=${upiId}&pn=Rudhraksha+Store&am=${Math.ceil(amount)}&cu=INR&tn=Rudhraksha+Store+Order`)}`
+  `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(`upi://pay?pa=${upiId}&pn=Royal Hoof+Store&am=${Math.ceil(amount)}&cu=INR&tn=Royal Hoof+Store+Order`)}`
 
 const EMPTY_ADDR = { label: "Home", full_name: "", phone: "", address1: "", address2: "", city: "", state: "", pincode: "", is_default: false }
 
@@ -372,7 +372,7 @@ export default function CheckoutPage() {
             const shipping = getShippingCost(selectedAddr)
             const discount = appliedPromo?.discountAmount || 0
             const grandTotal = Math.ceil(total + shipping - discount)
-            const upiDeepLink = `upi://pay?pa=${UPI_ID}&pn=Rudhraksha+Store&am=${grandTotal}&cu=INR&tn=Rudhraksha+Store+Order`
+            const upiDeepLink = `upi://pay?pa=${UPI_ID}&pn=Royal Hoof+Store&am=${grandTotal}&cu=INR&tn=Royal Hoof+Store+Order`
             return (
               <div className="space-y-4">
                 {/* Header card */}
