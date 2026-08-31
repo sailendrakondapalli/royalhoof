@@ -139,15 +139,14 @@ export default function AdminEnquiries() {
       const cleanPhone = enquiry.phone.replace(/\D/g, '')
       const phoneWithCode = cleanPhone.startsWith('91') ? cleanPhone : `91${cleanPhone}`
       
-      // Use whatsapp:// for mobile, https://wa.me for desktop/web
+      // Detect platform
       const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
       
+      // Use api.whatsapp.com (works for both regular WhatsApp and WhatsApp Business)
       return {
         name: enquiry.name,
         phone: enquiry.phone,
-        url: isMobile 
-          ? `whatsapp://send?phone=${phoneWithCode}&text=${encodedMessage}`
-          : `https://wa.me/${phoneWithCode}?text=${encodedMessage}`
+        url: `https://api.whatsapp.com/send?phone=${phoneWithCode}&text=${encodedMessage}`
       }
     })
     
@@ -215,15 +214,17 @@ export default function AdminEnquiries() {
         // Add country code if not present (assuming India +91)
         const phoneWithCode = cleanPhone.startsWith('91') ? cleanPhone : `91${cleanPhone}`
         
-        // Use appropriate URL scheme based on platform
-        const whatsappUrl = isMobile
-          ? `whatsapp://send?phone=${phoneWithCode}&text=${encodedMessage}`
-          : `https://wa.me/${phoneWithCode}?text=${encodedMessage}`
+        // Use api.whatsapp.com (works for both regular WhatsApp and WhatsApp Business)
+        const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneWithCode}&text=${encodedMessage}`
         
-        console.log(`Opening WhatsApp ${currentIndex + 1}/${selectedEnquiries.length}:`, enquiry.name, phoneWithCode, isMobile ? '(mobile)' : '(desktop)')
+        console.log(`Opening WhatsApp ${currentIndex + 1}/${selectedEnquiries.length}:`, enquiry.name, phoneWithCode)
         
         // Open WhatsApp
-        window.location.href = whatsappUrl
+        if (isMobile) {
+          window.location.href = whatsappUrl
+        } else {
+          window.open(whatsappUrl, '_blank')
+        }
         
         currentIndex++
         
