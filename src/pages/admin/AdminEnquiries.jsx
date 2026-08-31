@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 import toast from 'react-hot-toast'
-import { Phone, Mail, Calendar, MessageSquare, Edit2, Send, Check, X } from 'lucide-react'
+import { Phone, Mail, Calendar, MessageSquare, Edit2, Send, Check, X, FileText } from 'lucide-react'
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
+import InvoiceGenerator from '../../components/InvoiceGenerator'
 
 const CARD_BG = "#242120"
 const CARD_BORDER = "rgba(255,255,255,0.07)"
@@ -39,6 +42,10 @@ export default function AdminEnquiries() {
   const [sendingProgress, setSendingProgress] = useState({ current: 0, total: 0 })
   const [generatedLinks, setGeneratedLinks] = useState([])
   const [showLinksView, setShowLinksView] = useState(false)
+  
+  // Invoice states
+  const [showInvoiceModal, setShowInvoiceModal] = useState(false)
+  const [selectedEnquiry, setSelectedEnquiry] = useState(null)
 
   useEffect(() => { fetchItems(); fetchEvents() }, [])
 
@@ -485,6 +492,35 @@ export default function AdminEnquiries() {
                 </div>
               )}
 
+              {/* Invoice Action */}
+              <div style={{ marginBottom: 12 }}>
+                <button 
+                  onClick={() => {
+                    setSelectedEnquiry(item)
+                    setShowInvoiceModal(true)
+                  }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    background: "rgba(216, 199, 174, 0.1)",
+                    color: ACCENT,
+                    border: `1px solid ${ACCENT}40`,
+                    borderRadius: 6,
+                    padding: "10px 16px",
+                    cursor: "pointer",
+                    fontWeight: 600,
+                    fontSize: "0.8125rem",
+                    fontFamily: "'Inter', sans-serif",
+                    width: "100%",
+                    justifyContent: "center"
+                  }}
+                >
+                  <FileText size={16} />
+                  Generate Invoice
+                </button>
+              </div>
+
               {/* Notes */}
               <div style={{ borderTop: `1px solid ${CARD_BORDER}`, paddingTop: 12 }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
@@ -868,6 +904,17 @@ export default function AdminEnquiries() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Invoice Generator Modal */}
+      {showInvoiceModal && selectedEnquiry && (
+        <InvoiceGenerator 
+          enquiry={selectedEnquiry} 
+          onClose={() => {
+            setShowInvoiceModal(false)
+            setSelectedEnquiry(null)
+          }}
+        />
       )}
     </div>
   )
