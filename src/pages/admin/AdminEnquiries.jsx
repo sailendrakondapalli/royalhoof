@@ -134,14 +134,20 @@ export default function AdminEnquiries() {
     
     const encodedMessage = encodeURIComponent(message)
     
-    // Generate all links
+    // Generate all links with mobile-friendly format
     const links = selectedEnquiries.map(enquiry => {
       const cleanPhone = enquiry.phone.replace(/\D/g, '')
       const phoneWithCode = cleanPhone.startsWith('91') ? cleanPhone : `91${cleanPhone}`
+      
+      // Use whatsapp:// for mobile, https://wa.me for desktop/web
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+      
       return {
         name: enquiry.name,
         phone: enquiry.phone,
-        url: `https://wa.me/${phoneWithCode}?text=${encodedMessage}`
+        url: isMobile 
+          ? `whatsapp://send?phone=${phoneWithCode}&text=${encodedMessage}`
+          : `https://wa.me/${phoneWithCode}?text=${encodedMessage}`
       }
     })
     
@@ -187,6 +193,9 @@ export default function AdminEnquiries() {
     
     const encodedMessage = encodeURIComponent(message)
     
+    // Detect mobile
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    
     // Set sending state
     setIsSending(true)
     setSendingProgress({ current: 0, total: selectedEnquiries.length })
@@ -205,12 +214,16 @@ export default function AdminEnquiries() {
         const cleanPhone = enquiry.phone.replace(/\D/g, '')
         // Add country code if not present (assuming India +91)
         const phoneWithCode = cleanPhone.startsWith('91') ? cleanPhone : `91${cleanPhone}`
-        const whatsappUrl = `https://wa.me/${phoneWithCode}?text=${encodedMessage}`
         
-        console.log(`Opening WhatsApp ${currentIndex + 1}/${selectedEnquiries.length}:`, enquiry.name, phoneWithCode)
+        // Use appropriate URL scheme based on platform
+        const whatsappUrl = isMobile
+          ? `whatsapp://send?phone=${phoneWithCode}&text=${encodedMessage}`
+          : `https://wa.me/${phoneWithCode}?text=${encodedMessage}`
+        
+        console.log(`Opening WhatsApp ${currentIndex + 1}/${selectedEnquiries.length}:`, enquiry.name, phoneWithCode, isMobile ? '(mobile)' : '(desktop)')
         
         // Open WhatsApp
-        window.open(whatsappUrl, '_blank')
+        window.location.href = whatsappUrl
         
         currentIndex++
         
