@@ -13,11 +13,11 @@ import { useAdminStore } from '../../store/adminStore'
 import { formatINR } from '../../utils/format'
 
 // Royal Hoof palette
-const CARD_BG = "#242120"
+const CARD_BG = "#5B1E28"
 const CARD_BORDER = "rgba(255,255,255,0.07)"
 const TEXT_PRIMARY = "#F3EBDD"
 const TEXT_MUTED = "rgba(243,235,221,0.45)"
-const ACCENT = "#D8C7AE"
+const ACCENT = "#B8955A"
 
 const StatCard = ({ icon: Icon, label, value, sub, to, accent }) => (
   <Link to={to || "#"} style={{ textDecoration: "none" }}>

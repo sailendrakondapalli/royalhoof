@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import toast from 'react-hot-toast'
 import { Calendar, User, Mail, Phone, MessageSquare } from 'lucide-react'
@@ -119,8 +119,8 @@ export default function EnquiryPage() {
     }
   }
 
-  const inputClass = 'w-full bg-[#0D0C0B] border border-[#3A3836] rounded-lg px-4 py-3 text-[#F3EBDD] placeholder-[#B6A58F]/50 focus:outline-none focus:border-[#9A7650] transition-colors'
-  const labelClass = 'block text-[#D8C7AE] text-sm font-medium mb-2'
+  const inputClass = 'w-full bg-[#5B1E28] border border-[#762B35] rounded-lg px-4 py-3 text-[#F3EBDD] placeholder-[#B6A58F]/50 focus:outline-none focus:border-[#9A7650] transition-colors'
+  const labelClass = 'block text-[#B8955A] text-sm font-medium mb-2'
 
   return (
     <>
@@ -129,7 +129,7 @@ export default function EnquiryPage() {
         <meta name="description" content="Contact us or book a free demo session" />
       </Helmet>
 
-      <div className="min-h-screen py-20 px-6 lg:px-12 xl:px-20" style={{ background: '#171614' }}>
+      <div className="min-h-screen py-20 px-6 lg:px-12 xl:px-20" style={{ background: '#5B1E28' }}>
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
@@ -138,7 +138,7 @@ export default function EnquiryPage() {
               <span style={{ color: "#DDD4CF" }}>Enquiry &</span> <span style={{ color: "#8B4938", fontStyle: "italic" }}>Free Demo</span>
             </h1>
             <div className="equestrian-divider w-24 mx-auto mb-6" />
-            <p className="text-[#D8C7AE] max-w-2xl mx-auto">
+            <p className="text-[#B8955A] max-w-2xl mx-auto">
               Have questions or want to experience our academy? Send us an enquiry or book a free demo session.
             </p>
           </div>
@@ -150,7 +150,7 @@ export default function EnquiryPage() {
               className={`px-8 py-3 rounded-lg text-sm font-medium uppercase tracking-wider transition-all ${
                 activeForm === 'enquiry'
                   ? 'bg-[#9A7650] text-white'
-                  : 'bg-[#2A2826] text-[#B6A58F] hover:bg-[#3A3836]'
+                  : 'bg-[#762B35] text-[#B6A58F] hover:bg-[#762B35]'
               }`}
             >
               <MessageSquare size={18} className="inline-block mr-2 mb-1" />
@@ -161,7 +161,7 @@ export default function EnquiryPage() {
               className={`px-8 py-3 rounded-lg text-sm font-medium uppercase tracking-wider transition-all ${
                 activeForm === 'demo'
                   ? 'bg-[#9A7650] text-white'
-                  : 'bg-[#2A2826] text-[#B6A58F] hover:bg-[#3A3836]'
+                  : 'bg-[#762B35] text-[#B6A58F] hover:bg-[#762B35]'
               }`}
             >
               <Calendar size={18} className="inline-block mr-2 mb-1" />
@@ -352,7 +352,7 @@ export default function EnquiryPage() {
           {/* Contact Info */}
           <div className="mt-10 text-center text-[#B6A58F]">
             <p className="text-sm">You can also reach us directly:</p>
-            <p className="text-lg font-medium text-[#D8C7AE] mt-2">
+            <p className="text-lg font-medium text-[#B8955A] mt-2">
               <Phone size={18} className="inline-block mr-2 mb-1" />
               +91 90437 00776
             </p>

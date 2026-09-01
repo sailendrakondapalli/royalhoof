@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useAdminStore } from "../../store/adminStore"
 import { motion, AnimatePresence } from "framer-motion"
 import { Plus, Trash2, Edit2, Save, ChevronUp, ChevronDown, Loader2, ImagePlus, Image } from "lucide-react"
@@ -55,8 +55,8 @@ function BannerPreview({ banner }) {
         <p className="text-xs font-semibold" style={{ color: banner.accent }}>{banner.subtitle || "Subtitle"}</p>
         {(banner.price || banner.originalPrice) && (
           <div className="flex items-center gap-2 mt-0.5">
-            {banner.price && <span className="text-[#1C1006] text-sm font-bold">₹{banner.price}</span>}
-            {banner.originalPrice && <span className="text-gray-400 text-xs line-through">₹{banner.originalPrice}</span>}
+            {banner.price && <span className="text-[#1C1006] text-sm font-bold">?{banner.price}</span>}
+            {banner.originalPrice && <span className="text-gray-400 text-xs line-through">?{banner.originalPrice}</span>}
           </div>
         )}
         <span className="inline-block mt-1.5 px-3 py-1 rounded text-xs font-semibold"
@@ -151,11 +151,11 @@ function BannerForm({ initial, onSave, onCancel }) {
 
         {/* Price fields */}
         <div>
-          <label className={lbl}>Sale Price (₹)</label>
+          <label className={lbl}>Sale Price (?)</label>
           <input type="number" value={form.price||""} onChange={e=>setForm(f=>({...f,price:e.target.value}))} placeholder="e.g. 2499" className={inp} />
         </div>
         <div>
-          <label className={lbl}>Original Price (₹) <span className="text-gray-600">optional</span></label>
+          <label className={lbl}>Original Price (?) <span className="text-gray-600">optional</span></label>
           <input type="number" value={form.originalPrice||""} onChange={e=>setForm(f=>({...f,originalPrice:e.target.value}))} placeholder="e.g. 3999" className={inp} />
         </div>
 
@@ -227,7 +227,7 @@ function BannerForm({ initial, onSave, onCancel }) {
   )
 }
 
-/* ─── Logo Manager ─── */
+/* --- Logo Manager --- */
 function LogoManager() {
   const [logoUrl, setLogoUrl] = useState("")
   const [loading, setLoading] = useState(true)
@@ -329,7 +329,7 @@ function LogoManager() {
   )
 }
 
-/* ─── Hero Background Image Manager ─── */
+/* --- Hero Background Image Manager --- */
 function HeroBgManager() {
   const [imageUrl, setImageUrl] = useState("")
   const [loading, setLoading] = useState(true)
@@ -388,7 +388,7 @@ function HeroBgManager() {
         <ImageCropper
           imageSrc={cropSrc}
           aspect={16 / 5}
-          title="Crop Hero Image (16:5 — fits desktop & mobile)"
+          title="Crop Hero Image (16:5 � fits desktop & mobile)"
           onCrop={handleCropped}
           onCancel={() => setCropSrc(null)}
         />
@@ -399,7 +399,7 @@ function HeroBgManager() {
         <h2 className="text-base font-bold text-[#5D3A1A]" style={{ fontFamily: "Georgia, serif" }}>Hero Background Image</h2>
       </div>
       <p className="text-xs text-gray-500">
-        Upload a hero image. The built-in crop tool will let you select the exact visible area (16:5 ratio — works perfectly on both desktop and mobile).
+        Upload a hero image. The built-in crop tool will let you select the exact visible area (16:5 ratio � works perfectly on both desktop and mobile).
       </p>
 
       {loading ? <div className="flex items-center gap-2 text-gray-400 text-sm"><Loader2 size={14} className="animate-spin" /> Loading...</div> : (
@@ -476,10 +476,10 @@ export default function AdminBanners() {
 
   return (
     <div className="space-y-5">
-      {/* ── Logo Manager ── */}
+      {/* -- Logo Manager -- */}
       <LogoManager />
 
-      {/* ── Hero Background Image ── */}
+      {/* -- Hero Background Image -- */}
       <HeroBgManager />
 
       <div className="flex items-center justify-between">
@@ -509,7 +509,7 @@ export default function AdminBanners() {
         </div>
       ) : banners.length === 0 && !showForm ? (
         <div className="text-center py-16 bg-white rounded-xl border border-[#E5D8C8]">
-          <p className="text-4xl mb-3">🎨</p>
+          <p className="text-4xl mb-3">??</p>
           <p className="text-[#4B3420]">No banners yet.</p>
           <button onClick={() => setShowForm(true)} className="mt-4 px-6 py-2 bg-[#5D3A1A] text-white rounded-lg text-sm font-medium hover:bg-[#7A4E28] transition-all">+ Add Banner</button>
         </div>

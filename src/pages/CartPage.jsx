@@ -1,4 +1,4 @@
-﻿import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Trash2, Plus, Minus, ShoppingBag, ArrowRight, Heart } from 'lucide-react'
 import { useCartStore } from '../store/cartStore'
@@ -227,7 +227,7 @@ export default function CartPage() {
             <div className="space-y-3 mb-4">
               {selectedItems.map(item => (
                 <div key={item.id || item.product_id} className="flex justify-between text-sm">
-                  <span className="text-[#4B3420] truncate mr-2">{item.products?.name} � {item.quantity}</span>
+                  <span className="text-[#4B3420] truncate mr-2">{item.products?.name} ? {item.quantity}</span>
                   <span className="text-[#1C1006] shrink-0 font-medium">{formatINR((item.products?.price || 0) * item.quantity)}</span>
                 </div>
               ))}

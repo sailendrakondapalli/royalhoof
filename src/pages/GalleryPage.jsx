@@ -65,7 +65,7 @@ export default function GalleryPage() {
         <meta name="description" content="Explore our photo and video gallery" />
       </Helmet>
 
-      <div className="min-h-screen py-20 px-6 lg:px-12 xl:px-20" style={{ background: '#171614' }}>
+      <div className="min-h-screen py-20 px-6 lg:px-12 xl:px-20" style={{ background: '#5B1E28' }}>
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
@@ -85,7 +85,7 @@ export default function GalleryPage() {
                 className={`px-6 py-2 rounded-full text-sm font-medium uppercase tracking-wider transition-all ${
                   activeTab === tab 
                     ? 'bg-[#9A7650] text-white' 
-                    : 'bg-[#2A2826] text-[#B6A58F] hover:bg-[#3A3836]'
+                    : 'bg-[#762B35] text-[#B6A58F] hover:bg-[#762B35]'
                 }`}
               >
                 {tab}
@@ -103,7 +103,7 @@ export default function GalleryPage() {
                   className={`px-4 py-1.5 rounded-full text-xs font-medium uppercase tracking-wider transition-all ${
                     selectedCategory === cat 
                       ? 'bg-[#9A7650]/20 text-[#9A7650] border border-[#9A7650]' 
-                      : 'bg-[#2A2826] text-[#B6A58F] hover:bg-[#3A3836]'
+                      : 'bg-[#762B35] text-[#B6A58F] hover:bg-[#762B35]'
                   }`}
                 >
                   {cat}
@@ -138,7 +138,7 @@ export default function GalleryPage() {
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     {item.type === 'video' && (
                       <div className="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center">
-                        <Play size={24} className="text-[#171614] ml-1" />
+                        <Play size={24} className="text-[#5B1E28] ml-1" />
                       </div>
                     )}
                   </div>

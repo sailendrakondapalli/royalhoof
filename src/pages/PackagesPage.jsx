@@ -162,7 +162,7 @@ export default function PackagesPage() {
         <meta name="description" content="Choose the perfect membership package for your goals" />
       </Helmet>
 
-      <div className="min-h-screen py-20 px-6 lg:px-12 xl:px-20" style={{ background: '#171614' }}>
+      <div className="min-h-screen py-20 px-6 lg:px-12 xl:px-20" style={{ background: '#5B1E28' }}>
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
@@ -171,7 +171,7 @@ export default function PackagesPage() {
               <span style={{ color: "#DDD4CF" }}>Packages &</span> <span style={{ color: "#8B4938", fontStyle: "italic" }}>Memberships</span>
             </h1>
             <div className="equestrian-divider w-24 mx-auto mb-6" />
-            <p className="text-[#D8C7AE] max-w-2xl mx-auto">
+            <p className="text-[#B8955A] max-w-2xl mx-auto">
               Choose the perfect membership plan that fits your goals and schedule
             </p>
           </div>
@@ -183,7 +183,7 @@ export default function PackagesPage() {
               className={`px-8 py-3 rounded-lg text-sm font-medium uppercase tracking-wider transition-all ${
                 activeTab === 'adult'
                   ? 'bg-[#9A7650] text-white'
-                  : 'bg-[#2A2826] text-[#B6A58F] hover:bg-[#3A3836]'
+                  : 'bg-[#762B35] text-[#B6A58F] hover:bg-[#762B35]'
               }`}
             >
               Adult Packages
@@ -193,7 +193,7 @@ export default function PackagesPage() {
               className={`px-8 py-3 rounded-lg text-sm font-medium uppercase tracking-wider transition-all ${
                 activeTab === 'kids'
                   ? 'bg-[#9A7650] text-white'
-                  : 'bg-[#2A2826] text-[#B6A58F] hover:bg-[#3A3836]'
+                  : 'bg-[#762B35] text-[#B6A58F] hover:bg-[#762B35]'
               }`}
             >
               Kids Packages
@@ -247,7 +247,7 @@ export default function PackagesPage() {
                       {/* Features */}
                       <ul className="space-y-3 mb-8">
                         {pkg.features.map((feature, i) => (
-                          <li key={i} className="flex items-start gap-3 text-[#D8C7AE] text-sm">
+                          <li key={i} className="flex items-start gap-3 text-[#B8955A] text-sm">
                             <Check size={18} className="text-[#9A7650] flex-shrink-0 mt-0.5" />
                             <span>{feature}</span>
                           </li>
@@ -260,7 +260,7 @@ export default function PackagesPage() {
                         className={`w-full py-3 rounded-lg font-medium uppercase tracking-wider transition-colors ${
                           pkg.popular
                             ? 'bg-[#9A7650] hover:bg-[#8A6640] text-white'
-                            : 'bg-[#2A2826] hover:bg-[#3A3836] text-[#F3EBDD]'
+                            : 'bg-[#762B35] hover:bg-[#762B35] text-[#F3EBDD]'
                         }`}
                       >
                         Get Started
@@ -306,7 +306,7 @@ export default function PackagesPage() {
                       {/* Features */}
                       <ul className="space-y-3 mb-8">
                         {pkg.features.map((feature, i) => (
-                          <li key={i} className="flex items-start gap-3 text-[#D8C7AE] text-sm">
+                          <li key={i} className="flex items-start gap-3 text-[#B8955A] text-sm">
                             <Check size={18} className="text-[#9A7650] flex-shrink-0 mt-0.5" />
                             <span>{feature}</span>
                           </li>
@@ -340,7 +340,7 @@ export default function PackagesPage() {
               ].map((benefit, i) => (
                 <div key={i}>
                   <h4 className="text-[#9A7650] font-medium mb-2">{benefit.title}</h4>
-                  <p className="text-[#D8C7AE] text-sm">{benefit.desc}</p>
+                  <p className="text-[#B8955A] text-sm">{benefit.desc}</p>
                 </div>
               ))}
             </div>

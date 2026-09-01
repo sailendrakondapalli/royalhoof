@@ -8,7 +8,7 @@ import { TrendingUp, MapPin, ShoppingBag, DollarSign } from 'lucide-react'
 import { useAdminStore } from '../../store/adminStore'
 import { formatINR } from '../../utils/format'
 
-const COLORS = ['#D8C7AE', '#B6A58F', '#9A8870', '#7A6A54', '#5A4A38', '#C4B09A', '#E8D8C4', '#F0E8D8']
+const COLORS = ['#B8955A', '#B6A58F', '#9A8870', '#7A6A54', '#5A4A38', '#C4B09A', '#E8D8C4', '#F0E8D8']
 
 const TooltipStyle = {
   contentStyle: { background: '#2C2C2C', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, fontSize: 11, color: '#F3EBDD' },
@@ -25,7 +25,7 @@ export default function AdminAnalytics() {
   if (!stats) {
     return (
       <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 240 }}>
-        <div style={{ width: 32, height: 32, border: "2px solid #D8C7AE", borderTopColor: "transparent", borderRadius: "50%", animation: "spin 0.7s linear infinite" }} />
+        <div style={{ width: 32, height: 32, border: "2px solid #B8955A", borderTopColor: "transparent", borderRadius: "50%", animation: "spin 0.7s linear infinite" }} />
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     )
@@ -66,8 +66,8 @@ export default function AdminAnalytics() {
           { icon: TrendingUp, label: 'Avg Order Value', value: formatINR(stats.totalOrders ? Math.round(stats.totalRevenue / stats.paidOrders || 0) : 0) },
           { icon: MapPin, label: 'Cities Reached', value: stats.cityData?.length || 0 },
         ].map((k, i) => (
-          <div key={i} style={{ background: "#242120", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, padding: 20 }}>
-            <k.icon size={18} style={{ color: "#D8C7AE", marginBottom: 12 }} />
+          <div key={i} style={{ background: "#5B1E28", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, padding: 20 }}>
+            <k.icon size={18} style={{ color: "#B8955A", marginBottom: 12 }} />
             <p style={{ fontSize: "1.5rem", fontWeight: 700, color: "#F3EBDD", fontFamily: "'Inter', sans-serif" }}>{k.value}</p>
             <p style={{ color: "rgba(243,235,221,0.45)", fontSize: "0.8125rem", marginTop: 4, fontFamily: "'Inter', sans-serif" }}>{k.label}</p>
           </div>
@@ -75,28 +75,28 @@ export default function AdminAnalytics() {
       </div>
 
       {/* Revenue Area Chart */}
-      <div style={{ background: "#242120", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, padding: 20 }}>
+      <div style={{ background: "#5B1E28", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, padding: 20 }}>
         <h3 style={{ color: "#F3EBDD", fontWeight: 600, marginBottom: 16, fontSize: "0.9375rem", fontFamily: "'Inter', sans-serif" }}>Revenue Trend (Last 14 Days)</h3>
         <ResponsiveContainer width="100%" height={260}>
           <AreaChart data={stats.last14Days}>
             <defs>
               <linearGradient id="accentGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#D8C7AE" stopOpacity={0.25} />
-                <stop offset="95%" stopColor="#D8C7AE" stopOpacity={0} />
+                <stop offset="5%" stopColor="#B8955A" stopOpacity={0.25} />
+                <stop offset="95%" stopColor="#B8955A" stopOpacity={0} />
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
             <XAxis dataKey="date" tick={{ fill: 'rgba(243,235,221,0.4)', fontSize: 10 }} />
             <YAxis tick={{ fill: 'rgba(243,235,221,0.4)', fontSize: 10 }} tickFormatter={v => `₹${(v / 1000).toFixed(0)}k`} />
             <Tooltip {...TooltipStyle} formatter={(v, n) => [n === 'revenue' ? formatINR(v) : v, n]} />
-            <Area type="monotone" dataKey="revenue" stroke="#D8C7AE" fill="url(#accentGrad)" strokeWidth={2} name="Revenue" />
+            <Area type="monotone" dataKey="revenue" stroke="#B8955A" fill="url(#accentGrad)" strokeWidth={2} name="Revenue" />
           </AreaChart>
         </ResponsiveContainer>
       </div>
 
       {/* Two charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div style={{ background: "#242120", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, padding: 20 }}>
+        <div style={{ background: "#5B1E28", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, padding: 20 }}>
           <h3 style={{ color: "#F3EBDD", fontWeight: 600, marginBottom: 16, fontSize: "0.9375rem", fontFamily: "'Inter', sans-serif" }}>Weekly Orders</h3>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={weeklyData}>
@@ -104,12 +104,12 @@ export default function AdminAnalytics() {
               <XAxis dataKey="week" tick={{ fill: 'rgba(243,235,221,0.4)', fontSize: 11 }} />
               <YAxis tick={{ fill: 'rgba(243,235,221,0.4)', fontSize: 11 }} />
               <Tooltip {...TooltipStyle} />
-              <Bar dataKey="orders" fill="#D8C7AE" radius={[4, 4, 0, 0]} name="Orders" />
+              <Bar dataKey="orders" fill="#B8955A" radius={[4, 4, 0, 0]} name="Orders" />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
-        <div style={{ background: "#242120", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, padding: 20 }}>
+        <div style={{ background: "#5B1E28", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, padding: 20 }}>
           <h3 style={{ color: "#F3EBDD", fontWeight: 600, marginBottom: 16, fontSize: "0.9375rem", fontFamily: "'Inter', sans-serif" }}>Revenue by Category</h3>
           <ResponsiveContainer width="100%" height={220}>
             <PieChart>
@@ -124,9 +124,9 @@ export default function AdminAnalytics() {
       </div>
 
       {/* Location Analytics */}
-      <div style={{ background: "#242120", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, padding: 20 }}>
+      <div style={{ background: "#5B1E28", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, padding: 20 }}>
         <h3 style={{ color: "#F3EBDD", fontWeight: 600, marginBottom: 16, fontSize: "0.9375rem", display: "flex", alignItems: "center", gap: 8, fontFamily: "'Inter', sans-serif" }}>
-          <MapPin size={15} style={{ color: "#D8C7AE" }} /> Location Analytics — Top Cities
+          <MapPin size={15} style={{ color: "#B8955A" }} /> Location Analytics — Top Cities
         </h3>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <ResponsiveContainer width="100%" height={240}>
@@ -142,7 +142,7 @@ export default function AdminAnalytics() {
           <div className="space-y-3">
             {stats.cityData.map((c, i) => (
               <div key={c.city} style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <span style={{ color: "#D8C7AE", fontSize: "0.75rem", width: 20, fontWeight: 700 }}>{i + 1}</span>
+                <span style={{ color: "#B8955A", fontSize: "0.75rem", width: 20, fontWeight: 700 }}>{i + 1}</span>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
                     <span style={{ color: "#F3EBDD", fontSize: "0.75rem" }}>{c.city}</span>
@@ -163,7 +163,7 @@ export default function AdminAnalytics() {
       </div>
 
       {/* Top Products */}
-      <div style={{ background: "#242120", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, padding: 20 }}>
+      <div style={{ background: "#5B1E28", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, padding: 20 }}>
         <h3 style={{ color: "#F3EBDD", fontWeight: 600, marginBottom: 16, fontSize: "0.9375rem", fontFamily: "'Inter', sans-serif" }}>Best Selling Products</h3>
         <ResponsiveContainer width="100%" height={240}>
           <BarChart data={stats.topProducts}>

@@ -463,13 +463,13 @@ export default function AdminOrders() {
               style={{
                 display: "flex", alignItems: "center", gap: 6, padding: "6px 12px", borderRadius: 5,
                 fontSize: "0.8125rem", fontWeight: 500, cursor: "pointer", border: "1px solid",
-                background: isActive ? "#D8C7AE" : "transparent",
-                color: isActive ? "#171614" : "rgba(243,235,221,0.55)",
-                borderColor: isActive ? "#D8C7AE" : "rgba(255,255,255,0.1)",
+                background: isActive ? "#B8955A" : "transparent",
+                color: isActive ? "#5B1E28" : "rgba(243,235,221,0.55)",
+                borderColor: isActive ? "#B8955A" : "rgba(255,255,255,0.1)",
                 fontFamily: "'Inter', sans-serif",
               }}>
               {tab.label}
-              <span style={{ padding: "1px 6px", borderRadius: 9999, fontSize: "0.6875rem", fontWeight: 700, background: isActive ? "rgba(23,22,20,0.2)" : "rgba(255,255,255,0.08)", color: isActive ? "#171614" : "rgba(243,235,221,0.6)" }}>
+              <span style={{ padding: "1px 6px", borderRadius: 9999, fontSize: "0.6875rem", fontWeight: 700, background: isActive ? "rgba(23,22,20,0.2)" : "rgba(255,255,255,0.08)", color: isActive ? "#5B1E28" : "rgba(243,235,221,0.6)" }}>
                 {count}
               </span>
             </button>
@@ -478,7 +478,7 @@ export default function AdminOrders() {
       </div>
 
       {/* Orders list */}
-      <div style={{ background: "#242120", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, padding: 16 }}>
+      <div style={{ background: "#5B1E28", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, padding: 16 }}>
         {filtered.length === 0 ? (
           <p className="text-gray-400 text-sm text-center py-12">No orders found</p>
         ) : (

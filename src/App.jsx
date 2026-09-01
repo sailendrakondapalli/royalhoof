@@ -1,4 +1,4 @@
-﻿import { lazy, Suspense, useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import { Toaster } from 'react-hot-toast'
@@ -89,7 +89,7 @@ export default function App() {
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
-          {/* Admin routes — own layout, no storefront navbar/footer */}
+          {/* Admin routes � own layout, no storefront navbar/footer */}
           <Route path="/admin/*" element={
             <AdminRoute>
               <AdminLayout>

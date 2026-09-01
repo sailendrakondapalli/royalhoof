@@ -12,7 +12,7 @@ import { supabase } from "../../lib/supabase"
 import toast from "react-hot-toast"
 
 // Royal Hoof dark theme palette
-// bg: #1A1714  sidebar: #2C2C2C  card: #242120  accent: #D8C7AE  text: #F3EBDD
+// bg: #1A1714  sidebar: #2C2C2C  card: #5B1E28  accent: #B8955A  text: #F3EBDD
 
 const NAV = [
   { path: "/admin", label: "Dashboard", icon: LayoutDashboard },
@@ -55,7 +55,7 @@ function Sidebar({ pathname, onSignOut, onNavClick, user, pendingCount }) {
             <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1rem", fontWeight: 700, color: "#F3EBDD", letterSpacing: "0.06em", display: "block" }}>
               ROYALHOOF
             </span>
-            <span style={{ fontSize: "0.625rem", letterSpacing: "0.18em", color: "#D8C7AE", textTransform: "uppercase", display: "block" }}>
+            <span style={{ fontSize: "0.625rem", letterSpacing: "0.18em", color: "#B8955A", textTransform: "uppercase", display: "block" }}>
               Admin Panel
             </span>
           </div>
@@ -79,21 +79,21 @@ function Sidebar({ pathname, onSignOut, onNavClick, user, pendingCount }) {
                 textDecoration: "none",
                 transition: "background 0.15s, color 0.15s",
                 background: active ? "rgba(216,199,174,0.12)" : "transparent",
-                borderLeft: active ? "2px solid #D8C7AE" : "2px solid transparent",
+                borderLeft: active ? "2px solid #B8955A" : "2px solid transparent",
                 paddingLeft: active ? "10px" : "10px",
                 color: active ? "#F3EBDD" : "rgba(243,235,221,0.55)",
               }}
               onMouseEnter={e => { if (!active) e.currentTarget.style.background = "rgba(255,255,255,0.05)" }}
               onMouseLeave={e => { if (!active) e.currentTarget.style.background = "transparent" }}
             >
-              <Icon size={15} style={{ color: active ? "#D8C7AE" : "currentColor", flexShrink: 0 }} />
+              <Icon size={15} style={{ color: active ? "#B8955A" : "currentColor", flexShrink: 0 }} />
               <span style={{ flex: 1, fontSize: "0.8125rem", fontFamily: "'Inter', sans-serif", fontWeight: active ? 600 : 400 }}>{label}</span>
               {badge && (
-                <span style={{ background: "#D8C7AE", color: "#171614", fontSize: "0.625rem", fontWeight: 700, padding: "2px 6px", borderRadius: "9999px", minWidth: 18, textAlign: "center" }}>
+                <span style={{ background: "#B8955A", color: "#5B1E28", fontSize: "0.625rem", fontWeight: 700, padding: "2px 6px", borderRadius: "9999px", minWidth: 18, textAlign: "center" }}>
                   {badge > 99 ? "99+" : badge}
                 </span>
               )}
-              {active && <ChevronRight size={12} style={{ color: "#D8C7AE", marginLeft: "auto" }} />}
+              {active && <ChevronRight size={12} style={{ color: "#B8955A", marginLeft: "auto" }} />}
             </Link>
           )
         })}
@@ -136,15 +136,15 @@ function Sidebar({ pathname, onSignOut, onNavClick, user, pendingCount }) {
         }}>
           <div style={{
             width: 32, height: 32, borderRadius: "50%",
-            background: "linear-gradient(135deg, #D8C7AE, #9A8870)",
+            background: "linear-gradient(135deg, #B8955A, #9A8870)",
             display: "flex", alignItems: "center", justifyContent: "center",
-            flexShrink: 0, color: "#171614", fontWeight: 700, fontSize: "0.75rem",
+            flexShrink: 0, color: "#5B1E28", fontWeight: 700, fontSize: "0.75rem",
           }}>
             {initials}
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
             <p style={{ color: "#F3EBDD", fontSize: "0.75rem", fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontFamily: "'Inter', sans-serif" }}>{displayName}</p>
-            <span style={{ fontSize: "0.5625rem", fontWeight: 700, padding: "2px 6px", borderRadius: "9999px", background: "rgba(216,199,174,0.15)", color: "#D8C7AE", display: "inline-block", letterSpacing: "0.08em" }}>
+            <span style={{ fontSize: "0.5625rem", fontWeight: 700, padding: "2px 6px", borderRadius: "9999px", background: "rgba(216,199,174,0.15)", color: "#B8955A", display: "inline-block", letterSpacing: "0.08em" }}>
               ADMIN
             </span>
           </div>
@@ -225,7 +225,7 @@ export default function AdminLayout({ children }) {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setSidebarOpen(o => !o)}
-                style={{ color: "#D8C7AE", background: "none", border: "none", cursor: "pointer", padding: "6px", borderRadius: "4px" }}
+                style={{ color: "#B8955A", background: "none", border: "none", cursor: "pointer", padding: "6px", borderRadius: "4px" }}
                 onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.06)"}
                 onMouseLeave={e => e.currentTarget.style.background = "none"}
               >
@@ -238,7 +238,7 @@ export default function AdminLayout({ children }) {
             </div>
 
             {/* Brand in center on mobile */}
-            <span style={{ fontFamily: "'Cormorant Garamond', serif", color: "#D8C7AE", fontSize: "1rem", fontWeight: 600, letterSpacing: "0.06em" }}
+            <span style={{ fontFamily: "'Cormorant Garamond', serif", color: "#B8955A", fontSize: "1rem", fontWeight: 600, letterSpacing: "0.06em" }}
               className="sm:hidden">
               ROYALHOOF
             </span>
@@ -287,7 +287,7 @@ export default function AdminLayout({ children }) {
                           ? <p style={{ color: "rgba(243,235,221,0.3)", fontSize: "0.75rem", textAlign: "center", padding: "24px" }}>No notifications</p>
                           : notifications.map(n => (
                             <div key={n.id} style={{ display: "flex", alignItems: "flex-start", gap: 12, padding: "12px 16px", borderBottom: "1px solid rgba(255,255,255,0.04)", cursor: "pointer" }}>
-                              <AlertTriangle size={13} style={{ color: "#D8C7AE", marginTop: 2 }} />
+                              <AlertTriangle size={13} style={{ color: "#B8955A", marginTop: 2 }} />
                               <div style={{ flex: 1 }}>
                                 <p style={{ color: "rgba(243,235,221,0.8)", fontSize: "0.75rem" }}>{n.msg}</p>
                                 <p style={{ color: "rgba(243,235,221,0.3)", fontSize: "0.6875rem", marginTop: 2 }}>{new Date(n.time).toLocaleTimeString()}</p>
@@ -308,9 +308,9 @@ export default function AdminLayout({ children }) {
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <div style={{
                   width: 30, height: 30, borderRadius: "50%",
-                  background: "linear-gradient(135deg, #D8C7AE, #9A8870)",
+                  background: "linear-gradient(135deg, #B8955A, #9A8870)",
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  color: "#171614", fontWeight: 700, fontSize: "0.6875rem",
+                  color: "#5B1E28", fontWeight: 700, fontSize: "0.6875rem",
                   border: "2px solid rgba(216,199,174,0.3)",
                   flexShrink: 0, cursor: "default",
                 }}>

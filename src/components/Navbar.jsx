@@ -18,40 +18,8 @@ export default function Navbar() {
   const { pathname } = useLocation()
   const userRef = useRef(null)
   const searchRef = useRef(null)
-  const canvasRef = useRef(null)
   const isAdmin = checkIsAdmin(user)
   const isOnAdminPanel = pathname.startsWith("/admin")
-
-  // Load Horse Animation for logo
-  useEffect(() => {
-    let dotLottie = null
-
-    const loadDotLottie = async () => {
-      if (canvasRef.current) {
-        try {
-          // Use dynamic import for DotLottie
-          const { DotLottie } = await import('@lottiefiles/dotlottie-web')
-          
-          dotLottie = new DotLottie({
-            canvas: canvasRef.current,
-            src: '/Horse Run.lottie',
-            loop: true,
-            autoplay: true,
-          })
-        } catch (error) {
-          console.error('Failed to load DotLottie:', error)
-        }
-      }
-    }
-
-    loadDotLottie()
-
-    return () => {
-      if (dotLottie) {
-        dotLottie.destroy()
-      }
-    }
-  }, [])
 
   useEffect(() => {
     getSetting("site_logo_url").catch(() => {})
@@ -114,13 +82,13 @@ export default function Navbar() {
   }
 
   const navStyle = {
-    background: scrolled ? "#2C2C2C" : (pathname === "/" ? "rgba(44, 44, 44, 0.9)" : "#2C2C2C"),
+    background: scrolled ? "#5B1E28" : (pathname === "/" ? "rgba(91, 30, 40, 0.9)" : "#5B1E28"),
     backdropFilter: scrolled || pathname === "/" ? "blur(20px)" : "none",
     boxShadow: scrolled ? "0 1px 0 rgba(255, 255, 255, 0.1)" : "none",
     transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
   }
 
-  const iconStyle = "w-10 h-10 flex items-center justify-center text-[#F3EBDD] hover:text-[#D8C7AE] transition-colors duration-300"
+  const iconStyle = "w-10 h-10 flex items-center justify-center text-[#F3EBDD] hover:text-[#B8955A] transition-colors duration-300"
 
   const navLinks = [
     { to: "/", label: "Home" },
@@ -149,7 +117,7 @@ export default function Navbar() {
           right: 0,
           height: "100%",
           width: "280px",
-          background: "#2C2C2C",
+          background: "#5B1E28",
           borderLeft: "1px solid rgba(255,255,255,0.1)",
           boxShadow: "-8px 0 32px rgba(0,0,0,0.5)",
           display: "flex",
@@ -166,13 +134,16 @@ export default function Navbar() {
           borderBottom: "1px solid rgba(255,255,255,0.1)",
         }}>
           <span style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontSize: "1.25rem",
-            fontWeight: 600,
-            color: "#DDD4CF",
-            letterSpacing: "0.05em",
+            fontFamily: "'Cinzel', 'Cormorant Garamond', serif",
+            fontSize: "1.125rem",
+            fontWeight: 500,
+            background: 'linear-gradient(180deg, #8B5A00 0%, #D4AF37 50%, #B8860B 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+            letterSpacing: "0.06em",
           }}>
-            ROYALHOOF
+            ROYAL HOOF
           </span>
           <button
             onClick={() => setMenuOpen(false)}
@@ -205,7 +176,7 @@ export default function Navbar() {
               }}
               onMouseEnter={e => {
                 e.currentTarget.style.background = "rgba(216,199,174,0.12)"
-                e.currentTarget.style.color = "#D8C7AE"
+                e.currentTarget.style.color = "#B8955A"
               }}
               onMouseLeave={e => {
                 e.currentTarget.style.background = "transparent"
@@ -224,8 +195,8 @@ export default function Navbar() {
                 onClick={() => setMenuOpen(false)}
                 style={{
                   display: "block",
-                  background: "#D8C7AE",
-                  color: "#171614",
+                  background: "#B8955A",
+                  color: "#5B1E28",
                   padding: "10px 16px",
                   borderRadius: "4px",
                   fontFamily: "'Inter', sans-serif",
@@ -254,31 +225,48 @@ export default function Navbar() {
         <div className="w-full px-6 lg:px-12 xl:px-20 h-20 flex items-center gap-6">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 flex-shrink-0" onClick={closeAll}>
-            <div className="h-11 w-11 rounded-sm border border-[#CDBC91]/20 flex-shrink-0 flex items-center justify-center bg-transparent overflow-hidden">
-              <canvas
-                ref={canvasRef}
-                width={44}
-                height={44}
-                style={{ 
-                  width: '100%', 
-                  height: '100%',
-                  filter: 'brightness(0) invert(1)'
-                }}
-              />
-            </div>
+            <img 
+              src="/logo.png" 
+              alt="Royal Hoof Logo" 
+              className="h-11 w-11 object-contain flex-shrink-0"
+              onError={(e) => {
+                e.target.style.display = 'none';
+              }}
+            />
             <div className="block leading-tight">
-              <div className="font-medium tracking-tight text-[1.125rem] text-[#DDD4CF] sm:hidden" 
-                style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                ROYALHOOF
+              <div className="font-medium tracking-[0.06em] text-[1.125rem] sm:hidden" 
+                style={{ 
+                  fontFamily: "'Cinzel', 'Cormorant Garamond', serif",
+                  background: 'linear-gradient(180deg, #8B5A00 0%, #D4AF37 50%, #B8860B 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  textShadow: '0 0 1px rgba(212, 175, 55, 0.3)',
+                  letterSpacing: '0.06em'
+                }}>
+                ROYAL HOOF
               </div>
               <div className="hidden sm:block">
-                <div className="font-medium tracking-tight text-[1.125rem] text-[#DDD4CF]" 
-                  style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                  ROYALHOOF
+                <div className="font-medium tracking-[0.06em] text-[1.125rem]" 
+                  style={{ 
+                    fontFamily: "'Cinzel', 'Cormorant Garamond', serif",
+                    background: 'linear-gradient(180deg, #8B5A00 0%, #D4AF37 50%, #B8860B 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    textShadow: '0 0 1px rgba(212, 175, 55, 0.3)',
+                    letterSpacing: '0.06em'
+                  }}>
+                  ROYAL HOOF
                 </div>
-                <div className="text-[0.625rem] tracking-[0.2em] uppercase text-[#DDD4CF]" 
-                  style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                  Horse Riding
+                <div className="text-[0.5rem] tracking-[0.10em] uppercase mt-0.5" 
+                  style={{ 
+                    fontFamily: "'Cinzel', 'Cormorant Garamond', serif",
+                    color: '#C9972B',
+                    fontWeight: 400,
+                    letterSpacing: '0.10em'
+                  }}>
+                  Horse Riding Academy
                 </div>
               </div>
             </div>
@@ -306,7 +294,7 @@ export default function Navbar() {
                 placeholder="Search..."
                 className="w-full rounded-sm pl-11 pr-4 py-2.5 text-sm text-[#F3EBDD] placeholder-[#F3EBDD]/30 focus:outline-none transition-all duration-300"
                 style={{
-                  background: "rgba(44, 44, 44, 0.3)",
+                  background: "rgba(91, 30, 40, 0.3)",
                   border: "1px solid rgba(255, 255, 255, 0.15)",
                   fontFamily: "'Inter', sans-serif",
                 }}
@@ -316,13 +304,13 @@ export default function Navbar() {
               <div 
                 className="absolute top-full left-0 right-0 mt-2 rounded-sm z-50 overflow-hidden"
                 style={{ 
-                  background: "#2C2C2C", 
+                  background: "#5B1E28", 
                   border: "1px solid rgba(255, 255, 255, 0.15)",
                   boxShadow: "0 8px 24px rgba(0, 0, 0, 0.4)" 
                 }}>
                 {suggestions.map(p => (
                   <button key={p.id} onClick={() => handleSuggestionClick(p)}
-                    className="w-full flex items-center gap-3 px-4 py-3 hover:bg-[#171614] transition-colors text-left">
+                    className="w-full flex items-center gap-3 px-4 py-3 hover:bg-[#5B1E28] transition-colors text-left">
                     {p.images?.[0] && (
                       <img src={p.images[0]} alt="" className="w-10 h-10 object-cover rounded-sm flex-shrink-0" 
                         onError={e => { e.target.style.display = "none" }} />
@@ -346,8 +334,8 @@ export default function Navbar() {
               <Link to={isOnAdminPanel ? "/" : "/admin"}
                 className="hidden sm:flex items-center gap-1.5 px-4 py-2 text-[0.6875rem] font-semibold rounded-sm transition-all mr-2 tracking-wide uppercase"
                 style={{ 
-                  background: "#D8C7AE", 
-                  color: "#171614",
+                  background: "#B8955A", 
+                  color: "#5B1E28",
                   fontFamily: "'Inter', sans-serif" 
                 }}>
                 {isOnAdminPanel ? <><Store size={13} /> User</> : <><Settings size={13} /> Admin</>}

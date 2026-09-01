@@ -3,11 +3,11 @@ import { supabase } from '../../lib/supabase'
 import toast from 'react-hot-toast'
 import { Plus, Edit2, Trash2, Star, CheckCircle, XCircle, Eye, EyeOff } from 'lucide-react'
 
-const CARD_BG = "#242120"
+const CARD_BG = "#5B1E28"
 const CARD_BORDER = "rgba(255,255,255,0.07)"
 const TEXT_PRIMARY = "#F3EBDD"
 const TEXT_MUTED = "rgba(243,235,221,0.45)"
-const ACCENT = "#D8C7AE"
+const ACCENT = "#B8955A"
 
 const inputStyle = {
   width: "100%", background: "rgba(255,255,255,0.05)",
@@ -105,7 +105,7 @@ export default function AdminTestimonials() {
           <p style={{ color: TEXT_MUTED, fontSize: "0.875rem", marginTop: 2, fontFamily: "'Inter', sans-serif" }}>Review and approve customer testimonials</p>
         </div>
         <button onClick={() => { setShowForm(true); setEditingItem(null); resetForm() }}
-          style={{ display: "flex", alignItems: "center", gap: 8, background: ACCENT, color: "#171614", border: "none", borderRadius: 4, padding: "10px 18px", cursor: "pointer", fontWeight: 600, fontSize: "0.875rem", fontFamily: "'Inter', sans-serif" }}>
+          style={{ display: "flex", alignItems: "center", gap: 8, background: ACCENT, color: "#5B1E28", border: "none", borderRadius: 4, padding: "10px 18px", cursor: "pointer", fontWeight: 600, fontSize: "0.875rem", fontFamily: "'Inter', sans-serif" }}>
           <Plus size={16} /> Add Testimonial
         </button>
       </div>
@@ -117,7 +117,7 @@ export default function AdminTestimonials() {
             padding: "7px 16px", borderRadius: 4, fontSize: "0.8125rem", cursor: "pointer",
             fontFamily: "'Inter', sans-serif", border: "1px solid", textTransform: "capitalize",
             background: filter === tab ? ACCENT : "transparent",
-            color: filter === tab ? "#171614" : TEXT_MUTED,
+            color: filter === tab ? "#5B1E28" : TEXT_MUTED,
             borderColor: filter === tab ? ACCENT : CARD_BORDER,
           }}>
             {tab}
@@ -178,7 +178,7 @@ export default function AdminTestimonials() {
               <input type="url" value={formData.image_url} onChange={e => set('image_url', e.target.value)} style={inputStyle} placeholder="https://... or leave blank for avatar" />
             </div>
             <div style={{ display: "flex", gap: 12 }}>
-              <button type="submit" style={{ background: ACCENT, color: "#171614", border: "none", borderRadius: 4, padding: "10px 24px", cursor: "pointer", fontWeight: 600, fontSize: "0.875rem", fontFamily: "'Inter', sans-serif" }}>
+              <button type="submit" style={{ background: ACCENT, color: "#5B1E28", border: "none", borderRadius: 4, padding: "10px 24px", cursor: "pointer", fontWeight: 600, fontSize: "0.875rem", fontFamily: "'Inter', sans-serif" }}>
                 {editingItem ? 'Update' : 'Create'}
               </button>
               <button type="button" onClick={() => { setShowForm(false); setEditingItem(null); resetForm() }}

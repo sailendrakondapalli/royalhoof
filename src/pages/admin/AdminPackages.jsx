@@ -3,11 +3,11 @@ import { supabase } from '../../lib/supabase'
 import toast from 'react-hot-toast'
 import { Plus, Edit2, Trash2, Star, Eye, EyeOff } from 'lucide-react'
 
-const CARD_BG = "#242120"
+const CARD_BG = "#5B1E28"
 const CARD_BORDER = "rgba(255,255,255,0.07)"
 const TEXT_PRIMARY = "#F3EBDD"
 const TEXT_MUTED = "rgba(243,235,221,0.45)"
-const ACCENT = "#D8C7AE"
+const ACCENT = "#B8955A"
 
 const inputStyle = {
   width: "100%", background: "rgba(255,255,255,0.05)",
@@ -102,7 +102,7 @@ export default function AdminPackages() {
           <p style={{ color: TEXT_MUTED, fontSize: "0.875rem", marginTop: 2, fontFamily: "'Inter', sans-serif" }}>Manage riding packages and pricing</p>
         </div>
         <button onClick={() => { setShowForm(true); setEditingItem(null); resetForm() }}
-          style={{ display: "flex", alignItems: "center", gap: 8, background: ACCENT, color: "#171614", border: "none", borderRadius: 4, padding: "10px 18px", cursor: "pointer", fontWeight: 600, fontSize: "0.875rem", fontFamily: "'Inter', sans-serif" }}>
+          style={{ display: "flex", alignItems: "center", gap: 8, background: ACCENT, color: "#5B1E28", border: "none", borderRadius: 4, padding: "10px 18px", cursor: "pointer", fontWeight: 600, fontSize: "0.875rem", fontFamily: "'Inter', sans-serif" }}>
           <Plus size={16} /> Add Package
         </button>
       </div>
@@ -194,7 +194,7 @@ export default function AdminPackages() {
             </div>
 
             <div style={{ display: "flex", gap: 12 }}>
-              <button type="submit" style={{ background: ACCENT, color: "#171614", border: "none", borderRadius: 4, padding: "10px 24px", cursor: "pointer", fontWeight: 600, fontSize: "0.875rem", fontFamily: "'Inter', sans-serif" }}>
+              <button type="submit" style={{ background: ACCENT, color: "#5B1E28", border: "none", borderRadius: 4, padding: "10px 24px", cursor: "pointer", fontWeight: 600, fontSize: "0.875rem", fontFamily: "'Inter', sans-serif" }}>
                 {editingItem ? 'Update' : 'Create'}
               </button>
               <button type="button" onClick={() => { setShowForm(false); setEditingItem(null); resetForm() }}

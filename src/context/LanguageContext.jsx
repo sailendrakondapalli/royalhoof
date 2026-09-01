@@ -1,6 +1,6 @@
-﻿import { createContext, useContext } from "react"
+import { createContext, useContext } from "react"
 
-// English-only — language switching removed
+// English-only � language switching removed
 const t = {
   home: "HOME",
   allProducts: "ALL PACKAGES",
@@ -61,14 +61,14 @@ const t = {
   footerShipping: "Booking Policy",
   footerRefund: "Refund Policy",
   footerPrivacy: "Privacy Policy",
-  footerCopy: "© 2026 Royal Hoof Horse Riding Academy. All rights reserved.",
+  footerCopy: "� 2026 Royal Hoof Horse Riding Academy. All rights reserved.",
 
   // Checkout / orders
   checkout: "Enquiry",
   buyNow: "Book Now",
   deliveryAddress: "Your Details",
   addNew: "Add New",
-  continuePayment: "Continue →",
+  continuePayment: "Continue ?",
   orderSummary: "Booking Summary",
   subtotal: "Subtotal",
   shipping: "Charges",

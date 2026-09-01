@@ -121,7 +121,7 @@ export default function ContactPage() {
             fontSize: "0.75rem",
             letterSpacing: "0.25em",
             textTransform: "uppercase",
-            color: "#D8C7AE",
+            color: "#B8955A",
             marginBottom: "12px",
           }}>
             GET IN TOUCH
@@ -177,7 +177,7 @@ export default function ContactPage() {
                     alignItems: "flex-start",
                     gap: "16px",
                   }}>
-                    <div style={{ color: "#D8C7AE", flexShrink: 0, marginTop: "2px" }}>
+                    <div style={{ color: "#B8955A", flexShrink: 0, marginTop: "2px" }}>
                       {item.icon}
                     </div>
                     <div>
@@ -201,7 +201,7 @@ export default function ContactPage() {
                             textDecoration: "none",
                             lineHeight: 1.5,
                           }}
-                          onMouseEnter={e => e.currentTarget.style.color = "#D8C7AE"}
+                          onMouseEnter={e => e.currentTarget.style.color = "#B8955A"}
                           onMouseLeave={e => e.currentTarget.style.color = "#F3EBDD"}
                         >
                           {item.value}
@@ -376,8 +376,8 @@ export default function ContactPage() {
                   type="submit"
                   disabled={submitting}
                   style={{
-                    background: submitting ? "rgba(216,199,174,0.5)" : "#D8C7AE",
-                    color: "#171614",
+                    background: submitting ? "rgba(216,199,174,0.5)" : "#B8955A",
+                    color: "#5B1E28",
                     border: "none",
                     borderRadius: "4px",
                     padding: "13px 28px",
@@ -395,13 +395,13 @@ export default function ContactPage() {
                     alignSelf: "flex-start",
                   }}
                   onMouseEnter={e => { if (!submitting) e.currentTarget.style.background = "#E5D4C1" }}
-                  onMouseLeave={e => { if (!submitting) e.currentTarget.style.background = "#D8C7AE" }}
+                  onMouseLeave={e => { if (!submitting) e.currentTarget.style.background = "#B8955A" }}
                 >
                   {submitting ? (
                     <>
                       <div style={{
                         width: "16px", height: "16px",
-                        border: "2px solid #171614",
+                        border: "2px solid #5B1E28",
                         borderTopColor: "transparent",
                         borderRadius: "50%",
                         animation: "spin 0.7s linear infinite",

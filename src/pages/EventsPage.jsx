@@ -95,7 +95,7 @@ export default function EventsPage() {
         <meta name="description" content="Explore our upcoming and past events" />
       </Helmet>
 
-      <div className="min-h-screen py-20 px-6 lg:px-12 xl:px-20" style={{ background: '#171614' }}>
+      <div className="min-h-screen py-20 px-6 lg:px-12 xl:px-20" style={{ background: '#5B1E28' }}>
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
@@ -104,7 +104,7 @@ export default function EventsPage() {
               <span style={{ color: "#DDD4CF" }}>Equestrian</span> <span style={{ color: "#8B4938", fontStyle: "italic" }}>Events</span>
             </h1>
             <div className="equestrian-divider w-24 mx-auto mb-6" />
-            <p className="text-[#D8C7AE] max-w-2xl mx-auto">
+            <p className="text-[#B8955A] max-w-2xl mx-auto">
               Join us for exciting competitions, workshops, and celebrations throughout the year
             </p>
           </div>
@@ -116,7 +116,7 @@ export default function EventsPage() {
               className={`px-8 py-3 rounded-lg text-sm font-medium uppercase tracking-wider transition-all ${
                 activeTab === 'upcoming'
                   ? 'bg-[#9A7650] text-white'
-                  : 'bg-[#2A2826] text-[#B6A58F] hover:bg-[#3A3836]'
+                  : 'bg-[#762B35] text-[#B6A58F] hover:bg-[#762B35]'
               }`}
             >
               Upcoming Events
@@ -126,7 +126,7 @@ export default function EventsPage() {
               className={`px-8 py-3 rounded-lg text-sm font-medium uppercase tracking-wider transition-all ${
                 activeTab === 'past'
                   ? 'bg-[#9A7650] text-white'
-                  : 'bg-[#2A2826] text-[#B6A58F] hover:bg-[#3A3836]'
+                  : 'bg-[#762B35] text-[#B6A58F] hover:bg-[#762B35]'
               }`}
             >
               Past Events
@@ -159,7 +159,7 @@ export default function EventsPage() {
                   {/* Content */}
                   <div className="p-6">
                     <h3 className="heading-editorial text-2xl mb-3">{event.title}</h3>
-                    <p className="text-[#D8C7AE] text-sm mb-4 leading-relaxed">{event.description}</p>
+                    <p className="text-[#B8955A] text-sm mb-4 leading-relaxed">{event.description}</p>
 
                     {/* Event Details */}
                     <div className="space-y-2 mb-4">
@@ -187,7 +187,7 @@ export default function EventsPage() {
 
                     {/* Progress Bar */}
                     <div className="mb-4">
-                      <div className="w-full bg-[#2A2826] rounded-full h-2 overflow-hidden">
+                      <div className="w-full bg-[#762B35] rounded-full h-2 overflow-hidden">
                         <div 
                           className="bg-[#9A7650] h-full transition-all"
                           style={{ width: `${(event.registered / event.capacity) * 100}%` }}
@@ -201,7 +201,7 @@ export default function EventsPage() {
                       disabled={event.registered >= event.capacity}
                       className={`w-full py-3 rounded-lg font-medium uppercase tracking-wider transition-colors ${
                         event.registered >= event.capacity
-                          ? 'bg-[#3A3836] text-[#B6A58F] cursor-not-allowed'
+                          ? 'bg-[#762B35] text-[#B6A58F] cursor-not-allowed'
                           : 'bg-[#9A7650] hover:bg-[#8A6640] text-white'
                       }`}
                     >
@@ -223,7 +223,7 @@ export default function EventsPage() {
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                     />
                     <div className="absolute top-4 right-4">
-                      <span className="bg-[#2A2826] text-[#B6A58F] px-3 py-1 rounded-full text-xs font-medium uppercase">
+                      <span className="bg-[#762B35] text-[#B6A58F] px-3 py-1 rounded-full text-xs font-medium uppercase">
                         {event.category}
                       </span>
                     </div>
@@ -232,7 +232,7 @@ export default function EventsPage() {
                   {/* Content */}
                   <div className="p-5">
                     <h3 className="text-[#F3EBDD] font-medium text-lg mb-2">{event.title}</h3>
-                    <p className="text-[#D8C7AE] text-sm mb-3 leading-relaxed">{event.description}</p>
+                    <p className="text-[#B8955A] text-sm mb-3 leading-relaxed">{event.description}</p>
 
                     <div className="flex items-center gap-3 text-[#B6A58F] text-xs">
                       <Calendar size={14} />

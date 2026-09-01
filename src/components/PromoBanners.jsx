@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Link } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { ChevronLeft, ChevronRight } from "lucide-react"
@@ -6,7 +6,7 @@ import { getSetting } from "../services/settingsService"
 
 const DEFAULT_BANNERS = [
   { id: 1, badge: "LIMITED TIME", title: "Gauri Shankar", subtitle: "Up to 30% Off", desc: "Rare Nepal origin certified beads", price: "2499", originalPrice: "3999", cta: "Shop Now", link: "/products?category=Gauri+Shankar", bg: "from-[#1C1006] to-[#3d1f00]", accent: "#D97706", image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=300&q=80" },
-  { id: 2, badge: "NEW ARRIVALS", title: "Horse Riding Mala", subtitle: "Starting ₹599", desc: "Authentic 108 bead prayer malas", price: "599", originalPrice: "", cta: "Explore", link: "/products?category=Horse Riding+Mala", bg: "from-[#0a001a] to-[#1f003d]", accent: "#C084FC", image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=300&q=80" },
+  { id: 2, badge: "NEW ARRIVALS", title: "Horse Riding Mala", subtitle: "Starting ?599", desc: "Authentic 108 bead prayer malas", price: "599", originalPrice: "", cta: "Explore", link: "/products?category=Horse Riding+Mala", bg: "from-[#0a001a] to-[#1f003d]", accent: "#C084FC", image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=300&q=80" },
   { id: 3, badge: "BESTSELLER", title: "5 Mukhi Horse Riding", subtitle: "Lab Certified", desc: "Most sacred & widely worn bead", price: "499", originalPrice: "", cta: "View Collection", link: "/products?category=5+Mukhi", bg: "from-[#001a0a] to-[#003d1f]", accent: "#4ADE80", image: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=300&q=80" },
   { id: 4, badge: "FREE SHIPPING", title: "Free Shipping", subtitle: "On All Orders", desc: "No minimum order value", price: "", originalPrice: "", cta: "Shop All", link: "/products", bg: "from-[#1a0a0a] to-[#3d0000]", accent: "#F87171", image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=300&q=80" },
 ]

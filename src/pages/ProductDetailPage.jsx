@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
@@ -111,11 +111,11 @@ export default function ProductDetailPage() {
   return (
     <>
       <Helmet>
-        <title>{product.name} – Buy Online | Royal Hoof</title>
-        <meta name="description" content={`Buy authentic ${product.name} online. ${product.description ? product.description.slice(0, 140) : `Certified ${product.category} Horse Riding from Nepal & India.`} ₹${product.price}. Free delivery available.`} />
+        <title>{product.name} � Buy Online | Royal Hoof</title>
+        <meta name="description" content={`Buy authentic ${product.name} online. ${product.description ? product.description.slice(0, 140) : `Certified ${product.category} Horse Riding from Nepal & India.`} ?${product.price}. Free delivery available.`} />
         <meta name="keywords" content={`${product.name}, buy ${product.category}, authentic Horse Riding, ${product.tags?.join(', ')}, Horse Riding online india`} />
         <link rel="canonical" href={`https://www.royalhoof.com/products/${product.id}`} />
-        <meta property="og:title" content={`${product.name} – Royal Hoof`} />
+        <meta property="og:title" content={`${product.name} � Royal Hoof`} />
         <meta property="og:description" content={product.description || `Authentic ${product.category} Horse Riding. Certified and sourced from Nepal & India.`} />
         <meta property="og:image" content={product.images?.[0] || 'https://www.royalhoof.com/og-image.png'} />
         <meta property="og:url" content={`https://www.royalhoof.com/products/${product.id}`} />
@@ -159,7 +159,7 @@ export default function ProductDetailPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-          {/* Left — media */}
+          {/* Left � media */}
           <div className="space-y-3">
             {/* Main image */}
             <div className="relative aspect-square rounded-2xl overflow-hidden bg-[#1A0A02] border border-[#5C3015]">
@@ -205,7 +205,7 @@ export default function ProductDetailPage() {
             )}
           </div>
 
-          {/* Right — info */}
+          {/* Right � info */}
           <div>
             <p className="text-[#D97706] text-xs uppercase tracking-widest mb-2">{product.category}</p>
             <h1 className="text-3xl font-bold text-[#C8860A] mb-3" style={{ fontFamily: 'Georgia, serif' }}>{product.name}</h1>
@@ -231,8 +231,8 @@ export default function ProductDetailPage() {
               </div>
               <p className="text-sm mt-1" style={{ color: product.delivery_charge ? "#8B6A4A" : "#16a34a" }}>
                 {product.delivery_charge
-                  ? `+ ₹${product.delivery_charge} delivery charge`
-                  : "🚚 Free Delivery"}
+                  ? `+ ?${product.delivery_charge} delivery charge`
+                  : "?? Free Delivery"}
               </p>
             </div>
             <p className="text-[#DDB87A]/80 text-sm leading-relaxed mb-6">{product.description}</p>
@@ -303,9 +303,9 @@ export default function ProductDetailPage() {
             {/* Trust badges */}
             <div className="grid grid-cols-3 gap-2 text-center">
               {[
-                { icon: '🔱', label: 'Lab Certified' },
-                { icon: '🚚', label: product.delivery_charge ? `₹${product.delivery_charge} Delivery` : 'Free Delivery' },
-                { icon: '↩️', label: '7-Day Returns' },
+                { icon: '??', label: 'Lab Certified' },
+                { icon: '??', label: product.delivery_charge ? `?${product.delivery_charge} Delivery` : 'Free Delivery' },
+                { icon: '??', label: '7-Day Returns' },
               ].map(b => (
                 <div key={b.label} className="bg-[#2A1408] border border-[#5C3015] rounded-xl py-2.5 px-1">
                   <p className="text-lg mb-0.5">{b.icon}</p>

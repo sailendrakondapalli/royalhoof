@@ -26,7 +26,7 @@ const TestimonialsPage = lazy(() => import('../pages/TestimonialsPage'))
 const FAQPage = lazy(() => import('../pages/FAQPage'))
 
 const PageLoader = () => (
-  <div className="min-h-[60vh] flex items-center justify-center" style={{ background: "#171614" }}>
+  <div className="min-h-[60vh] flex items-center justify-center" style={{ background: "#5B1E28" }}>
     <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin"
       style={{ borderColor: "#9A7650", borderTopColor: "transparent" }} />
   </div>

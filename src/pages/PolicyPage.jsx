@@ -1,4 +1,4 @@
-﻿import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 
 const policies = {
@@ -11,7 +11,7 @@ const policies = {
       },
       {
         heading: 'Session Timings',
-        text: 'Sessions run Monday to Sunday, 6:00 AM – 8:00 PM IST.\n\nMorning slots (6 AM – 9 AM) and evening slots (5 PM – 8 PM) are most popular — book early to secure your preferred time.'
+        text: 'Sessions run Monday to Sunday, 6:00 AM � 8:00 PM IST.\n\nMorning slots (6 AM � 9 AM) and evening slots (5 PM � 8 PM) are most popular � book early to secure your preferred time.'
       },
       {
         heading: 'Cancellation by You',
@@ -23,7 +23,7 @@ const policies = {
       },
       {
         heading: 'Contact',
-        text: '📞 Phone / WhatsApp: +91 90437 00776\n📧 info@royalhoof.com\n📍 GIRI FARMS, Uniworld City, Aspen Greens, Nallambakkam, Tamil Nadu'
+        text: '?? Phone / WhatsApp: +91 90437 00776\n?? info@royalhoof.com\n?? GIRI FARMS, Uniworld City, Aspen Greens, Nallambakkam, Tamil Nadu'
       },
     ]
   },
@@ -32,7 +32,7 @@ const policies = {
     sections: [
       {
         heading: 'Package Refunds',
-        text: 'If you have purchased a riding package and wish to cancel before your first session, a full refund will be issued within 5–7 working days.\n\nOnce sessions have commenced, refunds are available on a pro-rated basis for unused sessions only.'
+        text: 'If you have purchased a riding package and wish to cancel before your first session, a full refund will be issued within 5�7 working days.\n\nOnce sessions have commenced, refunds are available on a pro-rated basis for unused sessions only.'
       },
       {
         heading: 'Single Session Refunds',
@@ -40,7 +40,7 @@ const policies = {
       },
       {
         heading: 'How to Request a Refund',
-        text: 'Contact us via WhatsApp or email with your name, booking details, and reason for the refund request.\n\n📱 WhatsApp: +91 90437 00776\n📧 info@royalhoof.com\n\nRefunds are processed within 5–7 working days after approval.'
+        text: 'Contact us via WhatsApp or email with your name, booking details, and reason for the refund request.\n\n?? WhatsApp: +91 90437 00776\n?? info@royalhoof.com\n\nRefunds are processed within 5�7 working days after approval.'
       },
       {
         heading: 'Non-Refundable Items',
@@ -55,7 +55,7 @@ const policies = {
       { heading: 'How We Use It', text: 'Your information is used solely to confirm bookings, send reminders, and communicate updates. We do not sell or share your data with third parties.' },
       { heading: 'Data Security', text: 'All data is stored securely. Payment transactions are handled via trusted third-party processors and we do not store card details.' },
       { heading: 'Cookies', text: 'We use cookies to improve site performance and remember your preferences. You can disable cookies in your browser settings.' },
-      { heading: 'Contact', text: 'For any privacy concerns:\n📧 info@royalhoof.com\n📞 +91 90437 00776' },
+      { heading: 'Contact', text: 'For any privacy concerns:\n?? info@royalhoof.com\n?? +91 90437 00776' },
     ]
   }
 }
@@ -76,7 +76,7 @@ export default function PolicyPage() {
   return (
     <>
       <Helmet>
-        <title>{policy.title} – Royal Hoof Horse Riding Academy</title>
+        <title>{policy.title} � Royal Hoof Horse Riding Academy</title>
       </Helmet>
 
       <div style={{ background: "#1A1714", minHeight: "100vh", padding: "48px 24px 80px" }}>
@@ -84,7 +84,7 @@ export default function PolicyPage() {
 
           {/* Page header */}
           <div style={{ marginBottom: 40, paddingBottom: 24, borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
-            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.75rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "#D8C7AE", marginBottom: 10 }}>
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.75rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "#B8955A", marginBottom: 10 }}>
               Royal Hoof Horse Riding Academy
             </p>
             <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 700, color: "#F3EBDD", lineHeight: 1.15 }}>
@@ -96,12 +96,12 @@ export default function PolicyPage() {
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {policy.sections.map((section, i) => (
               <div key={i} style={{
-                background: "#242120",
+                background: "#5B1E28",
                 border: "1px solid rgba(255,255,255,0.07)",
                 borderRadius: 8,
                 padding: "20px 24px",
               }}>
-                <h2 style={{ color: "#D8C7AE", fontWeight: 600, fontSize: "1rem", marginBottom: 10, fontFamily: "'Inter', sans-serif" }}>
+                <h2 style={{ color: "#B8955A", fontWeight: 600, fontSize: "1rem", marginBottom: 10, fontFamily: "'Inter', sans-serif" }}>
                   {section.heading}
                 </h2>
                 <p style={{ color: "rgba(243,235,221,0.7)", fontSize: "0.9rem", lineHeight: 1.7, whiteSpace: "pre-line", fontFamily: "'Inter', sans-serif" }}>
@@ -112,7 +112,7 @@ export default function PolicyPage() {
           </div>
 
           <p style={{ color: "rgba(243,235,221,0.25)", fontSize: "0.75rem", textAlign: "center", marginTop: 40, fontFamily: "'Inter', sans-serif" }}>
-            Last updated: August 2026 · Royal Hoof Horse Riding Academy
+            Last updated: August 2026 � Royal Hoof Horse Riding Academy
           </p>
         </div>
       </div>

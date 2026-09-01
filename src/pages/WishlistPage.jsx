@@ -1,4 +1,4 @@
-﻿import { Heart } from 'lucide-react'
+import { Heart } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useWishlistStore } from '../store/wishlistStore'
 import ProductCard from '../components/ProductCard'

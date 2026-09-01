@@ -1,20 +1,20 @@
-ï»¿import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Save, Loader2, RefreshCw, Upload, X } from "lucide-react"
 import { getSetting, setSetting } from "../../services/settingsService"
 import { supabase } from "../../lib/supabase"
 import toast from "react-hot-toast"
 
-const CARD_BG = "#242120"
+const CARD_BG = "#5B1E28"
 const CARD_BORDER = "rgba(255,255,255,0.07)"
 const TEXT_PRIMARY = "#F3EBDD"
 const TEXT_MUTED = "rgba(243,235,221,0.45)"
-const ACCENT = "#D8C7AE"
+const ACCENT = "#B8955A"
 
 const DEFAULT = {
   title: "Royal Hoof Horse Riding Academy",
   subtitle: "Nallambakkam, Tamil Nadu",
   p1: "Welcome to Royal Hoof Horse Riding Academy, located at GIRI FARMS in Nallambakkam, Tamil Nadu. We offer professional horse riding lessons for all ages in a safe, nurturing environment.",
-  p2: "Our certified trainers are passionate about equestrian sports and dedicated to building a strong foundation for every rider â€” from complete beginners to experienced equestrians.",
+  p2: "Our certified trainers are passionate about equestrian sports and dedicated to building a strong foundation for every rider — from complete beginners to experienced equestrians.",
   p3: "We offer a wide range of programmes including beginner lessons, advanced training, competitive riding, and special kids' sessions designed to build confidence and develop lifelong skills.",
   p4: "Safety is our top priority. All sessions are supervised by experienced professionals, and our horses are well-trained, healthy, and temperament-tested for rider compatibility.",
   p5: "Located conveniently within the Uniworld City, Aspen Greens community, our facility is equipped with quality arena space, stables, and training equipment.",
@@ -23,8 +23,8 @@ const DEFAULT = {
   yearsLabel: "Our Home",
   authentic: "All Ages",
   authenticLabel: "Welcome",
-  customers: "Mon â€“ Sun",
-  customersLabel: "6 AM â€“ 8 PM",
+  customers: "Mon – Sun",
+  customersLabel: "6 AM – 8 PM",
 }
 
 const inputStyle = {
@@ -113,7 +113,7 @@ export default function AdminAbout() {
 
   const handleReset = () => {
     setData(DEFAULT)
-    toast.success("Reset to defaults â€” click Save to apply")
+    toast.success("Reset to defaults — click Save to apply")
   }
 
   if (loading) {
@@ -159,7 +159,7 @@ export default function AdminAbout() {
             <RefreshCw size={13} /> Reset
           </button>
           <button onClick={handleSave} disabled={saving}
-            style={{ display: "flex", alignItems: "center", gap: 6, background: saving ? "rgba(216,199,174,0.5)" : ACCENT, color: "#171614", border: "none", borderRadius: 4, padding: "8px 20px", cursor: saving ? "not-allowed" : "pointer", fontWeight: 700, fontSize: "0.8125rem", fontFamily: "'Inter', sans-serif" }}>
+            style={{ display: "flex", alignItems: "center", gap: 6, background: saving ? "rgba(216,199,174,0.5)" : ACCENT, color: "#5B1E28", border: "none", borderRadius: 4, padding: "8px 20px", cursor: saving ? "not-allowed" : "pointer", fontWeight: 700, fontSize: "0.8125rem", fontFamily: "'Inter', sans-serif" }}>
             {saving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
             {saving ? "Saving..." : "Save Changes"}
           </button>
@@ -169,7 +169,7 @@ export default function AdminAbout() {
       {/* Two column layout: form + live preview */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, alignItems: "start" }} className="about-grid">
 
-        {/* LEFT â€” Edit form */}
+        {/* LEFT — Edit form */}
         <div style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderRadius: 8, padding: 24, display: "flex", flexDirection: "column", gap: 16 }}>
           <p style={{ color: ACCENT, fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", fontFamily: "'Inter', sans-serif" }}>
             Content
@@ -203,7 +203,7 @@ export default function AdminAbout() {
                   <>
                     <Upload size={22} style={{ color: TEXT_MUTED, margin: "0 auto 8px" }} />
                     <p style={{ color: TEXT_MUTED, fontSize: "0.875rem" }}>Click to upload image</p>
-                    <p style={{ color: "rgba(243,235,221,0.25)", fontSize: "0.75rem", marginTop: 4 }}>JPG, PNG, WEBP Â· max 10MB</p>
+                    <p style={{ color: "rgba(243,235,221,0.25)", fontSize: "0.75rem", marginTop: 4 }}>JPG, PNG, WEBP · max 10MB</p>
                   </>
                 )}
               </div>
@@ -246,7 +246,7 @@ export default function AdminAbout() {
           </div>
         </div>
 
-        {/* RIGHT â€” Live preview */}
+        {/* RIGHT — Live preview */}
         <div style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderRadius: 8, padding: 24, position: "sticky", top: 80 }}>
           <p style={{ color: ACCENT, fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", fontFamily: "'Inter', sans-serif", marginBottom: 16 }}>
             Live Preview
@@ -294,7 +294,7 @@ export default function AdminAbout() {
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
               {stats.map(s => (
                 <div key={s.v} style={{ textAlign: "center", background: "rgba(255,255,255,0.03)", border: `1px solid ${CARD_BORDER}`, borderRadius: 6, padding: "12px 8px" }}>
-                  <p style={{ color: ACCENT, fontFamily: "'Cormorant Garamond', serif", fontSize: "1.1rem", fontWeight: 700 }}>{data[s.v] || "â€”"}</p>
+                  <p style={{ color: ACCENT, fontFamily: "'Cormorant Garamond', serif", fontSize: "1.1rem", fontWeight: 700 }}>{data[s.v] || "—"}</p>
                   <p style={{ color: TEXT_MUTED, fontSize: "0.625rem", marginTop: 2, fontFamily: "'Inter', sans-serif" }}>{data[s.l] || "Label"}</p>
                 </div>
               ))}

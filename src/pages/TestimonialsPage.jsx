@@ -41,7 +41,7 @@ export default function TestimonialsPage() {
         <meta name="description" content="Read what our members say about us" />
       </Helmet>
 
-      <div className="min-h-screen py-20 px-6 lg:px-12 xl:px-20" style={{ background: '#171614' }}>
+      <div className="min-h-screen py-20 px-6 lg:px-12 xl:px-20" style={{ background: '#5B1E28' }}>
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
@@ -50,7 +50,7 @@ export default function TestimonialsPage() {
               <span style={{ color: "#DDD4CF" }}>What Our Members</span> <span style={{ color: "#8B4938", fontStyle: "italic" }}>Say</span>
             </h1>
             <div className="equestrian-divider w-24 mx-auto mb-6" />
-            <p className="text-[#D8C7AE] max-w-2xl mx-auto">
+            <p className="text-[#B8955A] max-w-2xl mx-auto">
               Don't just take our word for it - hear from our satisfied members and their families
             </p>
           </div>
@@ -77,19 +77,19 @@ export default function TestimonialsPage() {
                 <div key={i} className="equestrian-card rounded-lg p-6 animate-pulse">
                   <div className="flex gap-1 mb-4">
                     {[1, 2, 3, 4, 5].map(j => (
-                      <div key={j} className="w-4 h-4 bg-[#3A3836] rounded-sm" />
+                      <div key={j} className="w-4 h-4 bg-[#762B35] rounded-sm" />
                     ))}
                   </div>
                   <div className="space-y-2 mb-6">
-                    <div className="h-4 bg-[#3A3836] rounded" />
-                    <div className="h-4 bg-[#3A3836] rounded w-5/6" />
-                    <div className="h-4 bg-[#3A3836] rounded w-4/6" />
+                    <div className="h-4 bg-[#762B35] rounded" />
+                    <div className="h-4 bg-[#762B35] rounded w-5/6" />
+                    <div className="h-4 bg-[#762B35] rounded w-4/6" />
                   </div>
-                  <div className="flex items-center gap-3 pt-4 border-t border-[#3A3836]">
-                    <div className="w-12 h-12 bg-[#3A3836] rounded-full" />
+                  <div className="flex items-center gap-3 pt-4 border-t border-[#762B35]">
+                    <div className="w-12 h-12 bg-[#762B35] rounded-full" />
                     <div className="space-y-1">
-                      <div className="h-4 bg-[#3A3836] rounded w-20" />
-                      <div className="h-3 bg-[#3A3836] rounded w-16" />
+                      <div className="h-4 bg-[#762B35] rounded w-20" />
+                      <div className="h-3 bg-[#762B35] rounded w-16" />
                     </div>
                   </div>
                 </div>
@@ -97,7 +97,7 @@ export default function TestimonialsPage() {
             </div>
           ) : testimonials.length === 0 ? (
             <div className="text-center py-16">
-              <p className="text-[#D8C7AE] text-lg mb-4">No testimonials available yet.</p>
+              <p className="text-[#B8955A] text-lg mb-4">No testimonials available yet.</p>
               <p className="text-[#B6A58F] text-sm">Check back soon for member reviews!</p>
             </div>
           ) : (
@@ -117,12 +117,12 @@ export default function TestimonialsPage() {
                   </div>
 
                   {/* Review Text */}
-                  <p className="text-[#D8C7AE] text-sm leading-relaxed mb-6">
+                  <p className="text-[#B8955A] text-sm leading-relaxed mb-6">
                     "{testimonial.review}"
                   </p>
 
                   {/* Author */}
-                  <div className="flex items-center gap-3 pt-4 border-t border-[#3A3836]">
+                  <div className="flex items-center gap-3 pt-4 border-t border-[#762B35]">
                     <img 
                       src={testimonial.image_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonial.name)}&background=9A7650&color=fff`}
                       alt={testimonial.name}
@@ -146,7 +146,7 @@ export default function TestimonialsPage() {
             <h2 className="heading-editorial text-2xl mb-4">
               <span style={{ color: "#DDD4CF" }}>Want to Share Your</span> <span style={{ color: "#8B4938", fontStyle: "italic" }}>Experience?</span>
             </h2>
-            <p className="text-[#D8C7AE] mb-6 max-w-2xl mx-auto">
+            <p className="text-[#B8955A] mb-6 max-w-2xl mx-auto">
               We'd love to hear from you! Share your feedback and help others make the right choice.
             </p>
             <a

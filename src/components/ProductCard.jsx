@@ -1,4 +1,4 @@
-﻿import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Heart, ShoppingCart, ArrowRight, CheckCircle, MapPin, Sparkles } from 'lucide-react'
 import { useAuthStore } from '../store/authStore'
@@ -50,7 +50,7 @@ function GridCard({ product, inCart, wishlisted, onAddToCart, onWishlist }) {
     >
       <Link to={`/products/${product.id}`} className="flex flex-col flex-1">
         {/* Image Container */}
-        <div className="relative overflow-hidden aspect-square bg-[#0D0C0B] flex-shrink-0 image-zoom-wrapper">
+        <div className="relative overflow-hidden aspect-square bg-[#5B1E28] flex-shrink-0 image-zoom-wrapper">
           {mediaIsVideo ? (
             <video src={media} muted loop playsInline autoPlay
               className="w-full h-full object-cover" />
@@ -61,12 +61,12 @@ function GridCard({ product, inCart, wishlisted, onAddToCart, onWishlist }) {
           )}
 
           {/* Overlay on Hover */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#171614]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#5B1E28]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
           {/* Out of Stock Overlay */}
           {product.stock === 0 && (
-            <div className="absolute inset-0 bg-[#171614]/80 flex items-center justify-center backdrop-blur-sm">
-              <span className="text-[#F3EBDD] text-xs font-semibold bg-[#22201D] px-4 py-2 rounded-sm border border-[#B6A58F]/20"
+            <div className="absolute inset-0 bg-[#5B1E28]/80 flex items-center justify-center backdrop-blur-sm">
+              <span className="text-[#F3EBDD] text-xs font-semibold bg-[#5B1E28] px-4 py-2 rounded-sm border border-[#B6A58F]/20"
                 style={{ fontFamily: "'Inter', sans-serif" }}>
                 Out of Stock
               </span>
@@ -102,7 +102,7 @@ function GridCard({ product, inCart, wishlisted, onAddToCart, onWishlist }) {
             className={`absolute top-3 right-3 p-2 rounded-sm transition-all duration-300 backdrop-blur-sm ${
               wishlisted 
                 ? 'bg-red-500 text-white scale-110' 
-                : 'bg-[#22201D]/80 text-[#F3EBDD] hover:text-red-400 hover:bg-[#22201D]'
+                : 'bg-[#5B1E28]/80 text-[#F3EBDD] hover:text-red-400 hover:bg-[#5B1E28]'
             }`}>
             <Heart size={14} strokeWidth={1.5} fill={wishlisted ? 'currentColor' : 'none'} />
           </button>
@@ -117,7 +117,7 @@ function GridCard({ product, inCart, wishlisted, onAddToCart, onWishlist }) {
           </p>
           
           {/* Title */}
-          <h3 className="text-[#F3EBDD] text-sm font-medium line-clamp-2 mb-3 group-hover:text-[#D8C7AE] transition-colors leading-snug flex-1"
+          <h3 className="text-[#F3EBDD] text-sm font-medium line-clamp-2 mb-3 group-hover:text-[#B8955A] transition-colors leading-snug flex-1"
             style={{ fontFamily: "'Inter', sans-serif" }}>
             {product.name}
           </h3>
@@ -144,7 +144,7 @@ function GridCard({ product, inCart, wishlisted, onAddToCart, onWishlist }) {
                 color: product.delivery_charge ? "#B6A58F" : "#4ADE80",
                 fontFamily: "'Inter', sans-serif" 
               }}>
-              {product.delivery_charge ? `+ ₹${product.delivery_charge} delivery` : "Free Delivery"}
+              {product.delivery_charge ? `+ ?${product.delivery_charge} delivery` : "Free Delivery"}
             </p>
           </div>
         </div>
@@ -156,7 +156,7 @@ function GridCard({ product, inCart, wishlisted, onAddToCart, onWishlist }) {
           className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-sm text-xs font-semibold transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed uppercase tracking-wider ${
             inCart
               ? 'bg-green-700 hover:bg-green-600 text-white'
-              : 'bg-[#D8C7AE] hover:bg-[#F3EBDD] text-[#171614]'
+              : 'bg-[#B8955A] hover:bg-[#F3EBDD] text-[#5B1E28]'
           }`}
           style={{ fontFamily: "'Inter', sans-serif" }}>
           {inCart ? (
@@ -185,7 +185,7 @@ function ListCard({ product, inCart, wishlisted, onAddToCart, onWishlist }) {
       <Link to={`/products/${product.id}`}>
         <div className="flex items-stretch gap-4 p-4">
           {/* Image */}
-          <div className="relative flex-shrink-0 w-28 h-28 rounded-sm overflow-hidden bg-[#0D0C0B] image-zoom-wrapper">
+          <div className="relative flex-shrink-0 w-28 h-28 rounded-sm overflow-hidden bg-[#5B1E28] image-zoom-wrapper">
             {mediaIsVideo ? (
               <video src={media} muted loop playsInline autoPlay className="w-full h-full object-cover" />
             ) : (
@@ -194,8 +194,8 @@ function ListCard({ product, inCart, wishlisted, onAddToCart, onWishlist }) {
                 onError={e => { e.target.src = FALLBACK_IMG }} />
             )}
             {product.stock === 0 && (
-              <div className="absolute inset-0 bg-[#171614]/80 flex items-center justify-center backdrop-blur-sm">
-                <span className="text-[0.625rem] font-bold text-[#F3EBDD] bg-[#22201D] px-2 py-1 rounded-sm border border-[#B6A58F]/20"
+              <div className="absolute inset-0 bg-[#5B1E28]/80 flex items-center justify-center backdrop-blur-sm">
+                <span className="text-[0.625rem] font-bold text-[#F3EBDD] bg-[#5B1E28] px-2 py-1 rounded-sm border border-[#B6A58F]/20"
                   style={{ fontFamily: "'Inter', sans-serif" }}>
                   OOS
                 </span>
@@ -207,7 +207,7 @@ function ListCard({ product, inCart, wishlisted, onAddToCart, onWishlist }) {
           <div className="flex-1 min-w-0 flex flex-col justify-between py-1">
             <div className="flex items-center gap-2 mb-1">
               {product.custom_id && (
-                <span className="font-mono text-[0.625rem] text-[#B6A58F] bg-[#171614] px-2 py-0.5 rounded-sm border border-[#B6A58F]/15"
+                <span className="font-mono text-[0.625rem] text-[#B6A58F] bg-[#5B1E28] px-2 py-0.5 rounded-sm border border-[#B6A58F]/15"
                   style={{ fontFamily: "'Courier New', monospace" }}>
                   {product.custom_id}
                 </span>
@@ -218,7 +218,7 @@ function ListCard({ product, inCart, wishlisted, onAddToCart, onWishlist }) {
               </span>
             </div>
             
-            <h3 className="text-[#F3EBDD] text-sm font-medium line-clamp-2 group-hover:text-[#D8C7AE] transition-colors leading-tight mb-2"
+            <h3 className="text-[#F3EBDD] text-sm font-medium line-clamp-2 group-hover:text-[#B8955A] transition-colors leading-tight mb-2"
               style={{ fontFamily: "'Inter', sans-serif" }}>
               {product.name}
             </h3>
@@ -258,7 +258,7 @@ function ListCard({ product, inCart, wishlisted, onAddToCart, onWishlist }) {
                 color: product.delivery_charge ? "#B6A58F" : "#4ADE80",
                 fontFamily: "'Inter', sans-serif" 
               }}>
-              {product.delivery_charge ? `+ ₹${product.delivery_charge} delivery` : "Free Delivery"}
+              {product.delivery_charge ? `+ ?${product.delivery_charge} delivery` : "Free Delivery"}
             </p>
           </div>
 
@@ -276,7 +276,7 @@ function ListCard({ product, inCart, wishlisted, onAddToCart, onWishlist }) {
               className={`flex items-center gap-1.5 px-4 py-2 rounded-sm text-xs font-semibold transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap uppercase tracking-wider ${
                 inCart
                   ? 'bg-green-700 hover:bg-green-600 text-white'
-                  : 'bg-[#D8C7AE] hover:bg-[#F3EBDD] text-[#171614]'
+                  : 'bg-[#B8955A] hover:bg-[#F3EBDD] text-[#5B1E28]'
               }`}
               style={{ fontFamily: "'Inter', sans-serif" }}>
               {inCart ? (

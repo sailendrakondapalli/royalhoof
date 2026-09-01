@@ -6,11 +6,11 @@ import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 import InvoiceGenerator from '../../components/InvoiceGenerator'
 
-const CARD_BG = "#242120"
+const CARD_BG = "#5B1E28"
 const CARD_BORDER = "rgba(255,255,255,0.07)"
 const TEXT_PRIMARY = "#F3EBDD"
 const TEXT_MUTED = "rgba(243,235,221,0.45)"
-const ACCENT = "#D8C7AE"
+const ACCENT = "#B8955A"
 
 const inputStyle = {
   background: "rgba(255,255,255,0.05)",
@@ -373,7 +373,7 @@ export default function AdminEnquiries() {
                   padding: "5px 12px", borderRadius: 4, fontSize: "0.8125rem", cursor: "pointer",
                   fontFamily: "'Inter', sans-serif", border: "1px solid",
                   background: selectedType === type ? ACCENT : "transparent",
-                  color: selectedType === type ? "#171614" : TEXT_MUTED,
+                  color: selectedType === type ? "#5B1E28" : TEXT_MUTED,
                   borderColor: selectedType === type ? ACCENT : CARD_BORDER,
                   textTransform: "capitalize",
                 }}>
@@ -391,7 +391,7 @@ export default function AdminEnquiries() {
                   padding: "5px 12px", borderRadius: 4, fontSize: "0.8125rem", cursor: "pointer",
                   fontFamily: "'Inter', sans-serif", border: "1px solid",
                   background: selectedStatus === status ? ACCENT : "transparent",
-                  color: selectedStatus === status ? "#171614" : TEXT_MUTED,
+                  color: selectedStatus === status ? "#5B1E28" : TEXT_MUTED,
                   borderColor: selectedStatus === status ? ACCENT : CARD_BORDER,
                   textTransform: "capitalize",
                 }}>
@@ -538,7 +538,7 @@ export default function AdminEnquiries() {
                     />
                     <div style={{ display: "flex", gap: 8 }}>
                       <button onClick={() => saveNotes(item.id)}
-                        style={{ background: ACCENT, color: "#171614", border: "none", borderRadius: 4, padding: "6px 16px", cursor: "pointer", fontWeight: 600, fontSize: "0.8125rem", fontFamily: "'Inter', sans-serif" }}>
+                        style={{ background: ACCENT, color: "#5B1E28", border: "none", borderRadius: 4, padding: "6px 16px", cursor: "pointer", fontWeight: 600, fontSize: "0.8125rem", fontFamily: "'Inter', sans-serif" }}>
                         Save
                       </button>
                       <button onClick={() => { setEditingNotes(null); setNotes('') }}
@@ -838,7 +838,7 @@ export default function AdminEnquiries() {
                         justifyContent: "center",
                         gap: 8,
                         background: (selectedEvent && events.length > 0 && !isSending) ? ACCENT : "rgba(255,255,255,0.1)",
-                        color: (selectedEvent && events.length > 0 && !isSending) ? "#171614" : TEXT_MUTED,
+                        color: (selectedEvent && events.length > 0 && !isSending) ? "#5B1E28" : TEXT_MUTED,
                         border: "none",
                         borderRadius: 6,
                         padding: "12px 20px",
@@ -863,7 +863,7 @@ export default function AdminEnquiries() {
                     style={{
                       flex: 1,
                       background: ACCENT,
-                      color: "#171614",
+                      color: "#5B1E28",
                       border: "none",
                       borderRadius: 6,
                       padding: "12px 20px",

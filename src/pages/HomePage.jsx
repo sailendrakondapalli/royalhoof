@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
 import { Helmet } from "react-helmet-async"
@@ -25,7 +25,7 @@ const CAT_DESC = {
 }
 const PX = "px-6 lg:px-12 xl:px-20"
 
-/* ─── Hero Section ─── */
+/* --- Hero Section --- */
 function HeroSlider() {
   const { t } = useLanguage()
   const [slide, setSlide] = useState(0)
@@ -40,7 +40,7 @@ function HeroSlider() {
   return (
     <section className="relative w-full overflow-hidden" style={{ height: "clamp(500px, 75vh, 720px)" }}>
       {/* Background Video */}
-      <div className="absolute inset-0 bg-[#171614]" />
+      <div className="absolute inset-0 bg-[#5B1E28]" />
       <video 
         autoPlay 
         muted 
@@ -52,9 +52,9 @@ function HeroSlider() {
         <source src="/herovideo.mp4" type="video/mp4" />
       </video>
       
-      {/* Overlay - subtle dark gradient */}
+      {/* Overlay - subtle dark gradient for text readability */}
       <div className="absolute inset-0" style={{ 
-        background: "linear-gradient(to top, rgba(23, 22, 20, 0.85) 0%, rgba(23, 22, 20, 0.4) 50%, rgba(23, 22, 20, 0.2) 100%)" 
+        background: "linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0) 100%)" 
       }} />
       
       {/* Content */}
@@ -66,19 +66,39 @@ function HeroSlider() {
           transition={{ duration: 1, delay: 0.5 }}
           className="mb-8"
         >
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 tracking-tight" 
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium tracking-[0.06em] mb-4" 
               style={{ 
-                fontFamily: "'Cormorant Garamond', serif",
-                textShadow: '2px 2px 8px rgba(0,0,0,0.7)'
+                fontFamily: "'Cinzel', 'Cormorant Garamond', serif",
+                background: 'linear-gradient(180deg, #8B5A00 0%, #D4AF37 50%, #B8860B 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                textShadow: '0 2px 8px rgba(212, 175, 55, 0.4)',
+                letterSpacing: '0.06em',
+                fontWeight: 500
               }}>
-            ROYALHOOF
+            ROYAL HOOF
           </h1>
-          <p className="text-xl md:text-2xl text-white/90 tracking-wider uppercase font-light" 
+          <p className="text-xl md:text-2xl tracking-[0.10em] uppercase font-light" 
              style={{ 
-               fontFamily: "'Cormorant Garamond', serif",
-               textShadow: '1px 1px 4px rgba(0,0,0,0.6)'
+               fontFamily: "'Cinzel', 'Cormorant Garamond', serif",
+               color: '#C9972B',
+               letterSpacing: '0.10em',
+               textShadow: '1px 1px 4px rgba(0,0,0,0.6)',
+               fontWeight: 400
              }}>
-            Horse Riding Academy
+            Horse Riding Academy & Club
+          </p>
+          <p className="text-sm md:text-base tracking-[0.15em] uppercase mt-3" 
+             style={{ 
+               fontFamily: "'Cinzel', 'Cormorant Garamond', serif",
+               color: '#C9972B',
+               letterSpacing: '0.15em',
+               textShadow: '1px 1px 4px rgba(0,0,0,0.6)',
+               fontWeight: 400,
+               fontSize: '0.75rem'
+             }}>
+            ESTD. 2026
           </p>
         </motion.div>
 
@@ -92,8 +112,8 @@ function HeroSlider() {
             to="/enquiry"
             className="inline-flex items-center gap-3 px-8 py-4 rounded-sm font-bold text-lg tracking-wide uppercase transition-all duration-300 hover:scale-105 hover:shadow-xl"
             style={{ 
-              background: "linear-gradient(135deg, #D8C7AE 0%, #B6A58F 100%)",
-              color: "#171614",
+              background: "linear-gradient(135deg, #B8955A 0%, #B6A58F 100%)",
+              color: "#5B1E28",
               fontFamily: "'Inter', sans-serif",
               boxShadow: '0 4px 20px rgba(216, 199, 174, 0.4)'
             }}
@@ -112,7 +132,7 @@ function HeroSlider() {
             onClick={() => { setSlide(i); clearInterval(timerRef.current) }}
             className={`rounded-full transition-all duration-500 ${
               i === slide 
-                ? "w-8 h-1.5 bg-[#D8C7AE]" 
+                ? "w-8 h-1.5 bg-[#B8955A]" 
                 : "w-1.5 h-1.5 bg-[#F3EBDD]/30"
             }`} 
           />
@@ -122,7 +142,7 @@ function HeroSlider() {
   )
 }
 
-/* ─── About Section ─── */
+/* --- About Section --- */
 function AboutSection() {
   const [dbData, setDbData] = useState(null)
   const [imageUrl, setImageUrl] = useState("")
@@ -140,7 +160,7 @@ function AboutSection() {
     title: "Royal Hoof Horse Riding Academy",
     subtitle: "Nallambakkam, Tamil Nadu",
     p1: "Welcome to Royal Hoof Horse Riding Academy, located at GIRI FARMS in Nallambakkam, Tamil Nadu. We offer professional horse riding lessons for all ages in a safe, nurturing environment.",
-    p2: "Our certified trainers are passionate about equestrian sports and dedicated to building a strong foundation for every rider — from complete beginners to experienced equestrians.",
+    p2: "Our certified trainers are passionate about equestrian sports and dedicated to building a strong foundation for every rider � from complete beginners to experienced equestrians.",
     p3: "We offer a wide range of programmes including beginner lessons, advanced training, competitive riding, and special kids' sessions designed to build confidence and develop lifelong skills.",
     p4: "Safety is our top priority. All sessions are supervised by experienced professionals, and our horses are well-trained, healthy, and temperament-tested for rider compatibility.",
     p5: "Located conveniently within the Uniworld City, Aspen Greens community, our facility is equipped with quality arena space, stables, and training equipment.",
@@ -149,8 +169,8 @@ function AboutSection() {
     yearsLabel: "Our Home",
     authentic: "All Ages",
     authenticLabel: "Welcome",
-    customers: "Mon – Sun",
-    customersLabel: "6 AM – 8 PM",
+    customers: "Mon � Sun",
+    customersLabel: "6 AM � 8 PM",
   }
 
   const stats = [
@@ -162,7 +182,7 @@ function AboutSection() {
   const displayImage = imageUrl || "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800&q=80"
 
   return (
-    <section className={`w-full py-20 bg-[#171614] ${PX}`}>
+    <section className={`w-full py-20 bg-[#5B1E28] ${PX}`}>
       <ScrollReveal>
         <div className="max-w-6xl mx-auto">
           {/* Eyebrow */}
@@ -197,7 +217,7 @@ function AboutSection() {
                 {stats.map((s, i) => (
                   <div key={i} className="text-center py-5 rounded-sm"
                     style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(216,199,174,0.1)" }}>
-                    <div className="flex justify-center mb-2" style={{ color: "#D8C7AE" }}>{s.icon}</div>
+                    <div className="flex justify-center mb-2" style={{ color: "#B8955A" }}>{s.icon}</div>
                     <p className="font-bold text-base" style={{ color: "#F3EBDD", fontFamily: "'Cormorant Garamond', serif" }}>{s.value}</p>
                     <p className="text-xs mt-1" style={{ color: "#B6A58F", fontFamily: "'Inter', sans-serif" }}>{s.label}</p>
                   </div>
@@ -209,7 +229,7 @@ function AboutSection() {
             <div className="w-full space-y-5">
               {[d.p1, d.p2, d.p3, d.p4, d.p5, d.p6].filter(Boolean).map((para, i) => (
                 <p key={i} className="leading-relaxed text-base"
-                  style={{ color: "#D8C7AE", fontFamily: "'Inter', sans-serif", lineHeight: "1.8" }}>
+                  style={{ color: "#B8955A", fontFamily: "'Inter', sans-serif", lineHeight: "1.8" }}>
                   {para}
                 </p>
               ))}
@@ -221,7 +241,7 @@ function AboutSection() {
   )
 }
 
-/* ─── Section Title ─── */
+/* --- Section Title --- */
 function SectionTitle({ eyebrow, title }) {
   return (
     <div className="text-center mb-12">
@@ -235,7 +255,7 @@ function SectionTitle({ eyebrow, title }) {
   )
 }
 
-/* ─── Events Slider Component ─── */
+/* --- Events Slider Component --- */
 function EventsSlider({ events }) {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
@@ -432,7 +452,7 @@ function SectionHeader({ label, title, link }) {
   )
 }
 
-/* ─── Quick Contact Section ─── */
+/* --- Quick Contact Section --- */
 function QuickContactSection() {
   const [formData, setFormData] = useState({ name: '', phone: '', message: '' })
   const [submitting, setSubmitting] = useState(false)
@@ -476,7 +496,7 @@ function QuickContactSection() {
   }
 
   return (
-    <section className={`w-full py-20 bg-[#171614] ${PX}`}>
+    <section className={`w-full py-20 bg-[#5B1E28] ${PX}`}>
       <ScrollReveal>
         <div className="max-w-4xl mx-auto">
           <SectionTitle eyebrow="Get In Touch" title="Quick Contact" />
@@ -487,7 +507,7 @@ function QuickContactSection() {
               <h3 className="text-2xl font-bold text-[#F3EBDD] mb-6" style={{ fontFamily: "'Inter', sans-serif" }}>
                 <span style={{ color: "#DDD4CF" }}>Have Questions? We're Here to</span> <span style={{ color: "#8B4938", fontStyle: "italic" }}>Help!</span>
               </h3>
-              <p className="text-[#D8C7AE] mb-8 leading-relaxed">
+              <p className="text-[#B8955A] mb-8 leading-relaxed">
                 Get in touch with our expert team. Whether you need product advice, have questions about our services, or want to learn more about our offerings, we're ready to assist you.
               </p>
               
@@ -513,7 +533,7 @@ function QuickContactSection() {
                 </div>
               </div>
 
-              <div className="mt-8 pt-6 border-t border-[#3A3836]">
+              <div className="mt-8 pt-6 border-t border-[#762B35]">
                 <Link 
                   to="/contact"
                   className="inline-flex items-center gap-2 text-[#9A7650] hover:text-[#8A6640] font-medium transition-colors"
@@ -531,42 +551,42 @@ function QuickContactSection() {
               
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-[#D8C7AE] text-sm font-medium mb-2">
+                  <label className="block text-[#B8955A] text-sm font-medium mb-2">
                     Name *
                   </label>
                   <input
                     type="text"
                     value={formData.name}
                     onChange={(e) => handleChange('name', e.target.value)}
-                    className="w-full bg-[#0D0C0B] border border-[#3A3836] rounded-lg px-4 py-3 text-[#F3EBDD] placeholder-[#B6A58F]/50 focus:outline-none focus:border-[#9A7650] transition-colors"
+                    className="w-full bg-[#5B1E28] border border-[#762B35] rounded-lg px-4 py-3 text-[#F3EBDD] placeholder-[#B6A58F]/50 focus:outline-none focus:border-[#9A7650] transition-colors"
                     placeholder="Your full name"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[#D8C7AE] text-sm font-medium mb-2">
+                  <label className="block text-[#B8955A] text-sm font-medium mb-2">
                     Phone *
                   </label>
                   <input
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => handleChange('phone', e.target.value)}
-                    className="w-full bg-[#0D0C0B] border border-[#3A3836] rounded-lg px-4 py-3 text-[#F3EBDD] placeholder-[#B6A58F]/50 focus:outline-none focus:border-[#9A7650] transition-colors"
+                    className="w-full bg-[#5B1E28] border border-[#762B35] rounded-lg px-4 py-3 text-[#F3EBDD] placeholder-[#B6A58F]/50 focus:outline-none focus:border-[#9A7650] transition-colors"
                     placeholder="Your phone number"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[#D8C7AE] text-sm font-medium mb-2">
+                  <label className="block text-[#B8955A] text-sm font-medium mb-2">
                     Message *
                   </label>
                   <textarea
                     value={formData.message}
                     onChange={(e) => handleChange('message', e.target.value)}
                     rows={4}
-                    className="w-full bg-[#0D0C0B] border border-[#3A3836] rounded-lg px-4 py-3 text-[#F3EBDD] placeholder-[#B6A58F]/50 focus:outline-none focus:border-[#9A7650] transition-colors resize-none"
+                    className="w-full bg-[#5B1E28] border border-[#762B35] rounded-lg px-4 py-3 text-[#F3EBDD] placeholder-[#B6A58F]/50 focus:outline-none focus:border-[#9A7650] transition-colors resize-none"
                     placeholder="How can we help you?"
                     required
                   />
@@ -598,16 +618,16 @@ function QuickContactSection() {
   )
 }
 
-/* ─── Enquiry CTA Section ─── */
+/* --- Enquiry CTA Section --- */
 function EnquiryCTASection() {
   return (
-    <section className={`w-full py-16 bg-[#0D0C0B] ${PX}`}>
+    <section className={`w-full py-16 bg-[#5B1E28] ${PX}`}>
       <ScrollReveal>
         <div className="max-w-4xl mx-auto text-center">
           <h3 className="text-3xl font-bold text-[#F3EBDD] mb-4" style={{ fontFamily: "'Inter', sans-serif" }}>
             <span style={{ color: "#DDD4CF" }}>Ready to Get</span> <span style={{ color: "#8B4938", fontStyle: "italic" }}>Started?</span>
           </h3>
-          <p className="text-[#D8C7AE] mb-8 max-w-2xl mx-auto">
+          <p className="text-[#B8955A] mb-8 max-w-2xl mx-auto">
             Submit a detailed enquiry or book a free demo session to experience our services firsthand. 
             Our experts are ready to guide you through your journey.
           </p>
@@ -635,7 +655,7 @@ function EnquiryCTASection() {
   )
 }
 
-/* ─── Why Choose Us Section with Horse ─── */
+/* --- Why Choose Us Section with Horse --- */
 function WhyChooseUs({ displayFeatures }) {
   const canvasRef = useRef(null)
 
@@ -670,7 +690,7 @@ function WhyChooseUs({ displayFeatures }) {
   }, [])
 
   return (
-    <section className={`w-full py-16 ${PX}`} style={{ background: "#171614", borderTop: "1px solid rgba(182, 165, 143, 0.05)", borderBottom: "1px solid rgba(182, 165, 143, 0.05)" }}>
+    <section className={`w-full py-16 ${PX}`} style={{ background: "#5B1E28", borderTop: "1px solid rgba(182, 165, 143, 0.05)", borderBottom: "1px solid rgba(182, 165, 143, 0.05)" }}>
       <SectionTitle eyebrow="Premium Service" title="Why Choose Us" />
       
       <div className="max-w-6xl mx-auto relative">
@@ -757,7 +777,7 @@ function WhyChooseUs({ displayFeatures }) {
   )
 }
 
-/* ─── Gallery Item Component ─── */
+/* --- Gallery Item Component --- */
 function GalleryItemCard({ item }) {
   return (
     <Link to="/gallery" className="group block">
@@ -788,7 +808,7 @@ function GalleryItemCard({ item }) {
   )
 }
 
-/* ─── Package Item Component ─── */  
+/* --- Package Item Component --- */  
 function PackageCard({ pkg }) {
   return (
     <Link to="/packages" className="group block">
@@ -798,7 +818,7 @@ function PackageCard({ pkg }) {
         </h3>
         <div className="mb-4">
           <span className="text-2xl font-bold text-[#9A7650]">
-            ₹{pkg.price?.toLocaleString('en-IN') || '0'}
+            ?{pkg.price?.toLocaleString('en-IN') || '0'}
           </span>
           <span className="text-[#B6A58F] text-sm">/{pkg.duration}</span>
         </div>
@@ -806,7 +826,7 @@ function PackageCard({ pkg }) {
           <p className="text-[#9A7650] text-sm mb-3 font-medium">{pkg.age_group}</p>
         )}
         {pkg.description && (
-          <p className="text-[#D8C7AE] text-sm mb-4 leading-relaxed line-clamp-2">
+          <p className="text-[#B8955A] text-sm mb-4 leading-relaxed line-clamp-2">
             {pkg.description}
           </p>
         )}
@@ -820,7 +840,7 @@ function PackageCard({ pkg }) {
   )
 }
 
-/* ─── Main Page ─── */
+/* --- Main Page --- */
 export default function HomePage() {
   const { t } = useLanguage()
   const [newArrivals, setNewArrivals] = useState([])
@@ -973,7 +993,7 @@ export default function HomePage() {
       <AboutSection />
 
       {/* EVENTS */}
-      <section id="events" className={`w-full py-20 bg-[#0D0C0B] ${PX}`}>
+      <section id="events" className={`w-full py-20 bg-[#5B1E28] ${PX}`}>
         <ScrollReveal>
           <SectionHeader label="Upcoming" title="Events" link="/events" />
         </ScrollReveal>
@@ -999,7 +1019,7 @@ export default function HomePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {loadingPackages ? Array(6).fill(0).map((_, i) => (
             <div key={i} className="animate-pulse">
-              <div className="bg-[#2A2826] rounded-lg h-48"></div>
+              <div className="bg-[#762B35] rounded-lg h-48"></div>
             </div>
           )) : packages.length > 0 ? packages.map((pkg, i) => (
             <ScrollReveal key={pkg.id} delay={i * 0.1}>
@@ -1015,14 +1035,14 @@ export default function HomePage() {
       </section>
 
       {/* GALLERY */}
-      <section className={`w-full py-20 bg-[#0D0C0B] ${PX}`}>
+      <section className={`w-full py-20 bg-[#5B1E28] ${PX}`}>
         <ScrollReveal>
           <SectionHeader label="Visual Showcase" title="Gallery" link="/gallery" />
         </ScrollReveal>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {loadingGallery ? Array(6).fill(0).map((_, i) => (
             <div key={i} className="animate-pulse">
-              <div className="bg-[#2A2826] rounded-sm aspect-square"></div>
+              <div className="bg-[#762B35] rounded-sm aspect-square"></div>
             </div>
           )) : galleryItems.length > 0 ? galleryItems.map((item, i) => (
             <ScrollReveal key={item.id} delay={i * 0.05}>
@@ -1038,7 +1058,7 @@ export default function HomePage() {
       </section>
 
       {/* REVIEWS */}
-      <section className="w-full bg-[#171614]">
+      <section className="w-full bg-[#5B1E28]">
         <ScrollReveal><ReviewsSection /></ScrollReveal>
       </section>
 

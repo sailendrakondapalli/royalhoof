@@ -3,39 +3,49 @@
 
 @layer base {
   :root {
-    /* ── Rudhraksha Brown Palette ── */
-    /* Brown Foundation ~65% */
-    --charcoal:           #8B4513;    /* Primary background - saddle brown */
-    --charcoal-light:     #A0522D;    /* Secondary surfaces - sienna */
-    --charcoal-deep:      #654321;    /* Deepest contrast - dark brown */
+    /* ── Custom Burgundy & Gold Color Palette ── */
+    /* Main Burgundy */
+    --burgundy:           #5B1E28;    /* Deep Burgundy - main background */
+    --burgundy-dark:      #25211C;    /* Espresso Brown - dark sections */
+    --burgundy-light:     #762B35;    /* Rich Burgundy - cards */
     
-    /* Cream/Gold Typography ~20% */
-    --cream:              #F3EBDD;    /* Primary text */
-    --sand:               #CDBC91;    /* Warm golden accents */
+    /* Beige/Ivory Tones */
+    --beige:              #F4EBDD;    /* Warm Ivory - primary text */
+    --beige-secondary:    #C9B79C;    /* Soft Beige - secondary text */
     
-    /* Dust/Taupe Supporting ~10% */
-    --dust:               #B6A58F;    /* Supporting surfaces */
+    /* Gold Accents */
+    --accent:             #B8955A;    /* Champagne Gold - accents, buttons */
+    --accent-muted:       #8F7345;    /* Muted Gold - borders, icons */
     
-    /* Bronze Premium Accents ~5% */
-    --bronze:             #9A7650;    /* Muted bronze - very selective */
+    /* Legacy mappings for compatibility */
+    --beige-light:        #FAF5E8;
+    --beige-dark:         #C9B79C;
+    --accent-dark:        #8F7345;
+    --accent-light:       #D4B87A;
     
-    /* Legacy (for admin panel) */
-    --brown:        #6B2D0F;
-    --brown-light:  #8B3D1A;
-    --brown-dark:   #1A0A02;
-    --amber:        #C8860A;
-    --amber-light:  #E5A020;
-    --amber-pale:   #F5E6C8;
-    --bg:           #1C0D05;
-    --surface:      #2A1408;
-    --surface-2:    #3D1F0A;
-    --surface-3:    #4A2810;
-    --border:       #5C3015;
-    --border-dark:  #7A4020;
-    --text-dark:    #F5E6C8;
-    --text-mid:     #DDB87A;
-    --text-light:   #B8895A;
-    --text-muted:   #8B6040;
+    /* Functional mappings */
+    --bg:                 #5B1E28;    /* Main background (Deep Burgundy) */
+    --surface:            #762B35;    /* Cards/surfaces (Rich Burgundy) */
+    --surface-2:          #25211C;    /* Alternate sections (Espresso Brown) */
+    --text-primary:       #F4EBDD;    /* Primary text (Warm Ivory) */
+    --text-secondary:     #C9B79C;    /* Secondary text (Soft Beige) */
+    --text-muted:         #C9B79C;    /* Muted text (Soft Beige) */
+    --border:             rgba(143,115,69,0.3);   /* Borders (Muted Gold) */
+    --divider:            rgba(143,115,69,0.2);   /* Dividers */
+    
+    /* Button/CTA colors */
+    --button-primary:     #B8955A;    /* Champagne Gold */
+    --button-hover:       #D4B87A;    /* Lighter gold on hover */
+    
+    /* Secondary/Mauve (keeping for compatibility) */
+    --secondary:          #7E5A5F;
+    --secondary-dark:     #6B4D51;
+    --secondary-light:    #9A7479;
+    
+    /* Dark contrast */
+    --dark:               #25211C;
+    --dark-light:         #3D2A2A;
+    --dark-dark:          #1F1414;
   }
 
   * { box-sizing: border-box; }
@@ -44,8 +54,8 @@
     margin: 0;
     padding: 0;
     width: 100%;
-    background-color: #8B4513;
-    color: #F3EBDD;
+    background-color: #5B1E28;
+    color: #F4EBDD;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -60,9 +70,9 @@
   }
 
   ::-webkit-scrollbar { width: 8px; }
-  ::-webkit-scrollbar-track { background: #8B4513; }
-  ::-webkit-scrollbar-thumb { background: #9A7650; border-radius: 4px; }
-  ::-webkit-scrollbar-thumb:hover { background: #B6A58F; }
+  ::-webkit-scrollbar-track { background: #5B1E28; }
+  ::-webkit-scrollbar-thumb { background: #B8955A; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #D4B87A; }
 
   h1, h2, h3, h4, h5, h6 {
     color: #F3EBDD;
@@ -75,33 +85,34 @@
 @layer utilities {
   /* ── Equestrian Design System ── */
   
-  /* Premium Card Surface */
+  /* Premium Card Surface - Lighter Burgundy for differentiation */
   .equestrian-card {
-    background: #22201D;
-    border: 1px solid rgba(182, 165, 143, 0.15);
+    background: #762B35;
+    border: 1px solid rgba(243, 233, 210, 0.15);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .equestrian-card:hover {
-    border-color: rgba(154, 118, 80, 0.3);
+    background: #762B35;
+    border-color: rgba(243, 233, 210, 0.3);
     transform: translateY(-4px);
   }
 
-  /* Dust Surface (use sparingly ~10%) */
+  /* Secondary Surface - Darker Burgundy */
   .dust-surface {
-    background: #B6A58F;
+    background: #25211C;
   }
 
   /* Elegant Divider */
   .equestrian-divider {
     border: none;
     height: 1px;
-    background: linear-gradient(to right, transparent, rgba(182, 165, 143, 0.3) 30%, rgba(182, 165, 143, 0.3) 70%, transparent);
+    background: linear-gradient(to right, transparent, rgba(243, 233, 210, 0.3) 30%, rgba(243, 233, 210, 0.3) 70%, transparent);
   }
 
-  /* Primary Button - Cream/Sand */
+  /* Primary Button - Gold/Tan (stands out on burgundy) */
   .btn-primary-equestrian {
-    background: #D8C7AE;
-    color: #8B4513;
+    background: #B8955A;
+    color: #2E1E1E;
     font-weight: 600;
     font-size: 0.8125rem;
     letter-spacing: 0.08em;
@@ -113,32 +124,34 @@
     font-family: 'Inter', sans-serif;
   }
   .btn-primary-equestrian:hover {
-    background: #F3EBDD;
+    background: #D4B87A;
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(200,161,101,0.3);
   }
 
-  /* Secondary Button - Transparent with border */
+  /* Secondary Button - Transparent with Beige border */
   .btn-secondary-equestrian {
     background: transparent;
-    color: #F3EBDD;
+    color: #F4EBDD;
     font-weight: 600;
     font-size: 0.8125rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     padding: 0.875rem 2rem;
-    border: 1px solid #D8C7AE;
+    border: 1px solid #F4EBDD;
     border-radius: 2px;
     transition: all 0.3s ease;
     font-family: 'Inter', sans-serif;
   }
   .btn-secondary-equestrian:hover {
-    background: rgba(216, 199, 174, 0.1);
-    border-color: #F3EBDD;
+    background: rgba(243, 233, 210, 0.1);
+    border-color: #B8955A;
+    color: #B8955A;
   }
 
-  /* Bronze Accent (very selective ~5%) */
+  /* Dark Brown Accent */
   .bronze-accent {
-    color: #9A7650;
+    color: #2E1E1E;
   }
 
   /* Eyebrow Label */
@@ -147,7 +160,7 @@
     letter-spacing: 0.25em;
     text-transform: uppercase;
     font-weight: 600;
-    color: #B6A58F;
+    color: #B8955A;
     font-family: 'Inter', sans-serif;
   }
 
@@ -186,17 +199,17 @@
     }
   }
 
-  /* Legacy utilities (for admin panel) */
-  .divine-gradient  { background: linear-gradient(135deg, #1A0A02, #3D1F0A); }
-  .gold-gradient    { background: linear-gradient(135deg, #C8860A, #E5A020); }
-  .text-brown       { color: #6B2D0F; }
-  .text-amber       { color: #C8860A; }
-  .bg-surface       { background-color: #2A1408; }
-  .bg-surface-2     { background-color: #3D1F0A; }
-  .border-brown     { border-color: #5C3015; }
-  .shadow-card      { box-shadow: 0 2px 16px rgba(200,134,10,0.08); }
-  .shadow-card-lg   { box-shadow: 0 8px 32px rgba(200,134,10,0.18); }
-  .shadow-gold      { box-shadow: 0 4px 24px rgba(200,134,10,0.25); }
+  /* Legacy utilities (for admin panel - Burgundy with hierarchy) */
+  .divine-gradient  { background: linear-gradient(135deg, #5B1E28, #762B35); }
+  .gold-gradient    { background: linear-gradient(135deg, #B8955A, #D4B87A); }
+  .text-brown       { color: #5B1E28; }
+  .text-amber       { color: #B8955A; }
+  .bg-surface       { background-color: #762B35; }
+  .bg-surface-2     { background-color: #25211C; }
+  .border-brown     { border-color: rgba(243,233,210,0.15); }
+  .shadow-card      { box-shadow: 0 2px 16px rgba(0,0,0,0.3); }
+  .shadow-card-lg   { box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+  .shadow-gold      { box-shadow: 0 4px 24px rgba(200,161,101,0.25); }
 }
 
 @layer base {

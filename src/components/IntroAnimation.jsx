@@ -56,7 +56,7 @@ export default function IntroAnimation({ onComplete }) {
         transition={{ duration: 0.5 }}
         className="fixed inset-0 z-[100] flex items-center justify-center cursor-pointer"
         style={{ 
-          background: 'linear-gradient(135deg, #2C2C2C 0%, #1A1A1A 25%, #2C2C2C 50%, #1A1A1A 75%, #2C2C2C 100%)',
+          background: 'linear-gradient(135deg, #5B1E28 0%, #4A1720 25%, #5B1E28 50%, #4A1720 75%, #5B1E28 100%)',
           backgroundSize: '400% 400%',
           animation: 'smokeGradient 8s ease infinite'
         }}

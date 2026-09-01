@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { ChevronDown, Search } from 'lucide-react'
 
@@ -118,7 +118,7 @@ export default function FAQPage() {
         <meta name="description" content="Find answers to common questions about our academy" />
       </Helmet>
 
-      <div className="min-h-screen py-20 px-6 lg:px-12 xl:px-20" style={{ background: '#171614' }}>
+      <div className="min-h-screen py-20 px-6 lg:px-12 xl:px-20" style={{ background: '#5B1E28' }}>
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
@@ -127,7 +127,7 @@ export default function FAQPage() {
               <span style={{ color: "#DDD4CF" }}>Frequently Asked</span> <span style={{ color: "#8B4938", fontStyle: "italic" }}>Questions</span>
             </h1>
             <div className="equestrian-divider w-24 mx-auto mb-6" />
-            <p className="text-[#D8C7AE] max-w-2xl mx-auto">
+            <p className="text-[#B8955A] max-w-2xl mx-auto">
               Find answers to the most common questions about our academy, memberships, and services
             </p>
           </div>
@@ -141,7 +141,7 @@ export default function FAQPage() {
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
                 placeholder="Search for questions..."
-                className="w-full bg-[#0D0C0B] border border-[#3A3836] rounded-lg pl-12 pr-4 py-4 text-[#F3EBDD] placeholder-[#B6A58F]/50 focus:outline-none focus:border-[#9A7650] transition-colors"
+                className="w-full bg-[#5B1E28] border border-[#762B35] rounded-lg pl-12 pr-4 py-4 text-[#F3EBDD] placeholder-[#B6A58F]/50 focus:outline-none focus:border-[#9A7650] transition-colors"
               />
             </div>
           </div>
@@ -174,7 +174,7 @@ export default function FAQPage() {
                         <div key={qIndex} className="equestrian-card rounded-lg overflow-hidden">
                           <button
                             onClick={() => toggleItem(catIndex, qIndex)}
-                            className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-[#2A2826] transition-colors"
+                            className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-[#762B35] transition-colors"
                           >
                             <span className="text-[#F3EBDD] font-medium pr-4">{item.q}</span>
                             <ChevronDown
@@ -185,8 +185,8 @@ export default function FAQPage() {
                             />
                           </button>
                           {isOpen && (
-                            <div className="px-6 pb-4 pt-2 border-t border-[#3A3836]">
-                              <p className="text-[#D8C7AE] leading-relaxed">{item.a}</p>
+                            <div className="px-6 pb-4 pt-2 border-t border-[#762B35]">
+                              <p className="text-[#B8955A] leading-relaxed">{item.a}</p>
                             </div>
                           )}
                         </div>
@@ -203,7 +203,7 @@ export default function FAQPage() {
             <h2 className="heading-editorial text-2xl mb-4">
               <span style={{ color: "#DDD4CF" }}>Still Have</span> <span style={{ color: "#8B4938", fontStyle: "italic" }}>Questions?</span>
             </h2>
-            <p className="text-[#D8C7AE] mb-6 max-w-2xl mx-auto">
+            <p className="text-[#B8955A] mb-6 max-w-2xl mx-auto">
               Can't find what you're looking for? Our team is here to help you.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
@@ -215,7 +215,7 @@ export default function FAQPage() {
               </a>
               <a
                 href="tel:+919043700776"
-                className="inline-block bg-[#2A2826] hover:bg-[#3A3836] text-[#F3EBDD] px-8 py-3 rounded-lg font-medium uppercase tracking-wider transition-colors"
+                className="inline-block bg-[#762B35] hover:bg-[#762B35] text-[#F3EBDD] px-8 py-3 rounded-lg font-medium uppercase tracking-wider transition-colors"
               >
                 Call Us
               </a>

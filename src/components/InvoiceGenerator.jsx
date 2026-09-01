@@ -4,11 +4,11 @@ import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 import toast from 'react-hot-toast'
 
-const CARD_BG = "#242120"
+const CARD_BG = "#5B1E28"
 const CARD_BORDER = "rgba(255,255,255,0.07)"
 const TEXT_PRIMARY = "#F3EBDD"
 const TEXT_MUTED = "rgba(243,235,221,0.45)"
-const ACCENT = "#D8C7AE"
+const ACCENT = "#B8955A"
 
 const inputStyle = {
   background: "rgba(255,255,255,0.05)",
@@ -87,7 +87,7 @@ export default function InvoiceGenerator({ enquiry, onClose }) {
     return calculateSubtotal() + calculateTax()
   }
 
-  const generatePDF = async () => {
+  const generatePDF = () => {
     // Validation
     if (!invoiceData.businessName) {
       toast.error('Business name is required')
@@ -208,48 +208,29 @@ export default function InvoiceGenerator({ enquiry, onClose }) {
       doc.text(termsLines, 20, finalY + 36)
     }
     
-    // Create PDF blob and file
+    // Create PDF blob
     const pdfBlob = doc.output('blob')
     const fileName = `${invoiceData.invoiceNumber}.pdf`
-    const pdfFile = new File([pdfBlob], fileName, { type: 'application/pdf' })
     
     // Prepare WhatsApp message
     const cleanPhone = enquiry.phone.replace(/\D/g, '')
     const phoneWithCode = cleanPhone.startsWith('91') ? cleanPhone : `91${cleanPhone}`
-    const message = `Dear ${enquiry.name},\n\nPlease find your invoice ${invoiceData.invoiceNumber} attached.\n\nTotal Amount: ₹${total.toFixed(2)}\nDue Date: ${new Date(invoiceData.dueDate).toLocaleDateString('en-IN')}\n\nThank you for your business!`
+    const message = `Dear ${enquiry.name},\n\nYour invoice ${invoiceData.invoiceNumber} is ready.\n\n*Total Amount:* ₹${total.toFixed(2)}\n*Due Date:* ${new Date(invoiceData.dueDate).toLocaleDateString('en-IN')}\n\nThank you for your business!`
     
-    // Try to use Web Share API (works on mobile)
-    if (navigator.share && navigator.canShare && navigator.canShare({ files: [pdfFile] })) {
-      try {
-        await navigator.share({
-          files: [pdfFile],
-          title: fileName,
-          text: message
-        })
-        toast.success('Invoice shared successfully!')
-        onClose()
-        return
-      } catch (err) {
-        if (err.name !== 'AbortError') {
-          console.error('Share failed:', err)
-        }
-      }
-    }
-    
-    // Fallback: Download PDF and open WhatsApp (desktop or if share not supported)
+    // Download PDF
     const pdfUrl = URL.createObjectURL(pdfBlob)
     const link = document.createElement('a')
     link.href = pdfUrl
     link.download = fileName
     link.click()
     
-    // Small delay to ensure download starts
+    // Open WhatsApp directly to the contact
     setTimeout(() => {
       const encodedMessage = encodeURIComponent(message)
       const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneWithCode}&text=${encodedMessage}`
       window.open(whatsappUrl, '_blank')
       
-      toast.success('Invoice downloaded! Opening WhatsApp - please attach the PDF manually.')
+      toast.success('Invoice downloaded! Opening WhatsApp - please attach the PDF from your downloads.')
     }, 500)
     
     onClose()
@@ -371,7 +352,7 @@ export default function InvoiceGenerator({ enquiry, onClose }) {
                 alignItems: "center",
                 gap: 6,
                 background: ACCENT,
-                color: "#171614",
+                color: "#5B1E28",
                 border: "none",
                 borderRadius: 4,
                 padding: "6px 12px",
@@ -517,7 +498,7 @@ export default function InvoiceGenerator({ enquiry, onClose }) {
               justifyContent: "center",
               gap: 8,
               background: ACCENT,
-              color: "#171614",
+              color: "#5B1E28",
               border: "none",
               borderRadius: 6,
               padding: "12px 20px",

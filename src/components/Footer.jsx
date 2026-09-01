@@ -5,13 +5,13 @@ import { useLanguage } from '../context/LanguageContext'
 export default function Footer() {
   const { t } = useLanguage()
   return (
-    <footer style={{ background: "#0D0C0B", borderTop: "1px solid rgba(182, 165, 143, 0.1)" }} className="mt-20">
+    <footer style={{ background: "#5B1E28", borderTop: "1px solid rgba(182, 165, 143, 0.1)" }} className="mt-20">
       <div className="w-full px-6 lg:px-12 xl:px-20 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 lg:gap-16">
 
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
-            <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Cormorant Garamond', serif", color: "#D8C7AE" }}>
+            <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Cormorant Garamond', serif", color: "#B8955A" }}>
               ROYAL HOOF
             </h3>
             <p className="text-sm font-medium mb-4 tracking-wider uppercase" style={{ color: "#9A7650", fontFamily: "'Cormorant Garamond', serif" }}>
@@ -44,7 +44,7 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="eyebrow-label mb-4" style={{ color: "#D8C7AE" }}>Our Services</h4>
+            <h4 className="eyebrow-label mb-4" style={{ color: "#B8955A" }}>Our Services</h4>
             <ul className="space-y-3">
               {[
                 "Horse Riding",
@@ -65,7 +65,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="eyebrow-label mb-4" style={{ color: "#D8C7AE" }}>Quick Links</h4>
+            <h4 className="eyebrow-label mb-4" style={{ color: "#B8955A" }}>Quick Links</h4>
             <ul className="space-y-3">
               {[
                 { to: "/", label: "Home" },

@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import { motion } from "framer-motion"
 import { MapPin, Plus, Check, CheckCircle, Upload, Copy, Smartphone, AlertCircle, Loader2, Zap, Ticket, X as XIcon, Lock } from "lucide-react"
@@ -388,7 +388,7 @@ export default function CheckoutPage() {
                     <div className="text-center">
                       <p className="text-[#4B3420] text-sm font-medium mb-1">Amount to Pay</p>
                       <p className="text-[#5D3A1A] text-5xl font-bold" style={{ fontFamily: "Cinzel, serif" }}>
-                        ₹{grandTotal.toLocaleString("en-IN")}
+                        ?{grandTotal.toLocaleString("en-IN")}
                       </p>
                     </div>
 
@@ -429,7 +429,7 @@ export default function CheckoutPage() {
                       <Zap size={15} /> Open UPI App (amount auto-filled)
                     </a>
                     <p className="text-[#8B6A4A] text-xs text-center -mt-2">
-                      Tap above to open your UPI app with ₹{grandTotal.toLocaleString("en-IN")} pre-filled. If copying the UPI ID manually, enter the amount <strong>₹{grandTotal.toLocaleString("en-IN")}</strong> yourself.
+                      Tap above to open your UPI app with ?{grandTotal.toLocaleString("en-IN")} pre-filled. If copying the UPI ID manually, enter the amount <strong>?{grandTotal.toLocaleString("en-IN")}</strong> yourself.
                     </p>
 
                     {/* How to pay */}
@@ -437,8 +437,8 @@ export default function CheckoutPage() {
                       <p className="text-[#1E3A8A] text-sm font-bold mb-2">How to pay:</p>
                       <ol className="text-[#1E40AF] text-sm space-y-1.5 list-decimal list-inside">
                         <li>Scan the QR code or tap "Open UPI App" above</li>
-                        <li>Amount ₹{grandTotal.toLocaleString("en-IN")} will be auto-filled - confirm and pay</li>
-                        <li>If entering UPI ID manually, type the amount ₹{grandTotal.toLocaleString("en-IN")} yourself</li>
+                        <li>Amount ?{grandTotal.toLocaleString("en-IN")} will be auto-filled - confirm and pay</li>
+                        <li>If entering UPI ID manually, type the amount ?{grandTotal.toLocaleString("en-IN")} yourself</li>
                         <li>Take a screenshot of the success screen</li>
                         <li>Upload it below to confirm your order</li>
                       </ol>
@@ -455,23 +455,23 @@ export default function CheckoutPage() {
                   {/* What screenshot must show */}
                   <div className="bg-[#FFF5F2] border border-[#FFCAB8] rounded-2xl p-4 space-y-2">
                     <p className="text-[#C0392B] text-sm font-bold flex items-center gap-1.5">
-                      <span className="text-base">⚠️</span> Screenshot must clearly show:
+                      <span className="text-base">??</span> Screenshot must clearly show:
                     </p>
                     <ul className="space-y-1.5 ml-1">
                       {[
                         `Payment Success message`,
-                        `Amount: ₹${grandTotal.toLocaleString("en-IN")}`,
+                        `Amount: ?${grandTotal.toLocaleString("en-IN")}`,
                         `Paid to: ${UPI_ID}`,
                         `Transaction ID / UTR number`,
                       ].map((text, i) => (
                         <li key={i} className="text-[#A04000] text-sm font-medium flex items-center gap-2">
-                          <span className="inline-flex items-center justify-center w-5 h-5 bg-[#34D399] rounded text-white text-xs font-bold flex-shrink-0">✓</span> {text}
+                          <span className="inline-flex items-center justify-center w-5 h-5 bg-[#34D399] rounded text-white text-xs font-bold flex-shrink-0">?</span> {text}
                         </li>
                       ))}
                     </ul>
                     <div className="border-t border-[#FFCAB8] pt-2 mt-1">
                       <p className="text-[#C0392B] text-sm font-semibold flex items-center gap-1.5">
-                        <span className="text-base">⚠️</span> Wrong or unclear screenshots will be rejected and order cancelled.
+                        <span className="text-base">??</span> Wrong or unclear screenshots will be rejected and order cancelled.
                       </p>
                     </div>
                   </div>
@@ -498,7 +498,7 @@ export default function CheckoutPage() {
                           <Upload size={20} className="text-[#D97706]" />
                         </div>
                         <p className="text-[#4B3420] text-sm font-medium">Click to upload payment screenshot</p>
-                        <p className="text-[#8B6A4A] text-xs">PNG, JPG · max 10MB</p>
+                        <p className="text-[#8B6A4A] text-xs">PNG, JPG � max 10MB</p>
                       </>
                     )}
                   </label>
@@ -510,7 +510,7 @@ export default function CheckoutPage() {
                     className="w-full py-4 bg-[#5D3A1A] text-white font-bold rounded-xl hover:bg-[#7A4E28] transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-base shadow-lg">
                     {submitting
                       ? <><Loader2 size={18} className="animate-spin" /> Placing Order...</>
-                      : <><CheckCircle size={18} /> I've Paid · Confirm Order</>
+                      : <><CheckCircle size={18} /> I've Paid � Confirm Order</>
                     }
                   </button>
                   <p className="text-[#4B3420] text-xs text-center font-medium">Your order will be confirmed after admin verifies the payment</p>
@@ -660,9 +660,9 @@ export default function CheckoutPage() {
                             </span>
                             <div className="min-w-0">
                               <p className={`text-xs font-medium truncate ${eligible ? "text-[#1C1006]" : "text-gray-400"}`}>
-                                {code.discount_type === 'percentage' ? `${code.discount_value}% off` : `₹${code.discount_value} off`}
+                                {code.discount_type === 'percentage' ? `${code.discount_value}% off` : `?${code.discount_value} off`}
                                 {code.applicable_category ? ` on ${code.applicable_category}` : ""}
-                                {code.min_order_amount > 0 ? ` � Min ₹${code.min_order_amount.toLocaleString('en-IN')}` : ""}
+                                {code.min_order_amount > 0 ? ` ? Min ?${code.min_order_amount.toLocaleString('en-IN')}` : ""}
                               </p>
                               {code.description && <p className="text-gray-400 text-xs truncate">{code.description}</p>}
                               {!eligible && reason && <p className="text-red-400 text-xs">{reason}</p>}
@@ -695,7 +695,7 @@ export default function CheckoutPage() {
             )}
           </div>
 
-          <p className="text-[#8B6A4A] text-xs text-center">ð UPI Payment - Secure &amp; Safe</p>
+          <p className="text-[#8B6A4A] text-xs text-center">�??? UPI Payment - Secure &amp; Safe</p>
         </div>
       </div>
     </div>
