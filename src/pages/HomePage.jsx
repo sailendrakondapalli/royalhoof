@@ -621,7 +621,7 @@ function QuickContactSection() {
 /* --- Enquiry CTA Section --- */
 function EnquiryCTASection() {
   return (
-    <section className={`w-full py-16 bg-[#5B1E28] ${PX}`}>
+    <section className={`w-full py-20 ${PX}`} style={{ background: "#4A1720" }}>
       <ScrollReveal>
         <div className="max-w-4xl mx-auto text-center">
           <h3 className="text-3xl font-bold text-[#F3EBDD] mb-4" style={{ fontFamily: "'Inter', sans-serif" }}>
@@ -989,11 +989,11 @@ export default function HomePage() {
       {/* HERO */}
       <HeroSlider />
 
-      {/* ABOUT */}
+      {/* ABOUT - Darker */}
       <AboutSection />
 
-      {/* EVENTS */}
-      <section id="events" className={`w-full py-20 bg-[#5B1E28] ${PX}`}>
+      {/* EVENTS - Lighter */}
+      <section id="events" className={`w-full py-20 ${PX}`} style={{ background: "#4A1720" }}>
         <ScrollReveal>
           <SectionHeader label="Upcoming" title="Events" link="/events" />
         </ScrollReveal>
@@ -1006,13 +1006,13 @@ export default function HomePage() {
         )}
       </section>
 
-      {/* WHY CHOOSE */}
+      {/* WHY CHOOSE - Darker */}
       <ScrollReveal>
         <WhyChooseUs displayFeatures={displayFeatures} />
       </ScrollReveal>
 
-      {/* OUR PACKAGES */}
-      <section className={`w-full py-20 bg-gradient-to-br from-[#2A251F] to-[#1F1C17] ${PX}`}>
+      {/* OUR PACKAGES - Lighter */}
+      <section className={`w-full py-20 ${PX}`} style={{ background: "#4A1720" }}>
         <ScrollReveal>
           <SectionHeader label="Premium Offers" title="Our Packages" link="/packages" />
         </ScrollReveal>
@@ -1034,7 +1034,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* GALLERY */}
+      {/* GALLERY - Darker */}
       <section className={`w-full py-20 bg-[#5B1E28] ${PX}`}>
         <ScrollReveal>
           <SectionHeader label="Visual Showcase" title="Gallery" link="/gallery" />
@@ -1057,21 +1057,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* REVIEWS */}
-      <section className="w-full bg-[#5B1E28]">
+      {/* REVIEWS - Lighter */}
+      <section className="w-full" style={{ background: "#4A1720" }}>
         <ScrollReveal><ReviewsSection /></ScrollReveal>
       </section>
 
-      {/* QUICK CONTACT */}
+      {/* QUICK CONTACT - Darker */}
       <QuickContactSection />
 
-      {/* ENQUIRY CTA */}
-      <EnquiryCTASection />
-
-      {/* QUICK CONTACT */}
-      <QuickContactSection />
-
-      {/* ENQUIRY CTA */}
+      {/* ENQUIRY CTA - Lighter */}
       <EnquiryCTASection />
     </>
   )
