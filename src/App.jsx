@@ -89,7 +89,7 @@ export default function App() {
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
-          {/* Admin routes — own layout, no storefront navbar/footer */}
+          {/* Admin routes - own layout, no storefront navbar/footer */}
           <Route path="/admin/*" element={
             <AdminRoute>
               <AdminLayout>
