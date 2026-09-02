@@ -99,13 +99,39 @@ export default function IntroAnimation({ onComplete }) {
             transition={{ duration: 1, delay: 2.5 }}
             className="mt-8 text-center"
           >
-            <h1 className="text-4xl font-bold text-white mb-2" 
-                style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-              ROYALHOOF
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium tracking-[0.06em] mb-4" 
+                style={{ 
+                  fontFamily: "'Cinzel', 'Cormorant Garamond', serif",
+                  background: 'linear-gradient(180deg, #8B5A00 0%, #D4AF37 50%, #B8860B 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  textShadow: '0 2px 8px rgba(212, 175, 55, 0.4)',
+                  letterSpacing: '0.06em',
+                  fontWeight: 500
+                }}>
+              ROYAL HOOF
             </h1>
-            <p className="text-lg text-white/80 tracking-wider uppercase" 
-               style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-              Horse Riding Academy
+            <p className="text-xl md:text-2xl tracking-[0.10em] uppercase font-light" 
+               style={{ 
+                 fontFamily: "'Cinzel', 'Cormorant Garamond', serif",
+                 color: '#C9972B',
+                 letterSpacing: '0.10em',
+                 textShadow: '1px 1px 4px rgba(0,0,0,0.6)',
+                 fontWeight: 400
+               }}>
+              Horse Riding Academy & Club
+            </p>
+            <p className="text-sm md:text-base tracking-[0.15em] uppercase mt-3" 
+               style={{ 
+                 fontFamily: "'Cinzel', 'Cormorant Garamond', serif",
+                 color: '#C9972B',
+                 letterSpacing: '0.15em',
+                 textShadow: '1px 1px 4px rgba(0,0,0,0.6)',
+                 fontWeight: 400,
+                 fontSize: '0.75rem'
+               }}>
+              ESTD. 2026
             </p>
           </motion.div>
         </div>

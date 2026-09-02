@@ -11,8 +11,8 @@ import SkeletonCard from '../components/SkeletonCard'
 
 const SORT_OPTIONS = [
   { value: 'newest', label: 'Newest First' },
-  { value: 'price_asc', label: 'Price: Low ? High' },
-  { value: 'price_desc', label: 'Price: High ? Low' },
+  { value: 'price_asc', label: 'Price: Low → High' },
+  { value: 'price_desc', label: 'Price: High → Low' },
 ]
 
 const PAGE_SIZE_OPTIONS = [8, 12, 24, 48]

@@ -55,8 +55,8 @@ function BannerPreview({ banner }) {
         <p className="text-xs font-semibold" style={{ color: banner.accent }}>{banner.subtitle || "Subtitle"}</p>
         {(banner.price || banner.originalPrice) && (
           <div className="flex items-center gap-2 mt-0.5">
-            {banner.price && <span className="text-[#1C1006] text-sm font-bold">?{banner.price}</span>}
-            {banner.originalPrice && <span className="text-gray-400 text-xs line-through">?{banner.originalPrice}</span>}
+            {banner.price && <span className="text-[#1C1006] text-sm font-bold">₹{banner.price}</span>}
+            {banner.originalPrice && <span className="text-gray-400 text-xs line-through">₹{banner.originalPrice}</span>}
           </div>
         )}
         <span className="inline-block mt-1.5 px-3 py-1 rounded text-xs font-semibold"
@@ -90,7 +90,7 @@ function ProductSelector({ form, setForm }) {
       <option value="">- None (use link above) -</option>
       {products.map(p => (
         <option key={p.id} value={p.id}>
-          {p.custom_id ? `[${p.custom_id}] ` : ""}{p.name} - ?{p.price}
+          {p.custom_id ? `[${p.custom_id}] ` : ""}{p.name} - ₹{p.price}
         </option>
       ))}
     </select>
@@ -151,11 +151,11 @@ function BannerForm({ initial, onSave, onCancel }) {
 
         {/* Price fields */}
         <div>
-          <label className={lbl}>Sale Price (?)</label>
+          <label className={lbl}>Sale Price (₹)</label>
           <input type="number" value={form.price||""} onChange={e=>setForm(f=>({...f,price:e.target.value}))} placeholder="e.g. 2499" className={inp} />
         </div>
         <div>
-          <label className={lbl}>Original Price (?) <span className="text-gray-600">optional</span></label>
+          <label className={lbl}>Original Price (₹) <span className="text-gray-600">optional</span></label>
           <input type="number" value={form.originalPrice||""} onChange={e=>setForm(f=>({...f,originalPrice:e.target.value}))} placeholder="e.g. 3999" className={inp} />
         </div>
 
@@ -388,7 +388,7 @@ function HeroBgManager() {
         <ImageCropper
           imageSrc={cropSrc}
           aspect={16 / 5}
-          title="Crop Hero Image (16:5 � fits desktop & mobile)"
+          title="Crop Hero Image (16:5 � fits desktop & mobile)"
           onCrop={handleCropped}
           onCancel={() => setCropSrc(null)}
         />
@@ -399,7 +399,7 @@ function HeroBgManager() {
         <h2 className="text-base font-bold text-[#5D3A1A]" style={{ fontFamily: "Georgia, serif" }}>Hero Background Image</h2>
       </div>
       <p className="text-xs text-gray-500">
-        Upload a hero image. The built-in crop tool will let you select the exact visible area (16:5 ratio � works perfectly on both desktop and mobile).
+        Upload a hero image. The built-in crop tool will let you select the exact visible area (16:5 ratio � works perfectly on both desktop and mobile).
       </p>
 
       {loading ? <div className="flex items-center gap-2 text-gray-400 text-sm"><Loader2 size={14} className="animate-spin" /> Loading...</div> : (

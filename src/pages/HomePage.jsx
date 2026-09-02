@@ -190,8 +190,18 @@ function AboutSection() {
           
           {/* Title */}
           <div className="text-center mb-4">
-            <h2 className="heading-editorial inline-block"
-              style={{ fontSize: "clamp(1.75rem, 3vw, 2.5rem)" }}>
+            <h2 className="inline-block font-medium tracking-[0.06em]"
+              style={{ 
+                fontSize: "clamp(1.75rem, 3vw, 2.5rem)",
+                fontFamily: "'Cinzel', 'Cormorant Garamond', serif",
+                background: 'linear-gradient(180deg, #8B5A00 0%, #D4AF37 50%, #B8860B 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                textShadow: '0 2px 8px rgba(212, 175, 55, 0.4)',
+                letterSpacing: '0.06em',
+                fontWeight: 500
+              }}>
               {d.title}
             </h2>
             <span className="block text-base mt-2 font-medium" style={{ color: "#B6A58F", fontFamily: "'Inter', sans-serif" }}>
@@ -818,7 +828,7 @@ function PackageCard({ pkg }) {
         </h3>
         <div className="mb-4">
           <span className="text-2xl font-bold text-[#9A7650]">
-            ?{pkg.price?.toLocaleString('en-IN') || '0'}
+            ₹{pkg.price?.toLocaleString('en-IN') || '0'}
           </span>
           <span className="text-[#B6A58F] text-sm">/{pkg.duration}</span>
         </div>
