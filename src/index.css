@@ -1,0 +1,324 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* ── Premium Luxury Equestrian Palette ── */
+    --bg-primary:         #16080B;
+    --bg-secondary:       #210B10;
+    --bg-deep:            #2A0D13;
+    --bg-oxblood:         #350F17;
+    --bg-elevated:        #350F17;
+
+    --text-primary:       #F4EBDD;
+    --text-secondary:     #B9AFA3;
+    --text-champagne:     #D8C7A0;
+    --text-muted:         #B9AFA3;
+
+    --gold:               #C9A227;
+    --gold-light:         #E0C15A;
+    --gold-dark:          #A88628;
+    --gold-muted:         #8A7020;
+
+    --border-gold:        rgba(201, 162, 39, 0.25);
+    --border-subtle:      rgba(244, 235, 221, 0.08);
+    --border-light:       rgba(201, 162, 39, 0.12);
+    --divider:            rgba(201, 162, 39, 0.18);
+
+    --shadow-soft:        0 4px 24px rgba(0, 0, 0, 0.45);
+    --shadow-card:        0 2px 20px rgba(0, 0, 0, 0.5);
+    --shadow-card-lg:     0 12px 40px rgba(0, 0, 0, 0.55);
+    --shadow-gold:        0 4px 24px rgba(201, 162, 39, 0.15);
+
+    /* Legacy compatibility mappings */
+    --burgundy:           var(--bg-primary);
+    --burgundy-dark:      var(--bg-primary);
+    --burgundy-light:     var(--bg-deep);
+    --beige:              var(--text-primary);
+    --beige-secondary:    var(--text-champagne);
+    --accent:             var(--gold);
+    --accent-muted:       var(--gold-dark);
+    --beige-light:        #FAF5E8;
+    --beige-dark:         var(--text-champagne);
+    --accent-dark:        var(--gold-dark);
+    --accent-light:       var(--gold-light);
+    --bg:                 var(--bg-primary);
+    --surface:            var(--bg-secondary);
+    --surface-2:          var(--bg-deep);
+    --text-muted:         var(--text-secondary);
+    --border:             var(--border-gold);
+    --button-primary:     var(--gold);
+    --button-hover:       var(--gold-light);
+    --secondary:          #6B4A50;
+    --secondary-dark:     #523840;
+    --secondary-light:    #8A6368;
+    --dark:               #0E0507;
+    --dark-light:         var(--bg-primary);
+    --dark-dark:          #080304;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    font-weight: 400;
+  }
+
+  #root {
+    min-height: 100vh;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-primary); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+    font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background: rgba(201, 162, 39, 0.3);
+    color: var(--text-primary);
+  }
+}
+
+@layer utilities {
+  /* ── Premium Equestrian Design System ── */
+
+  .text-gold-gradient {
+    background: linear-gradient(180deg, #A88628 0%, #E0C15A 45%, #C9A227 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-premium {
+    background-color: var(--bg-primary);
+  }
+
+  .bg-premium-secondary {
+    background-color: var(--bg-secondary);
+  }
+
+  .bg-premium-deep {
+    background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  }
+
+  /* Premium Card Surface */
+  .equestrian-card {
+    background: linear-gradient(145deg, #210B10 0%, #2A0D13 100%);
+    border: 1px solid var(--border-gold);
+    box-shadow: var(--shadow-card);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .equestrian-card:hover {
+    border-color: rgba(201, 162, 39, 0.45);
+    box-shadow: var(--shadow-card-lg), var(--shadow-gold);
+    transform: translateY(-3px);
+  }
+
+  /* Secondary Surface */
+  .dust-surface {
+    background: var(--bg-deep);
+  }
+
+  /* Glass Surface */
+  .glass-surface {
+    background: linear-gradient(135deg, rgba(33, 11, 16, 0.88) 0%, rgba(22, 8, 11, 0.82) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-gold);
+  }
+
+  /* Elegant Divider */
+  .equestrian-divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201, 162, 39, 0.4) 30%, rgba(201, 162, 39, 0.4) 70%, transparent);
+  }
+
+  .ornamental-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+  }
+  .ornamental-divider::before,
+  .ornamental-divider::after {
+    content: '';
+    flex: 1;
+    max-width: 80px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201, 162, 39, 0.5));
+  }
+  .ornamental-divider::after {
+    background: linear-gradient(to left, transparent, rgba(201, 162, 39, 0.5));
+  }
+
+  /* Primary Button — Metallic Gold */
+  .btn-primary-equestrian {
+    background: linear-gradient(135deg, #A88628 0%, #C9A227 50%, #E0C15A 100%);
+    color: #16080B;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.875rem 2rem;
+    border: none;
+    border-radius: 1px;
+    transition: all 0.35s ease;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 2px 12px rgba(201, 162, 39, 0.2);
+  }
+  .btn-primary-equestrian:hover {
+    background: linear-gradient(135deg, #C9A227 0%, #E0C15A 60%, #E0C15A 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(201, 162, 39, 0.35);
+  }
+
+  /* Secondary Button — Transparent with Gold Border */
+  .btn-secondary-equestrian {
+    background: transparent;
+    color: var(--text-champagne);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.875rem 2rem;
+    border: 1px solid var(--border-gold);
+    border-radius: 1px;
+    transition: all 0.35s ease;
+    font-family: 'Inter', sans-serif;
+  }
+  .btn-secondary-equestrian:hover {
+    background: rgba(201, 162, 39, 0.08);
+    border-color: rgba(201, 162, 39, 0.5);
+    color: var(--gold-light);
+  }
+
+  /* Form Inputs */
+  .input-premium {
+    background: rgba(22, 8, 11, 0.6);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .input-premium::placeholder {
+    color: rgba(244, 235, 221, 0.3);
+  }
+  .input-premium:focus {
+    outline: none;
+    border-color: rgba(201, 162, 39, 0.5);
+    box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.08);
+  }
+
+  /* Eyebrow Label */
+  .eyebrow-label {
+    font-size: 0.6875rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--gold);
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Editorial Heading */
+  .heading-editorial {
+    font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    line-height: 1.2;
+  }
+
+  /* Page Hero Banner */
+  .page-hero {
+    background: linear-gradient(180deg, #210B10 0%, #16080B 100%);
+    border-bottom: 1px solid var(--border-gold);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(201, 162, 39, 0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* Image Zoom */
+  .image-zoom-wrapper {
+    overflow: hidden;
+  }
+  .image-zoom-wrapper img {
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .image-zoom-wrapper:hover img {
+    transform: scale(1.06);
+  }
+
+  /* Reveal Animation */
+  .reveal-up {
+    animation: revealUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  @keyframes revealUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Legacy utilities */
+  .divine-gradient  { background: linear-gradient(135deg, #16080B, #2A0D13); }
+  .gold-gradient    { background: linear-gradient(135deg, #A88628, #E0C15A); }
+  .text-brown       { color: #16080B; }
+  .text-amber       { color: var(--gold); }
+  .bg-surface       { background-color: var(--bg-secondary); }
+  .bg-surface-2     { background-color: var(--bg-deep); }
+  .border-brown     { border-color: var(--border-gold); }
+  .shadow-card      { box-shadow: var(--shadow-card); }
+  .shadow-card-lg   { box-shadow: var(--shadow-card-lg); }
+  .shadow-gold      { box-shadow: var(--shadow-gold); }
+}
+
+@layer base {
+  button,
+  [role="button"],
+  label[for],
+  label.cursor-pointer,
+  select,
+  input[type="submit"],
+  input[type="button"],
+  input[type="reset"],
+  input[type="file"]::file-selector-button {
+    cursor: pointer !important;
+  }
+}
+
+button,
+[role="button"],
+a,
+label,
+select,
+input[type="submit"],
+input[type="button"],
+input[type="reset"],
+input[type="file"]::file-selector-button,
+input[type="checkbox"],
+input[type="radio"],
+summary {
+  cursor: pointer !important;
+}
