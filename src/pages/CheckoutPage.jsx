@@ -498,7 +498,7 @@ export default function CheckoutPage() {
                           <Upload size={20} className="text-[#D97706]" />
                         </div>
                         <p className="text-[#4B3420] text-sm font-medium">Click to upload payment screenshot</p>
-                        <p className="text-[#8B6A4A] text-xs">PNG, JPG · max 10MB</p>
+                        <p className="text-[#8B6A4A] text-xs">PNG, JPG - max 10MB</p>
                       </>
                     )}
                   </label>
@@ -510,7 +510,7 @@ export default function CheckoutPage() {
                     className="w-full py-4 bg-[#5D3A1A] text-white font-bold rounded-xl hover:bg-[#7A4E28] transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-base shadow-lg">
                     {submitting
                       ? <><Loader2 size={18} className="animate-spin" /> Placing Order...</>
-                      : <><CheckCircle size={18} /> I've Paid · Confirm Order</>
+                      : <><CheckCircle size={18} /> I've Paid - Confirm Order</>
                     }
                   </button>
                   <p className="text-[#4B3420] text-xs text-center font-medium">Your order will be confirmed after admin verifies the payment</p>
@@ -695,7 +695,7 @@ export default function CheckoutPage() {
             )}
           </div>
 
-          <p className="text-[#8B6A4A] text-xs text-center">ð??? UPI Payment - Secure &amp; Safe</p>
+          <p className="text-[#8B6A4A] text-xs text-center">-??? UPI Payment - Secure &amp; Safe</p>
         </div>
       </div>
     </div>
