@@ -1,0 +1,330 @@
+import { Link, useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { Heart, ShoppingCart, ArrowRight, CheckCircle, MapPin, Sparkles } from 'lucide-react'
+import { useAuthStore } from '../store/authStore'
+import { useCartStore } from '../store/cartStore'
+import { useWishlistStore } from '../store/wishlistStore'
+import { formatINR } from '../utils/format'
+import toast from 'react-hot-toast'
+
+const isVideo = (url) => url && /\.(mp4|mov|webm|ogg)(\?|$)/i.test(url)
+const FALLBACK_IMG = '/Horse Riding-fallback.webp'
+
+function TagBadges({ tags }) {
+  if (!tags?.length) return null
+  return (
+    <div className="flex flex-wrap gap-1">
+      {tags.includes('certified') && (
+        <span className="flex items-center gap-1 text-[0.625rem] font-semibold px-2 py-0.5 rounded-sm bg-green-900/30 text-green-400 border border-green-700/40"
+          style={{ fontFamily: "'Inter', sans-serif" }}>
+          <CheckCircle size={10} /> Certified
+        </span>
+      )}
+      {tags.includes('nepal') && (
+        <span className="flex items-center gap-1 text-[0.625rem] font-semibold px-2 py-0.5 rounded-sm bg-[#C5963A]/15 text-[#C5963A] border border-[#C5963A]/30"
+          style={{ fontFamily: "'Inter', sans-serif" }}>
+          <MapPin size={10} /> Nepal
+        </span>
+      )}
+      {tags.includes('rare') && (
+        <span className="flex items-center gap-1 text-[0.625rem] font-semibold px-2 py-0.5 rounded-sm bg-purple-900/30 text-purple-400 border border-purple-700/40"
+          style={{ fontFamily: "'Inter', sans-serif" }}>
+          <Sparkles size={10} /> Rare
+        </span>
+      )}
+    </div>
+  )
+}
+
+/* --- GRID CARD --- */
+function GridCard({ product, inCart, wishlisted, onAddToCart, onWishlist }) {
+  const media = product.images?.[0] || FALLBACK_IMG
+  const mediaIsVideo = isVideo(media)
+  const origPrice = product.original_price || product.compare_price
+
+  return (
+    <motion.div
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+      className="group relative equestrian-card rounded-sm overflow-hidden flex flex-col h-full"
+    >
+      <Link to={`/products/${product.id}`} className="flex flex-col flex-1">
+        {/* Image Container */}
+        <div className="relative overflow-hidden aspect-square bg-[#F4E9D2] flex-shrink-0 image-zoom-wrapper">
+          {mediaIsVideo ? (
+            <video src={media} muted loop playsInline autoPlay
+              className="w-full h-full object-cover" />
+          ) : (
+            <img src={media} alt={product.name} loading="lazy"
+              className="w-full h-full object-cover"
+              onError={e => { e.target.src = FALLBACK_IMG }} />
+          )}
+
+          {/* Overlay on Hover */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#082B49]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+          {/* Out of Stock Overlay */}
+          {product.stock === 0 && (
+            <div className="absolute inset-0 bg-[#F4E9D2]/80 flex items-center justify-center backdrop-blur-sm">
+              <span className="text-[#292725] text-xs font-semibold bg-[#F4E9D2] px-4 py-2 rounded-sm border border-[#B9AFA3]/20"
+                style={{ fontFamily: "'Inter', sans-serif" }}>
+                Out of Stock
+              </span>
+            </div>
+          )}
+
+          {/* Certified Badge */}
+          {product.tags?.includes('certified') && (
+            <span className="absolute top-3 left-3 flex items-center gap-1 bg-green-700/90 text-white text-[0.625rem] px-2 py-1 rounded-sm font-semibold backdrop-blur-sm"
+              style={{ fontFamily: "'Inter', sans-serif" }}>
+              <CheckCircle size={10} /> Certified
+            </span>
+          )}
+          
+          {/* New Badge */}
+          {!product.tags?.includes('certified') && product.tags?.includes('new') && (
+            <span className="absolute top-3 left-3 bg-[#C5963A] text-[#292725] text-[0.625rem] px-2 py-1 rounded-sm font-bold backdrop-blur-sm"
+              style={{ fontFamily: "'Inter', sans-serif" }}>
+              New
+            </span>
+          )}
+
+          {/* Discount Badge */}
+          {origPrice && origPrice > product.price && (
+            <span className="absolute top-3 right-12 bg-green-700/90 text-white text-[0.625rem] font-bold px-2 py-1 rounded-sm backdrop-blur-sm"
+              style={{ fontFamily: "'Inter', sans-serif" }}>
+              -{Math.round(((origPrice - product.price) / origPrice) * 100)}%
+            </span>
+          )}
+
+          {/* Wishlist Button */}
+          <button onClick={onWishlist}
+            className={`absolute top-3 right-3 p-2 rounded-sm transition-all duration-300 backdrop-blur-sm ${
+              wishlisted 
+                ? 'bg-red-500 text-white scale-110' 
+                : 'bg-[#F4E9D2]/80 text-[#292725] hover:text-red-400 hover:bg-[#F4E9D2]'
+            }`}>
+            <Heart size={14} strokeWidth={1.5} fill={wishlisted ? 'currentColor' : 'none'} />
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="p-4 flex flex-col flex-1">
+          {/* Category */}
+          <p className="text-[0.625rem] text-[#C5963A] mb-2 uppercase tracking-[0.15em] font-semibold"
+            style={{ fontFamily: "'Inter', sans-serif" }}>
+            {product.category}
+          </p>
+          
+          {/* Title */}
+          <h3 className="text-[#292725] text-sm font-medium line-clamp-2 mb-3 group-hover:text-[#C5963A] transition-colors leading-snug flex-1"
+            style={{ fontFamily: "'Inter', sans-serif" }}>
+            {product.name}
+          </h3>
+          
+          {/* Tags */}
+          <div className="mb-3">
+            <TagBadges tags={product.tags?.filter(t => t !== 'certified')} />
+          </div>
+          
+          {/* Pricing */}
+          <div className="mt-auto">
+            <div className="flex items-center gap-2">
+              <span className="text-[#292725] font-semibold text-base" style={{ fontFamily: "'Inter', sans-serif" }}>
+                {formatINR(product.price)}
+              </span>
+              {origPrice && origPrice > product.price && (
+                <span className="text-[#765334]/60 text-xs line-through">
+                  {formatINR(origPrice)}
+                </span>
+              )}
+            </div>
+            <p className="text-[0.625rem] mt-1" 
+              style={{ 
+                color: product.delivery_charge ? "#B9AFA3" : "#4ADE80",
+                fontFamily: "'Inter', sans-serif" 
+              }}>
+              {product.delivery_charge ? `+ ?${product.delivery_charge} delivery` : "Free Delivery"}
+            </p>
+          </div>
+        </div>
+      </Link>
+
+      {/* Add to Cart Button */}
+      <div className="px-4 pb-4">
+        <button onClick={onAddToCart} disabled={product.stock === 0}
+          className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-sm text-xs font-semibold transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed uppercase tracking-wider ${
+            inCart
+              ? 'bg-green-700 hover:bg-green-600 text-white'
+              : 'bg-[#C5963A] hover:bg-[#D2AA55] text-[#082B49]'
+          }`}
+          style={{ fontFamily: "'Inter', sans-serif" }}>
+          {inCart ? (
+            <><ArrowRight size={14} /> View Cart</>
+          ) : (
+            <><ShoppingCart size={14} /> Add to Cart</>
+          )}
+        </button>
+      </div>
+    </motion.div>
+  )
+}
+
+/* --- LIST CARD --- */
+function ListCard({ product, inCart, wishlisted, onAddToCart, onWishlist }) {
+  const media = product.images?.[0] || FALLBACK_IMG
+  const mediaIsVideo = isVideo(media)
+  const origPrice = product.original_price || product.compare_price
+  const inStock = product.stock > 0
+
+  return (
+    <motion.div
+      whileHover={{ x: 4 }}
+      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+      className="group relative equestrian-card rounded-sm transition-all duration-300 overflow-hidden">
+      <Link to={`/products/${product.id}`}>
+        <div className="flex items-stretch gap-4 p-4">
+          {/* Image */}
+          <div className="relative flex-shrink-0 w-28 h-28 rounded-sm overflow-hidden bg-[#F4E9D2] image-zoom-wrapper">
+            {mediaIsVideo ? (
+              <video src={media} muted loop playsInline autoPlay className="w-full h-full object-cover" />
+            ) : (
+              <img src={media} alt={product.name} loading="lazy"
+                className="w-full h-full object-cover"
+                onError={e => { e.target.src = FALLBACK_IMG }} />
+            )}
+            {product.stock === 0 && (
+              <div className="absolute inset-0 bg-[#F4E9D2]/80 flex items-center justify-center backdrop-blur-sm">
+                <span className="text-[0.625rem] font-bold text-[#292725] bg-[#F4E9D2] px-2 py-1 rounded-sm border border-[#B9AFA3]/20"
+                  style={{ fontFamily: "'Inter', sans-serif" }}>
+                  OOS
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Content */}
+          <div className="flex-1 min-w-0 flex flex-col justify-between py-1">
+            <div className="flex items-center gap-2 mb-1">
+              {product.custom_id && (
+                <span className="font-mono text-[0.625rem] text-[#765334] bg-[#F4E9D2] px-2 py-0.5 rounded-sm border border-[#B9AFA3]/15"
+                  style={{ fontFamily: "'Courier New', monospace" }}>
+                  {product.custom_id}
+                </span>
+              )}
+              <span className="text-[0.625rem] text-[#C5963A] font-semibold uppercase tracking-wider px-2 py-0.5 bg-[#C5963A]/10 rounded-sm border border-[#C5963A]/20"
+                style={{ fontFamily: "'Inter', sans-serif" }}>
+                {product.category}
+              </span>
+            </div>
+            
+            <h3 className="text-[#292725] text-sm font-medium line-clamp-2 group-hover:text-[#C5963A] transition-colors leading-tight mb-2"
+              style={{ fontFamily: "'Inter', sans-serif" }}>
+              {product.name}
+            </h3>
+            
+            {product.size && (
+              <p className="text-[#765334] text-xs mb-2" style={{ fontFamily: "'Inter', sans-serif" }}>
+                Size: <span className="font-medium text-[#292725]">{product.size} mm</span>
+              </p>
+            )}
+            
+            <TagBadges tags={product.tags} />
+            
+            <div className="flex items-center gap-3 mt-2">
+              <span className="text-[#292725] font-semibold text-base" style={{ fontFamily: "'Inter', sans-serif" }}>
+                {formatINR(product.price)}
+              </span>
+              {origPrice && origPrice > product.price && (
+                <span className="text-[#765334]/60 text-xs line-through">
+                  {formatINR(origPrice)}
+                </span>
+              )}
+              {origPrice && origPrice > product.price && (
+                <span className="text-green-400 text-[0.625rem] font-bold" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  -{Math.round(((origPrice - product.price) / origPrice) * 100)}%
+                </span>
+              )}
+              <span className={`flex items-center gap-1.5 text-[0.625rem] font-semibold ml-auto ${
+                inStock ? 'text-green-400' : 'text-red-400'
+              }`} style={{ fontFamily: "'Inter', sans-serif" }}>
+                <span className={`w-1.5 h-1.5 rounded-full ${inStock ? 'bg-green-400' : 'bg-red-400'}`} />
+                {inStock ? 'In Stock' : 'Out of Stock'}
+              </span>
+            </div>
+            
+            <p className="text-[0.625rem] mt-1" 
+              style={{ 
+                color: product.delivery_charge ? "#B9AFA3" : "#4ADE80",
+                fontFamily: "'Inter', sans-serif" 
+              }}>
+              {product.delivery_charge ? `+ ?${product.delivery_charge} delivery` : "Free Delivery"}
+            </p>
+          </div>
+
+          {/* Actions */}
+          <div className="flex-shrink-0 flex flex-col items-center justify-between py-1 gap-2 pl-2">
+            <button onClick={onWishlist}
+              className={`p-2 rounded-sm transition-all duration-300 ${
+                wishlisted 
+                  ? 'bg-red-900/30 text-red-400' 
+                  : 'text-[#292725]/50 hover:text-red-400 hover:bg-red-900/20'
+              }`}>
+              <Heart size={16} strokeWidth={1.5} fill={wishlisted ? 'currentColor' : 'none'} />
+            </button>
+            <button onClick={onAddToCart} disabled={product.stock === 0}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-sm text-xs font-semibold transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap uppercase tracking-wider ${
+                inCart
+                  ? 'bg-green-700 hover:bg-green-600 text-white'
+                  : 'bg-[#C5963A] hover:bg-[#D2AA55] text-[#082B49]'
+              }`}
+              style={{ fontFamily: "'Inter', sans-serif" }}>
+              {inCart ? (
+                <><ArrowRight size={12} /> Cart</>
+              ) : (
+                <><ShoppingCart size={12} /> Add</>
+              )}
+            </button>
+          </div>
+        </div>
+      </Link>
+    </motion.div>
+  )
+}
+
+/* --- MAIN EXPORT --- */
+export default function ProductCard({ product, layout = 'grid' }) {
+  const { user } = useAuthStore()
+  const { addToCart, items } = useCartStore()
+  const { toggleWishlist, isWishlisted } = useWishlistStore()
+  const navigate = useNavigate()
+
+  const wishlisted = isWishlisted(product.id)
+  const inCart = items.some(i => i.product_id === product.id)
+
+  const handleAddToCart = async (e) => {
+    e.preventDefault()
+    if (inCart) { navigate('/cart'); return }
+    if (!user) { toast.error('Please login to add to cart'); return }
+    try { 
+      await addToCart(product, user?.id)
+      toast.success('Added to cart!') 
+    } catch (err) { 
+      toast.error(err.message || 'Failed to add to cart') 
+    }
+  }
+
+  const handleWishlist = async (e) => {
+    e.preventDefault()
+    if (!user) { toast.error('Please login to save to wishlist'); return }
+    try {
+      const added = await toggleWishlist(product, user?.id)
+      toast.success(added ? 'Added to wishlist!' : 'Removed from wishlist')
+    } catch (err) { 
+      toast.error(err.message || 'Failed to update wishlist') 
+    }
+  }
+
+  const shared = { product, inCart, wishlisted, onAddToCart: handleAddToCart, onWishlist: handleWishlist }
+  return layout === 'list' ? <ListCard {...shared} /> : <GridCard {...shared} />
+}

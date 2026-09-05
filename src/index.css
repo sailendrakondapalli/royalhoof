@@ -1,0 +1,492 @@
+@import "tailwindcss";
+
+@theme {
+  --color-royal-cream: #F4E9D2;
+  --color-royal-cream-light: #F5EBD8;
+  --color-royal-cream-input: #FAF3E4;
+  --color-royal-navy: #082B49;
+  --color-royal-navy-mid: #0B304D;
+  --color-royal-navy-deep: #102F48;
+  --color-royal-navy-alt: #173A55;
+  --color-royal-gold: #C5963A;
+  --color-royal-gold-light: #D2AA55;
+  --color-royal-gold-dark: #B8862D;
+  --color-royal-gold-pale: #E0C27A;
+  --color-royal-brown: #765334;
+  --color-royal-brown-dark: #4A2F20;
+  --color-royal-sand: #D8C5A0;
+  --color-royal-charcoal: #292725;
+}
+
+@layer base {
+  :root {
+    /* ── Royal Hoof Heritage Palette ── */
+    --royal-cream:         #F4E9D2;
+    --royal-cream-light:   #F5EBD8;
+    --royal-cream-input:   #FAF3E4;
+    --royal-navy:          #082B49;
+    --royal-navy-mid:      #0B304D;
+    --royal-navy-deep:     #102F48;
+    --royal-navy-alt:      #173A55;
+    --royal-gold:          #C5963A;
+    --royal-gold-light:    #D2AA55;
+    --royal-gold-dark:     #B8862D;
+    --royal-gold-pale:     #E0C27A;
+    --royal-brown:         #765334;
+    --royal-brown-dark:    #4A2F20;
+    --royal-sand:          #D8C5A0;
+    --royal-charcoal:      #292725;
+
+    /* Semantic tokens */
+    --bg-primary:          var(--royal-cream);
+    --bg-secondary:        var(--royal-cream-input);
+    --bg-deep:             var(--royal-sand);
+    --bg-oxblood:          var(--royal-navy);
+    --bg-elevated:         var(--royal-cream-input);
+
+    --text-primary:        var(--royal-charcoal);
+    --text-secondary:      var(--royal-brown);
+    --text-champagne:      var(--royal-sand);
+    --text-muted:          #6B5E52;
+    --text-on-navy:        var(--royal-cream-light);
+
+    --gold:                var(--royal-gold);
+    --gold-light:          var(--royal-gold-light);
+    --gold-dark:           var(--royal-gold-dark);
+    --gold-muted:          var(--royal-gold-dark);
+
+    --border-gold:         rgba(197, 150, 58, 0.45);
+    --border-navy:         rgba(8, 43, 73, 0.2);
+    --border-subtle:       rgba(8, 43, 73, 0.12);
+    --border-light:        rgba(197, 150, 58, 0.25);
+    --divider:             rgba(197, 150, 58, 0.35);
+
+    --shadow-soft:         0 4px 24px rgba(8, 43, 73, 0.08);
+    --shadow-card:         0 2px 16px rgba(8, 43, 73, 0.1);
+    --shadow-card-lg:      0 8px 32px rgba(8, 43, 73, 0.14);
+    --shadow-gold:         0 4px 20px rgba(197, 150, 58, 0.18);
+
+    /* Legacy compatibility mappings */
+    --burgundy:            var(--royal-navy);
+    --burgundy-dark:       var(--royal-navy-deep);
+    --burgundy-light:      var(--royal-navy-mid);
+    --beige:               var(--royal-cream-light);
+    --beige-secondary:     var(--royal-sand);
+    --accent:              var(--royal-gold);
+    --accent-muted:        var(--royal-gold-dark);
+    --beige-light:         var(--royal-cream-input);
+    --beige-dark:          var(--royal-sand);
+    --accent-dark:         var(--royal-gold-dark);
+    --accent-light:        var(--royal-gold-light);
+    --bg:                  var(--royal-cream);
+    --surface:             var(--royal-cream-input);
+    --surface-2:           var(--royal-sand);
+    --border:              var(--border-gold);
+    --button-primary:      var(--royal-navy);
+    --button-hover:        var(--royal-navy-mid);
+    --secondary:           var(--royal-brown);
+    --secondary-dark:      var(--royal-brown-dark);
+    --secondary-light:     var(--royal-sand);
+    --dark:                var(--royal-navy);
+    --dark-light:          var(--royal-navy-mid);
+    --dark-dark:           var(--royal-navy-deep);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: var(--royal-cream);
+    color: var(--royal-charcoal);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    font-weight: 400;
+  }
+
+  body.paper-texture::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url('/textures/paper-grain.svg');
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    opacity: 0.035;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  #root {
+    min-height: 100vh;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--royal-cream); }
+  ::-webkit-scrollbar-thumb { background: var(--royal-gold-dark); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--royal-gold); }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--royal-navy);
+    font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .section-navy h1,
+  .section-navy h2,
+  .section-navy h3,
+  .section-navy h4,
+  .section-navy h5,
+  .section-navy h6 {
+    color: var(--royal-cream-light);
+  }
+
+  ::selection {
+    background: rgba(197, 150, 58, 0.25);
+    color: var(--royal-navy);
+  }
+}
+
+@layer utilities {
+  /* ── Royal Hoof Heritage Design System ── */
+
+  .text-gold-gradient {
+    background: linear-gradient(180deg, #B8862D 0%, #D2AA55 45%, #C5963A 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-premium {
+    background-color: var(--royal-cream);
+  }
+
+  .bg-premium-secondary {
+    background-color: var(--royal-cream-input);
+  }
+
+  .bg-premium-deep {
+    background: linear-gradient(180deg, var(--royal-cream) 0%, var(--royal-cream-input) 100%);
+  }
+
+  .section-cream {
+    background-color: var(--royal-cream);
+    color: var(--royal-charcoal);
+  }
+
+  .section-navy {
+    background-color: var(--royal-navy);
+    color: var(--royal-cream-light);
+  }
+
+  /* ── Reference Poster Styling Motifs ── */
+  .poster-navy-badge {
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 9999px;
+    background-color: #082B49;
+    border: 2px solid #C5963A;
+    color: #C5963A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(8, 43, 73, 0.25);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .poster-navy-badge:hover {
+    transform: scale(1.08);
+    border-color: #D2AA55;
+    box-shadow: 0 6px 16px rgba(197, 150, 58, 0.3);
+  }
+
+  .poster-ribbon {
+    background: linear-gradient(90deg, #061D33 0%, #082B49 50%, #061D33 100%);
+    border-top: 2px solid #C5963A;
+    border-bottom: 2px solid #C5963A;
+    color: #F5EBD8;
+    box-shadow: 0 8px 24px rgba(8, 43, 73, 0.3);
+  }
+
+  .poster-parchment-card {
+    background-color: #F5EBD8;
+    border: 1px solid rgba(197, 150, 58, 0.45);
+    box-shadow: 0 4px 16px rgba(8, 43, 73, 0.08);
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  .poster-parchment-card:hover {
+    border-color: #C5963A;
+    box-shadow: 0 8px 24px rgba(197, 150, 58, 0.2);
+    transform: translateY(-2px);
+  }
+
+
+  /* Cream Card Surface */
+  .equestrian-card {
+    background: var(--royal-cream-input);
+    border: 1px solid var(--border-navy);
+    box-shadow: var(--shadow-card);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .equestrian-card:hover {
+    border-color: var(--border-gold);
+    box-shadow: var(--shadow-card-lg), var(--shadow-gold);
+    transform: translateY(-3px);
+  }
+
+  /* Dark Navy Card Variant */
+  .equestrian-card-dark {
+    background: var(--royal-navy);
+    border: 1px solid rgba(197, 150, 58, 0.3);
+    color: var(--royal-cream-light);
+    box-shadow: var(--shadow-card);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .equestrian-card-dark:hover {
+    border-color: var(--border-gold);
+    box-shadow: var(--shadow-card-lg), var(--shadow-gold);
+    transform: translateY(-3px);
+  }
+
+  .dust-surface {
+    background: var(--royal-sand);
+  }
+
+  .glass-surface {
+    background: var(--royal-cream-input);
+    border: 1px solid var(--border-navy);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .equestrian-divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border-gold) 30%, var(--border-gold) 70%, transparent);
+  }
+
+  .ornamental-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+  }
+  .ornamental-divider::before,
+  .ornamental-divider::after {
+    content: '';
+    flex: 1;
+    max-width: 80px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(197, 150, 58, 0.5));
+  }
+  .ornamental-divider::after {
+    background: linear-gradient(to left, transparent, rgba(197, 150, 58, 0.5));
+  }
+
+  /* Primary Button — Deep Navy */
+  .btn-primary-equestrian {
+    background: var(--royal-navy);
+    color: var(--royal-cream-light);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.875rem 2rem;
+    border: 1px solid var(--royal-navy);
+    border-radius: 2px;
+    transition: all 0.35s ease;
+    font-family: 'Inter', sans-serif;
+    box-shadow: var(--shadow-soft);
+  }
+  .btn-primary-equestrian:hover {
+    background: var(--royal-navy-mid);
+    border-color: var(--royal-gold);
+    color: var(--royal-cream-light);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-gold);
+  }
+
+  /* Secondary Button — Transparent Navy Border */
+  .btn-secondary-equestrian {
+    background: transparent;
+    color: var(--royal-navy);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.875rem 2rem;
+    border: 1px solid var(--royal-navy);
+    border-radius: 2px;
+    transition: all 0.35s ease;
+    font-family: 'Inter', sans-serif;
+  }
+  .btn-secondary-equestrian:hover {
+    background: rgba(8, 43, 73, 0.06);
+    border-color: var(--royal-gold);
+    color: var(--royal-navy);
+  }
+
+  .section-navy .btn-secondary-equestrian {
+    color: var(--royal-cream-light);
+    border-color: rgba(245, 235, 216, 0.4);
+  }
+  .section-navy .btn-secondary-equestrian:hover {
+    background: rgba(197, 150, 58, 0.12);
+    border-color: var(--royal-gold);
+    color: var(--royal-cream-light);
+  }
+
+  /* Gold Accent Button */
+  .btn-gold-equestrian {
+    background: var(--royal-gold);
+    color: var(--royal-navy);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.875rem 2rem;
+    border: 1px solid var(--royal-gold-dark);
+    border-radius: 2px;
+    transition: all 0.35s ease;
+    font-family: 'Inter', sans-serif;
+    box-shadow: var(--shadow-gold);
+  }
+  .btn-gold-equestrian:hover {
+    background: var(--royal-gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(197, 150, 58, 0.3);
+  }
+
+  /* Form Inputs */
+  .input-premium {
+    background: var(--royal-cream-input);
+    border: 1px solid var(--border-navy);
+    color: var(--royal-navy);
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .input-premium::placeholder {
+    color: rgba(41, 39, 37, 0.4);
+  }
+  .input-premium:focus {
+    outline: none;
+    border-color: var(--royal-gold);
+    box-shadow: 0 0 0 3px rgba(197, 150, 58, 0.12);
+  }
+
+  .eyebrow-label {
+    font-size: 0.6875rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--royal-gold);
+    font-family: 'Inter', sans-serif;
+  }
+
+  .section-navy .eyebrow-label {
+    color: var(--royal-gold-light);
+  }
+
+  .heading-editorial {
+    font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--royal-navy);
+    line-height: 1.2;
+  }
+
+  .section-navy .heading-editorial {
+    color: var(--royal-cream-light);
+  }
+
+  .page-hero {
+    background: var(--royal-cream);
+    border-bottom: 1px solid var(--border-gold);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(197, 150, 58, 0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .brush-label {
+    display: inline-block;
+    background-image: url('/decor/brush-stroke-navy.svg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+    padding: 0.35rem 1.25rem;
+    color: var(--royal-cream-light);
+    font-size: 0.6875rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .image-zoom-wrapper {
+    overflow: hidden;
+  }
+  .image-zoom-wrapper img {
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .image-zoom-wrapper:hover img {
+    transform: scale(1.06);
+  }
+
+  .reveal-up {
+    animation: revealUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  @keyframes revealUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Legacy utilities — remapped */
+  .divine-gradient  { background: linear-gradient(135deg, var(--royal-navy), var(--royal-navy-deep)); }
+  .gold-gradient    { background: linear-gradient(135deg, var(--royal-gold-dark), var(--royal-gold-light)); }
+  .text-brown       { color: var(--royal-brown); }
+  .text-amber       { color: var(--royal-gold); }
+  .bg-surface       { background-color: var(--royal-cream-input); }
+  .bg-surface-2     { background-color: var(--royal-sand); }
+  .border-brown     { border-color: var(--border-gold); }
+  .shadow-card      { box-shadow: var(--shadow-card); }
+  .shadow-card-lg   { box-shadow: var(--shadow-card-lg); }
+  .shadow-gold      { box-shadow: var(--shadow-gold); }
+}
+
+@layer base {
+  button,
+  [role="button"],
+  label[for],
+  label.cursor-pointer,
+  select,
+  input[type="submit"],
+  input[type="button"],
+  input[type="reset"],
+  input[type="file"]::file-selector-button {
+    cursor: pointer !important;
+  }
+}
+
+button,
+[role="button"],
+a,
+label,
+select,
+input[type="submit"],
+input[type="button"],
+input[type="reset"],
+input[type="file"]::file-selector-button,
+input[type="checkbox"],
+input[type="radio"],
+summary {
+  cursor: pointer !important;
+}
